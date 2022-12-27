@@ -1,0 +1,65 @@
+# kynx/mezzio-openapi
+
+Middleware and helpers for OpenAPI-based Mezzio applications.
+
+## Pipeline
+
+Create pipeline [delegator factory]. This includes standard middleware (ProblemDetails, validation, modeller).
+
+### Considerations
+
+* Pipeline delegator factory should be opt-in from command line - too much stuff a user might want to customise later. 
+
+
+## Routing
+
+Create pipeline and route [delegator factory]. This parses OpenAPI spec and add routes to Mezzio application.
+
+Routes have the original OpenApi path set as an option so it is available to middleware for validation etc.  
+
+### Considerations
+
+* Authentication middleware may need to be added per-route, not in the pipeline
+
+### Authentication
+
+Add `mezzio/authentication` implementations. OAuth2 is a bitch.
+
+
+### Validator
+
+Use [openapi-psr7-validator]?
+
+### Considerations
+
+* Do we validate before or after authentication? Probably after: [Google Cloud Endpoints] could replace the authentication, but 
+doesn't really validate requests.
+
+### Modeller
+
+1. Replaces request's parsed body with model object
+2. Serialises responses payload
+
+Maybe use https://jane.readthedocs.io/en/latest/components/AutoMapper.html?
+
+Or do we leave this to the handlers? Might be easier of user's wanted to replace the mapping for specific operations.
+
+## Handlers
+
+Handler per operation with `get` / `patch` / `post` / etc methods. Uses `operationId` for naming. Will need
+to construct a default name (path + method?) if no `operationId` given.
+
+
+## Services
+
+Stubs for each method. 
+
+## Resources
+
+* https://cloud.google.com/endpoints/docs/openapi/deploy-endpoints-config#validating_openapijson_syntax
+* https://github.com/GoogleCloudPlatform/endpoints-samples/blob/master/k8s/openapi.yaml
+* https://github.com/lcobucci/jwt/issues/32
+
+[delegator factory]: https://docs.mezzio.dev/mezzio/v3/cookbook/autowiring-routes-and-pipelines/#custom-delegator-factories
+[openapi-psr7-validator]: https://github.com/thephpleague/openapi-psr7-validator
+[Google Cloud Endpoints]: https://cloud.google.com/endpoints/docs/openapi/deploy-endpoints-config#validating_openapijson_syntax
