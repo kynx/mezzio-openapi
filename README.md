@@ -35,14 +35,14 @@ Use [openapi-psr7-validator]?
 * Do we validate before or after authentication? Probably after: [Google Cloud Endpoints] could replace the authentication, but 
 doesn't really validate requests.
 
-### Modeller
+### RequestParser
 
-1. Replaces request's parsed body with model object
-2. Serialises responses payload
+Adds OpenApiRequestInterface attribute to request. This contains path, query, header and cookie parameters along with 
+parsed request body. Everything is strongly typed - ie query params converted to ints / model objects / etc.
 
-Maybe use https://jane.readthedocs.io/en/latest/components/AutoMapper.html?
+TOOD: handling XML request bodies. Add / find an XML strategy to add to BodyParamsMiddleware. The schema includes extra 
+stuff on how the XML is formatted that we will need to figure out...
 
-Or do we leave this to the handlers? Might be easier of user's wanted to replace the mapping for specific operations.
 
 ## Handlers
 
