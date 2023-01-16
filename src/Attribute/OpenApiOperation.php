@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Kynx\Mezzio\OpenApi;
+namespace Kynx\Mezzio\OpenApi\Attribute;
 
 use Attribute;
 
 /**
- * Associates a Model class with an OpenApi schema
+ * Associates an operation class with an OpenApi schema
  *
- * @see \KynxTest\Mezzio\OpenApi\OpenApiSchemaTest
+ * @see \KynxTest\Mezzio\OpenApi\OpenApiOperationTest
  *
  * @psalm-immutable
  */
 #[Attribute(Attribute::TARGET_CLASS)]
-final class OpenApiSchema
+final class OpenApiOperation
 {
     public function __construct(private readonly string $jsonPointer)
     {
