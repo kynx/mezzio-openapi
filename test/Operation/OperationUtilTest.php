@@ -4,29 +4,35 @@ declare(strict_types=1);
 
 namespace KynxTest\Mezzio\OpenApi\Operation;
 
-use KynxTest\Mezzio\OpenApi\Operation\Asset\MockOperation;
-use KynxTest\Mezzio\OpenApi\Operation\Asset\MockOperationParser;
+use Kynx\Mezzio\OpenApi\Operation\OperationUtil;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
+use Rize\UriTemplate;
 
 /**
- * @covers \Kynx\Mezzio\OpenApi\Operation\AbstractOperationParser
+ * @covers \Kynx\Mezzio\OpenApi\Operation\OperationUtil
  */
-final class AbstractOperationParserTest extends TestCase
+final class OperationUtilTest extends TestCase
 {
+    private UriTemplate $uriTemplate;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->uriTemplate = new UriTemplate();
+    }
+
     /**
      * @dataProvider pathVariableProvider
      */
     public function testGetPathVariablesPopulatesPathParams(string $path, string $template, array $expected): void
     {
-        $expected = new MockOperation($expected, [], [], []);
-        $uri      = new Uri('http://example.com' . $path);
-        $request  = $this->getRequest($uri, [], []);
-        $parser   = new MockOperationParser($template, '', [], []);
+        $request = $this->getRequest(new Uri('http://example.com' . $path), [], []);
 
-        $actual = $parser->getOperation($request);
+        $actual = OperationUtil::getPathVariables($this->uriTemplate, $template, $request);
         self::assertEquals($expected, $actual);
     }
 
@@ -63,12 +69,9 @@ final class AbstractOperationParserTest extends TestCase
      */
     public function testGetQueryVariablesPopulatesQueryParams(string $query, string $template, array $expected): void
     {
-        $expected = new MockOperation([], $expected, [], []);
-        $uri      = new Uri('http://example.com/users/123' . $query);
-        $request  = $this->getRequest($uri, [], []);
-        $parser   = new MockOperationParser('', $template, [], []);
+        $request = $this->getRequest(new Uri('http://example.com/users/123' . $query), [], []);
 
-        $actual = $parser->getOperation($request);
+        $actual = OperationUtil::getQueryVariables($this->uriTemplate, $template, $request);
         self::assertEquals($expected, $actual);
     }
 
@@ -98,12 +101,10 @@ final class AbstractOperationParserTest extends TestCase
      */
     public function testGetHeaderVariablesPopulatesHeaderParams(array $headers, array $templates, array $expected): void
     {
-        $expected = new MockOperation([], [], $expected, []);
-        $uri      = new Uri('http://example.com/');
-        $request  = $this->getRequest($uri, $headers, []);
-        $parser   = new MockOperationParser('', '', $templates, []);
+        $uri     = new Uri('http://example.com/');
+        $request = $this->getRequest($uri, $headers, []);
 
-        $actual = $parser->getOperation($request);
+        $actual = OperationUtil::getHeaderVariables($this->uriTemplate, $templates, $request);
         self::assertEquals($expected, $actual);
     }
 
@@ -127,12 +128,10 @@ final class AbstractOperationParserTest extends TestCase
      */
     public function testGetCookieVariablesPopulatesCookieParams(array $cookies, array $templates, array $expected): void
     {
-        $expected = new MockOperation([], [], [], $expected);
-        $uri      = new Uri('http://example.com/');
-        $request  = $this->getRequest($uri, [], $cookies);
-        $parser   = new MockOperationParser('', '', [], $templates);
+        $uri     = new Uri('http://example.com/');
+        $request = $this->getRequest($uri, [], $cookies);
 
-        $actual = $parser->getOperation($request);
+        $actual = OperationUtil::getCookieVariables($this->uriTemplate, $templates, $request);
         self::assertEquals($expected, $actual);
     }
 
@@ -152,18 +151,16 @@ final class AbstractOperationParserTest extends TestCase
     public function testListToAssociativeArrayReturnsArray(): void
     {
         $expected = ['role' => 'admin', 'firstName' => 'Alex'];
-        $parser   = new MockOperationParser('', '', [], []);
 
-        $actual = $parser->listToAssociativeArray(['role', 'admin', 'firstName', 'Alex']);
+        $actual = OperationUtil::listToAssociativeArray(['role', 'admin', 'firstName', 'Alex']);
         self::assertSame($expected, $actual);
     }
 
     public function testListToAssociativeArrayHandlesMissingValue(): void
     {
         $expected = ['role' => 'admin', 'firstName' => null];
-        $parser   = new MockOperationParser('', '', [], []);
 
-        $actual = $parser->listToAssociativeArray(['role', 'admin', 'firstName']);
+        $actual = OperationUtil::listToAssociativeArray(['role', 'admin', 'firstName']);
         self::assertSame($expected, $actual);
     }
 
