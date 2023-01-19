@@ -9,8 +9,6 @@ use Attribute;
 /**
  * Associates a model class with an OpenApi schema
  *
- * @see \KynxTest\Mezzio\OpenApi\OpenApiSchemaTest
- *
  * @psalm-immutable
  */
 #[Attribute(Attribute::TARGET_CLASS)]

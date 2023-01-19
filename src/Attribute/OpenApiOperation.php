@@ -9,8 +9,6 @@ use Attribute;
 /**
  * Associates an operation class with an OpenApi schema
  *
- * @see \KynxTest\Mezzio\OpenApi\OpenApiOperationTest
- *
  * @psalm-immutable
  */
 #[Attribute(Attribute::TARGET_CLASS)]
