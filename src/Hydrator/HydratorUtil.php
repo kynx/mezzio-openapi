@@ -20,9 +20,6 @@ use function is_array;
 use function is_string;
 
 /**
- * @see \KynxTest\Mezzio\OpenApi\Hydrator\HydratorUtilTest
- *
- * phpcs:ignore Generic.Files.LineLength.TooLong
  * @psalm-type DiscriminatorValue = array{key: string, map: array<string, class-string<HydratorInterface>}
  * @psalm-type DiscriminatorValueArray = array<string, DiscriminatorValue>
  * @psalm-type DiscriminatorList = array<class-string<HydratorInterface>, list<string>>
@@ -31,12 +28,15 @@ use function is_string;
  */
 final class HydratorUtil
 {
+    /**
+     * @codeCoverageIgnore
+     */
     private function __construct()
     {
     }
 
     /**
-     * Returns hydrated object based on the descriminator property value
+     * Returns hydrated object based on the discriminator property value
      *
      * @link https://spec.openapis.org/oas/v3.1.0#discriminator-object
      *
@@ -70,7 +70,7 @@ final class HydratorUtil
     /**
      * @param array{key: string, map: array<string, class-string<HydratorInterface>>} $discriminator
      */
-    private static function hydrateDiscriminatorValue(string $name, array $data, array $discriminator): object
+    public static function hydrateDiscriminatorValue(string $name, array $data, array $discriminator): object
     {
         $key = $discriminator['key'];
         if (! isset($data[$key])) {
@@ -129,7 +129,7 @@ final class HydratorUtil
     /**
      * @param DiscriminatorList $discriminator
      */
-    private static function hydrateDiscriminatorList(string $name, array $data, array $discriminator): object
+    public static function hydrateDiscriminatorList(string $name, array $data, array $discriminator): object
     {
         $matches = array_map(
             fn (array $keys): int => self::countMatchedKeys($data, $keys),

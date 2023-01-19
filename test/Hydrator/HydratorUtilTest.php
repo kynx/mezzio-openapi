@@ -12,6 +12,8 @@ use KynxTest\Mezzio\OpenApi\Hydrator\Asset\TypeErrorHydrator;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * @uses \Kynx\Mezzio\OpenApi\Hydrator\HydratorException
+ *
  * @covers \Kynx\Mezzio\OpenApi\Hydrator\HydratorUtil
  */
 final class HydratorUtilTest extends TestCase
@@ -77,6 +79,22 @@ final class HydratorUtilTest extends TestCase
         HydratorUtil::hydrateDiscriminatorValues($data, [], $valueMap);
     }
 
+    public function testHydrateDiscriminatorValuesIgnoresMissingData(): void
+    {
+        $expected = [
+            'skip' => "don't hydrate me",
+        ];
+        $valueMap = [
+            'foo' => [
+                'key' => 'bar',
+                'map' => ['a' => Asset\BadHydrator::class],
+            ],
+        ];
+
+        $actual = HydratorUtil::hydrateDiscriminatorValues($expected, [], $valueMap);
+        self::assertSame($expected, $actual);
+    }
+
     public function testHydrateDiscriminatorValuesHydrates(): void
     {
         $expected = [
@@ -131,7 +149,7 @@ final class HydratorUtilTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testHydrateDiscriminatorListTypeErrorThrowsException(): void
+    public function testHydrateDiscriminatorListsTypeErrorThrowsException(): void
     {
         $data    = [
             'foo' => ['a' => 1],
@@ -147,7 +165,22 @@ final class HydratorUtilTest extends TestCase
         HydratorUtil::hydrateDiscriminatorLists($data, [], $listMap);
     }
 
-    public function testHydrateDiscriminatorListHydratesMostMatchedProperties(): void
+    public function testHydrateDiscriminatorListsSkipsIgnoresMissingData(): void
+    {
+        $expected = [
+            'skip' => "don't hydrate me",
+        ];
+        $listMap  = [
+            'foo' => [
+                Asset\BadHydrator::class => ['b', 'd'],
+            ],
+        ];
+
+        $actual = HydratorUtil::hydrateDiscriminatorLists($expected, [], $listMap);
+        self::assertSame($expected, $actual);
+    }
+
+    public function testHydrateDiscriminatorListsHydratesMostMatchedProperties(): void
     {
         $expected = [
             'skip' => "don't hydrate me",
@@ -168,7 +201,7 @@ final class HydratorUtilTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function testHydrateDiscriminatorListHydratesArray(): void
+    public function testHydrateDiscriminatorListsHydratesArray(): void
     {
         $expected = [
             'foo' => [
@@ -204,6 +237,19 @@ final class HydratorUtilTest extends TestCase
         self::expectException(HydratorException::class);
         self::expectExceptionMessage("Bad type");
         HydratorUtil::hydrateProperties($data, [], $propertyMap);
+    }
+
+    public function testHydratePropertiesIgnoresMissingProperty(): void
+    {
+        $expected    = [
+            'skip' => "don't hydrate me",
+        ];
+        $propertyMap = [
+            'foo' => TypeErrorHydrator::class,
+        ];
+
+        $actual = HydratorUtil::hydrateProperties($expected, [], $propertyMap);
+        self::assertSame($expected, $actual);
     }
 
     public function testHydrateProperties(): void
@@ -258,6 +304,19 @@ final class HydratorUtilTest extends TestCase
         self::expectException(HydratorException::class);
         self::expectExceptionMessage('Cannot hydrate foo: "baz" is not a valid backing value');
         HydratorUtil::hydrateEnums($data, [], $enums);
+    }
+
+    public function testHydrateEnumsIgnoresMissingData(): void
+    {
+        $expected = [
+            'skip' => "don't hydrate me",
+        ];
+        $enums    = [
+            'foo' => MockEnum::class,
+        ];
+
+        $actual = HydratorUtil::hydrateEnums($expected, [], $enums);
+        self::assertSame($expected, $actual);
     }
 
     public function testHydrateEnums(): void

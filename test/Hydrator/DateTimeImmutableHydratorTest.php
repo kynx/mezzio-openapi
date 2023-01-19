@@ -10,6 +10,8 @@ use Kynx\Mezzio\OpenApi\Hydrator\HydratorException;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * @uses \Kynx\Mezzio\OpenApi\Hydrator\HydratorException
+ *
  * @covers \Kynx\Mezzio\OpenApi\Hydrator\DateTimeImmutableHydrator
  */
 final class DateTimeImmutableHydratorTest extends TestCase
