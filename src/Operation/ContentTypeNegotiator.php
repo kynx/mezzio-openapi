@@ -65,6 +65,14 @@ final class ContentTypeNegotiator
         return $mimeType;
     }
 
+    /**
+     * @return list<string>
+     */
+    public function getMimeTypes(): array
+    {
+        return array_keys($this->matchers);
+    }
+
     private function getMatched(array $parts): string|null
     {
         $suffixed = count($parts) > 2 ? [$parts[0], $parts[2]] : [];
@@ -79,13 +87,5 @@ final class ContentTypeNegotiator
         }
 
         return $this->default;
-    }
-
-    /**
-     * @return list<string>
-     */
-    private function getMimeTypes(): array
-    {
-        return array_keys($this->matchers);
     }
 }

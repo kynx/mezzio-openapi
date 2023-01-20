@@ -44,16 +44,16 @@ final class ContentTypeNegotiatorTest extends TestCase
      */
     public function testMatchContentTypeReturnsMatched(string $mimeType, string $expected): void
     {
-        $matcher = new ContentTypeNegotiator([
+        $negotiator = new ContentTypeNegotiator([
             '*/*',
             'text/*',
             'text/csv',
             'application/zip',
             'application/geo+json',
         ]);
-        $request = $this->getRequest(['Content-Type' => $mimeType]);
+        $request    = $this->getRequest(['Content-Type' => $mimeType]);
 
-        $actual = $matcher->negotiate($request);
+        $actual = $negotiator->negotiate($request);
         self::assertSame($expected, $actual);
     }
 
@@ -72,12 +72,21 @@ final class ContentTypeNegotiatorTest extends TestCase
 
     public function testGetMatchedContentTypeThrowsException(): void
     {
-        $matcher = new ContentTypeNegotiator(['image/png']);
-        $request = $this->getRequest(['Content-Type' => 'text/csv']);
+        $negotiator = new ContentTypeNegotiator(['image/png']);
+        $request    = $this->getRequest(['Content-Type' => 'text/csv']);
 
         self::expectException(OperationException::class);
         self::expectExceptionMessage("Invalid Content-Type header 'text/csv'; expected one of 'image/png'");
-        $matcher->negotiate($request);
+        $negotiator->negotiate($request);
+    }
+
+    public function testGetMimeTypesReturnsMimeTypes(): void
+    {
+        $expected   = ['application/json', 'application/xml'];
+        $negotiator = new ContentTypeNegotiator($expected);
+
+        $actual = $negotiator->getMimeTypes();
+        self::assertSame($expected, $actual);
     }
 
     private function getRequest(array $headers): ServerRequestInterface
