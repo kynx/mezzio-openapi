@@ -6,7 +6,7 @@ namespace Kynx\Mezzio\OpenApi\Operation;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-interface RequestParserInterface
+interface OperationFactoryInterface
 {
-    public function parse(ServerRequestInterface $request): object;
+    public function getOperation(ServerRequestInterface $request): object;
 }

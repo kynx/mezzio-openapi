@@ -7,12 +7,12 @@ namespace Kynx\Mezzio\OpenApi\Attribute;
 use Attribute;
 
 /**
- * Associates a request parser class with an OpenApi schema
+ * Associates an operation factory class with an OpenApi schema
  *
  * @psalm-immutable
  */
 #[Attribute(Attribute::TARGET_CLASS)]
-final class OpenApiRequestParser
+final class OpenApiOperationFactory
 {
     public function __construct(private readonly string $jsonPointer)
     {
