@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Kynx\Mezzio\OpenApi\Hydrator;
 
 use BackedEnum;
+use Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException;
+use Kynx\Mezzio\OpenApi\Hydrator\Exception\InvalidDiscriminatorException;
+use Kynx\Mezzio\OpenApi\Hydrator\Exception\MissingDiscriminatorException;
 use TypeError;
 use ValueError;
 
@@ -74,19 +77,19 @@ final class HydratorUtil
     {
         $key = $discriminator['key'];
         if (! isset($data[$key])) {
-            throw HydratorException::missingDiscriminatorProperty($name, $key);
+            throw MissingDiscriminatorException::fromMissing($name, $key);
         }
 
         $value    = (string) $data[$key];
         $hydrator = $discriminator['map'][$value] ?? null;
         if ($hydrator === null) {
-            throw HydratorException::invalidDiscriminatorValue($key, $value);
+            throw InvalidDiscriminatorException::fromValue($key, $value);
         }
 
         try {
             return $hydrator::hydrate($data);
         } catch (TypeError $exception) {
-            throw HydratorException::fromThrowable($name, $exception);
+            throw HydrationException::fromThrowable($name, $exception);
         }
     }
 
@@ -142,7 +145,7 @@ final class HydratorUtil
         try {
             return $hydrator::hydrate($data);
         } catch (TypeError $exception) {
-            throw HydratorException::fromThrowable($name, $exception);
+            throw HydrationException::fromThrowable($name, $exception);
         }
     }
 
@@ -190,7 +193,7 @@ final class HydratorUtil
         try {
             return $hydrator::hydrate($data);
         } catch (TypeError $exception) {
-            throw HydratorException::fromThrowable($name, $exception);
+            throw HydrationException::fromThrowable($name, $exception);
         }
     }
 
@@ -231,7 +234,7 @@ final class HydratorUtil
         try {
             return $enum::from($value);
         } catch (ValueError $exception) {
-            throw HydratorException::fromThrowable($name, $exception);
+            throw HydrationException::fromThrowable($name, $exception);
         }
     }
 

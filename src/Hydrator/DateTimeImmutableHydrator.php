@@ -6,6 +6,7 @@ namespace Kynx\Mezzio\OpenApi\Hydrator;
 
 use DateTimeImmutable;
 use Exception;
+use Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException;
 
 use function assert;
 use function is_string;
@@ -18,7 +19,7 @@ final class DateTimeImmutableHydrator implements HydratorInterface
         try {
             return new DateTimeImmutable($data);
         } catch (Exception $exception) {
-            throw HydratorException::fromThrowable(DateTimeImmutable::class, $exception);
+            throw HydrationException::fromThrowable(DateTimeImmutable::class, $exception);
         }
     }
 }

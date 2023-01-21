@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kynx\Mezzio\OpenApi\Operation;
 
+use Kynx\Mezzio\OpenApi\Operation\Exception\InvalidContentTypeException;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function array_filter;
@@ -59,7 +60,7 @@ final class ContentTypeNegotiator
         [$type]   = explode(';', $request->getHeaderLine('Content-Type'));
         $mimeType = $this->getMatched(preg_split('#[/+]#', trim($type)));
         if ($mimeType === null) {
-            throw OperationException::invalidContentType($type, $this->getMimeTypes());
+            throw InvalidContentTypeException::fromExpected($type, $this->getMimeTypes());
         }
 
         return $mimeType;

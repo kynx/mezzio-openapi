@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace KynxTest\Mezzio\OpenApi\Operation;
 
 use Kynx\Mezzio\OpenApi\Operation\ContentTypeNegotiator;
-use Kynx\Mezzio\OpenApi\Operation\OperationException;
+use Kynx\Mezzio\OpenApi\Operation\Exception\InvalidContentTypeException;
 use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
@@ -15,7 +15,7 @@ use function fopen;
 use function is_resource;
 
 /**
- * @uses \Kynx\Mezzio\OpenApi\Operation\OperationException
+ * @uses \Kynx\Mezzio\OpenApi\Operation\Exception\InvalidContentTypeException
  *
  * @covers \Kynx\Mezzio\OpenApi\Operation\ContentTypeNegotiator
  */
@@ -75,7 +75,7 @@ final class ContentTypeNegotiatorTest extends TestCase
         $negotiator = new ContentTypeNegotiator(['image/png']);
         $request    = $this->getRequest(['Content-Type' => 'text/csv']);
 
-        self::expectException(OperationException::class);
+        self::expectException(InvalidContentTypeException::class);
         self::expectExceptionMessage("Invalid Content-Type header 'text/csv'; expected one of 'image/png'");
         $negotiator->negotiate($request);
     }

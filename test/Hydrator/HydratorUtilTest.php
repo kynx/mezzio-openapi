@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace KynxTest\Mezzio\OpenApi\Hydrator;
 
-use Kynx\Mezzio\OpenApi\Hydrator\HydratorException;
+use Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException;
+use Kynx\Mezzio\OpenApi\Hydrator\Exception\InvalidDiscriminatorException;
+use Kynx\Mezzio\OpenApi\Hydrator\Exception\MissingDiscriminatorException;
 use Kynx\Mezzio\OpenApi\Hydrator\HydratorUtil;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\GoodHydrator;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\MockEnum;
@@ -12,7 +14,9 @@ use KynxTest\Mezzio\OpenApi\Hydrator\Asset\TypeErrorHydrator;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @uses \Kynx\Mezzio\OpenApi\Hydrator\HydratorException
+ * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException
+ * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\InvalidDiscriminatorException
+ * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\MissingDiscriminatorException
  *
  * @covers \Kynx\Mezzio\OpenApi\Hydrator\HydratorUtil
  */
@@ -32,8 +36,8 @@ final class HydratorUtilTest extends TestCase
             ],
         ];
 
-        self::expectException(HydratorException::class);
-        self::expectExceptionMessage("Property 'foo' is missing discriminator property 'baz'");
+        self::expectException(MissingDiscriminatorException::class);
+        self::expectExceptionMessage("Property 'foo' is missing discriminator 'baz'");
         HydratorUtil::hydrateDiscriminatorValues($data, [], $valueMap);
     }
 
@@ -53,7 +57,7 @@ final class HydratorUtilTest extends TestCase
             ],
         ];
 
-        self::expectException(HydratorException::class);
+        self::expectException(InvalidDiscriminatorException::class);
         self::expectExceptionMessage("Discriminator property 'bar' has invalid value 'a'");
         HydratorUtil::hydrateDiscriminatorValues($data, [], $valueMap);
     }
@@ -74,7 +78,7 @@ final class HydratorUtilTest extends TestCase
             ],
         ];
 
-        self::expectException(HydratorException::class);
+        self::expectException(HydrationException::class);
         self::expectExceptionMessage("Bad type");
         HydratorUtil::hydrateDiscriminatorValues($data, [], $valueMap);
     }
@@ -160,7 +164,7 @@ final class HydratorUtilTest extends TestCase
             ],
         ];
 
-        self::expectException(HydratorException::class);
+        self::expectException(HydrationException::class);
         self::expectExceptionMessage("Bad type");
         HydratorUtil::hydrateDiscriminatorLists($data, [], $listMap);
     }
@@ -234,7 +238,7 @@ final class HydratorUtilTest extends TestCase
             'foo' => TypeErrorHydrator::class,
         ];
 
-        self::expectException(HydratorException::class);
+        self::expectException(HydrationException::class);
         self::expectExceptionMessage("Bad type");
         HydratorUtil::hydrateProperties($data, [], $propertyMap);
     }
@@ -301,7 +305,7 @@ final class HydratorUtilTest extends TestCase
             'foo' => MockEnum::class,
         ];
 
-        self::expectException(HydratorException::class);
+        self::expectException(HydrationException::class);
         self::expectExceptionMessage('Cannot hydrate foo: "baz" is not a valid backing value');
         HydratorUtil::hydrateEnums($data, [], $enums);
     }

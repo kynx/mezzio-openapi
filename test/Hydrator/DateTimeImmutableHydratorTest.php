@@ -6,11 +6,11 @@ namespace KynxTest\Mezzio\OpenApi\Hydrator;
 
 use DateTimeImmutable;
 use Kynx\Mezzio\OpenApi\Hydrator\DateTimeImmutableHydrator;
-use Kynx\Mezzio\OpenApi\Hydrator\HydratorException;
+use Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @uses \Kynx\Mezzio\OpenApi\Hydrator\HydratorException
+ * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException
  *
  * @covers \Kynx\Mezzio\OpenApi\Hydrator\DateTimeImmutableHydrator
  */
@@ -26,7 +26,7 @@ final class DateTimeImmutableHydratorTest extends TestCase
 
     public function testHydrateInvalidValueThrowsException(): void
     {
-        self::expectException(HydratorException::class);
+        self::expectException(HydrationException::class);
         self::expectExceptionMessage("Cannot hydrate " . DateTimeImmutable::class);
         DateTimeImmutableHydrator::hydrate("bad");
     }
