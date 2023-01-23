@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace KynxTest\Mezzio\OpenApi\Middleware;
 
 use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddlewareFactory;
-use Kynx\Mezzio\OpenApi\Middleware\OperationFactoryResolverInterface;
+use Kynx\Mezzio\OpenApi\Operation\OperationFactoryResolverInterface;
 use KynxTest\Mezzio\OpenApi\Middleware\Asset\MockOperationFactory;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\ServerRequest;

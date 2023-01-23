@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kynx\Mezzio\OpenApi\Middleware;
 
+use Kynx\Mezzio\OpenApi\Operation\OperationFactoryResolverInterface;
 use Psr\Container\ContainerInterface;
 
 final class OpenApiOperationMiddlewareFactory

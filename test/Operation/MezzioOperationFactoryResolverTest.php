@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace KynxTest\Mezzio\OpenApi\Middleware;
+namespace KynxTest\Mezzio\OpenApi\Operation;
 
 use Kynx\Mezzio\OpenApi\Attribute\OpenApiOperationFactory;
 use Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException;
-use Kynx\Mezzio\OpenApi\Middleware\MezzioOperationFactoryResolver;
+use Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolver;
 use KynxTest\Mezzio\OpenApi\Middleware\Asset\MockOperationFactory;
+use KynxTest\Mezzio\OpenApi\Middleware\MiddlewareTrait;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Uri;
 use Mezzio\Router\Route;
@@ -16,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Server\MiddlewareInterface;
 
 /**
- * @covers \Kynx\Mezzio\OpenApi\Middleware\MezzioOperationFactoryResolver
+ * @covers \Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolver
  */
 final class MezzioOperationFactoryResolverTest extends TestCase
 {

@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Kynx\Mezzio\OpenApi\Middleware;
+namespace Kynx\Mezzio\OpenApi\Operation;
 
 use Kynx\Mezzio\OpenApi\Attribute\OpenApiOperationFactory;
 use Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException;
 use Kynx\Mezzio\OpenApi\Operation\OperationFactoryInterface;
+use Kynx\Mezzio\OpenApi\Operation\OperationFactoryResolverInterface;
 use Mezzio\Router\Route;
 use Mezzio\Router\RouteResult;
 use Psr\Http\Message\ServerRequestInterface;

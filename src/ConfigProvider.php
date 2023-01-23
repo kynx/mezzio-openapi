@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Kynx\Mezzio\OpenApi;
 
-use Kynx\Mezzio\OpenApi\Middleware\MezzioOperationFactoryResolverFactory;
 use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddleware;
 use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddlewareFactory;
-use Kynx\Mezzio\OpenApi\Middleware\OperationFactoryResolverInterface;
+use Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolverFactory;
+use Kynx\Mezzio\OpenApi\Operation\OperationFactoryResolverInterface;
 
 final class ConfigProvider
 {

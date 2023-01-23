@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace KynxTest\Mezzio\OpenApi\Middleware;
+namespace KynxTest\Mezzio\OpenApi\Operation;
 
 use Kynx\Mezzio\OpenApi\ConfigProvider;
-use Kynx\Mezzio\OpenApi\Middleware\MezzioOperationFactoryResolverFactory;
+use Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolverFactory;
 use KynxTest\Mezzio\OpenApi\Middleware\Asset\MockOperationFactory;
+use KynxTest\Mezzio\OpenApi\Middleware\MiddlewareTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 /**
- * @covers \Kynx\Mezzio\OpenApi\Middleware\MezzioOperationFactoryResolverFactory
+ * @covers \Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolverFactory
  */
 final class MezzioOperationFactoryResolverFactoryTest extends TestCase
 {

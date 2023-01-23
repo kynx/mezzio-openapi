@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Kynx\Mezzio\OpenApi\Middleware;
+namespace Kynx\Mezzio\OpenApi\Operation;
 
 use Kynx\Mezzio\OpenApi\ConfigProvider;
+use Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolver;
 use Kynx\Mezzio\OpenApi\Operation\OperationFactoryInterface;
 use Psr\Container\ContainerInterface;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Kynx\Mezzio\OpenApi\Middleware;
+namespace Kynx\Mezzio\OpenApi\Operation;
 
 use Kynx\Mezzio\OpenApi\Operation\OperationFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;

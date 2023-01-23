@@ -6,7 +6,7 @@ namespace KynxTest\Mezzio\OpenApi\Middleware;
 
 use Kynx\Mezzio\OpenApi\Attribute\OpenApiOperation;
 use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddleware;
-use Kynx\Mezzio\OpenApi\Middleware\OperationFactoryResolverInterface;
+use Kynx\Mezzio\OpenApi\Operation\OperationFactoryResolverInterface;
 use KynxTest\Mezzio\OpenApi\Middleware\Asset\MockOperation;
 use KynxTest\Mezzio\OpenApi\Middleware\Asset\MockOperationFactory;
 use Laminas\Diactoros\Response\EmptyResponse;
