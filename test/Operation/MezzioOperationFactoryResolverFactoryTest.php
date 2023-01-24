@@ -6,7 +6,7 @@ namespace KynxTest\Mezzio\OpenApi\Operation;
 
 use Kynx\Mezzio\OpenApi\ConfigProvider;
 use Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolverFactory;
-use KynxTest\Mezzio\OpenApi\Middleware\Asset\MockOperationFactory;
+use KynxTest\Mezzio\OpenApi\Operation\Asset\MockOperationFactory;
 use KynxTest\Mezzio\OpenApi\Middleware\MiddlewareTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;

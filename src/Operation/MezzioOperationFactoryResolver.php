@@ -23,7 +23,7 @@ final class MezzioOperationFactoryResolver implements OperationFactoryResolverIn
     {
     }
 
-    public function getFactory(ServerRequestInterface $request): OperationFactoryInterface
+    public function getFactory(ServerRequestInterface $request): OperationFactoryInterface|null
     {
         $routeResult = $request->getAttribute(RouteResult::class);
         assert($routeResult instanceof RouteResult);

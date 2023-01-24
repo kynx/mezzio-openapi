@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace KynxTest\Mezzio\OpenApi\Middleware\Asset;
+namespace KynxTest\Mezzio\OpenApi\Operation\Asset;
 
 use Kynx\Mezzio\OpenApi\Operation\OperationFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;

@@ -25,7 +25,10 @@ final class OpenApiOperationMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $operation = $this->factoryResolver->getFactory($request)->getOperation($request);
-        return $handler->handle($request->withAttribute(OpenApiOperation::class, $operation));
+        $operation = $this->factoryResolver->getFactory($request)?->getOperation($request);
+        if ($operation !== null) {
+            return $handler->handle($request->withAttribute(OpenApiOperation::class, $operation));
+        }
+        return $handler->handle($request);
     }
 }
