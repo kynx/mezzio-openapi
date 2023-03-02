@@ -8,10 +8,12 @@ use Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\InvalidDiscriminatorException;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\MissingDiscriminatorException;
 use Kynx\Mezzio\OpenApi\Hydrator\HydratorUtil;
+use KynxTest\Mezzio\OpenApi\Hydrator\Asset\Extractable;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\GoodHydrator;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\MockEnum;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\TypeErrorHydrator;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 /**
  * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException
@@ -382,6 +384,90 @@ final class HydratorUtilTest extends TestCase
         ];
 
         $actual = HydratorUtil::getMappedProperties($data, $map);
+        self::assertSame($expected, $actual);
+    }
+
+    public function testExtractDataExtractsMethods(): void
+    {
+        $expected = [
+            'one'   => 'foo',
+            'three' => true,
+        ];
+        $object   = new Extractable('foo', 2, true);
+        $methods  = ['one' => 'getOne', 'three' => 'isThree'];
+
+        $actual = HydratorUtil::extractData($object, $methods);
+        self::assertSame($expected, $actual);
+    }
+
+    public function testExtractEnumsExtrasSingleEnum(): void
+    {
+        $expected = [
+            'first' => 'first',
+            'enum'  => 'foo',
+        ];
+        $data     = [
+            'first' => 'first',
+            'enum'  => MockEnum::Foo,
+        ];
+
+        $actual = HydratorUtil::extractEnums($data, [], ['enum' => MockEnum::class]);
+        self::assertSame($expected, $actual);
+    }
+
+    public function testExtractEnumsExtractsArrayOfEnums(): void
+    {
+        $expected = [
+            'first' => 'first',
+            'enum'  => ['foo', 'bar'],
+        ];
+        $data     = [
+            'first' => 'first',
+            'enum'  => [MockEnum::Foo, MockEnum::Bar],
+        ];
+
+        $actual = HydratorUtil::extractEnums($data, ['enum'], ['enum' => MockEnum::class]);
+        self::assertSame($expected, $actual);
+    }
+
+    public function testExtractPropertiesExtractsSingleProperty(): void
+    {
+        $expected    = [
+            'first'  => 'first',
+            'object' => [
+                'foo' => 'bar',
+            ],
+        ];
+        $object      = new stdClass();
+        $object->foo = 'bar';
+        $data        = [
+            'first'  => 'first',
+            'object' => $object,
+        ];
+
+        $actual = HydratorUtil::extractProperties($data, [], [stdClass::class => GoodHydrator::class]);
+        self::assertSame($expected, $actual);
+    }
+
+    public function testExtractPropertiesExtractsArrayProperty(): void
+    {
+        $expected    = [
+            'first'  => 'first',
+            'object' => [
+                ['foo' => 'bar'],
+                ['foo' => 'baz'],
+            ],
+        ];
+        $first       = new stdClass();
+        $first->foo  = 'bar';
+        $second      = new stdClass();
+        $second->foo = 'baz';
+        $data        = [
+            'first'  => 'first',
+            'object' => [$first, $second],
+        ];
+
+        $actual = HydratorUtil::extractProperties($data, ['object'], [stdClass::class => GoodHydrator::class]);
         self::assertSame($expected, $actual);
     }
 }

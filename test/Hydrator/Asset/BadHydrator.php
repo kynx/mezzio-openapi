@@ -13,4 +13,9 @@ final class BadHydrator implements HydratorInterface
     {
         return new stdClass();
     }
+
+    public static function extract(mixed $object): bool|array|float|int|string|null
+    {
+        return [];
+    }
 }

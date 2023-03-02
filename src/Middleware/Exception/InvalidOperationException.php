@@ -19,10 +19,10 @@ final class InvalidOperationException extends DomainException implements ServerE
         ), 500);
     }
 
-    public static function missingOperationFactory(string $pointer): self
+    public static function missingRequestFactory(string $pointer): self
     {
         return new self(sprintf(
-            "No operation factory configured for '%s'",
+            "No request factory configured for '%s'",
             $pointer
         ), 500);
     }

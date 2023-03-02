@@ -13,4 +13,9 @@ final class TypeErrorHydrator implements HydratorInterface
     {
         throw new TypeError('Bad type');
     }
+
+    public static function extract(mixed $object): bool|array|float|int|string|null
+    {
+        return [];
+    }
 }

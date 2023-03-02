@@ -20,7 +20,9 @@ use function assert;
 use function count;
 use function in_array;
 use function is_array;
+use function is_object;
 use function is_string;
+use function method_exists;
 
 /**
  * @psalm-type DiscriminatorValue = array{key: string, map: array<string, class-string<HydratorInterface>}
@@ -71,7 +73,7 @@ final class HydratorUtil
     }
 
     /**
-     * @param array{key: string, map: array<string, class-string<HydratorInterface>>} $discriminator
+     * @param DiscriminatorValue $discriminator
      */
     public static function hydrateDiscriminatorValue(string $name, array $data, array $discriminator): object
     {
@@ -262,5 +264,85 @@ final class HydratorUtil
         }
 
         return $mapped;
+    }
+
+    /**
+     * @param array<string, string> $methods
+     * @return array<string, mixed>
+     */
+    public static function extractData(object $object, array $methods): array
+    {
+        $data = [];
+        foreach ($methods as $key => $method) {
+            assert(method_exists($object, $method));
+            /** @psalm-suppress MixedAssignment */
+            $data[$key] = $object->$method();
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array<string, class-string<BackedEnum>> $enums
+     */
+    public static function extractEnums(array $data, array $arrayProperties, array $enums): array
+    {
+        foreach (array_keys($enums) as $property) {
+            $value = $data[$property];
+            if (in_array($property, $arrayProperties, true)) {
+                assert(is_array($value));
+                $enumValues = [];
+                /** @psalm-suppress MixedAssignment */
+                foreach ($value as $enumValue) {
+                    assert($enumValue instanceof BackedEnum);
+                    $enumValues[] = $enumValue->value;
+                }
+                $data[$property] = $enumValues;
+            } else {
+                assert($value instanceof BackedEnum);
+                $data[$property] = $value->value;
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array<class-string, class-string<HydratorInterface>> $extractors
+     */
+    public static function extractProperties(array $data, array $arrayProperties, array $extractors): array
+    {
+        foreach ($data as $property => $value) {
+            if (in_array($property, $arrayProperties, true)) {
+                assert(is_array($value));
+                $data[$property] = self::extractArray($value, $extractors);
+            } else {
+                /** @psalm-suppress MixedAssignment */
+                $data[$property] = self::extractProperty($value, $extractors);
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array<class-string, class-string<HydratorInterface>> $extractors
+     */
+    private static function extractArray(array $data, array $extractors): array
+    {
+        return array_map(fn (object $object): mixed => self::extractProperty($object, $extractors), $data);
+    }
+
+    /**
+     * @param array<class-string, class-string<HydratorInterface>> $extractors
+     */
+    private static function extractProperty(mixed $value, array $extractors): mixed
+    {
+        if (! is_object($value)) {
+            return $value;
+        }
+
+        assert(isset($extractors[$value::class]));
+        return $extractors[$value::class]::extract($value);
     }
 }

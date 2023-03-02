@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Kynx\Mezzio\OpenApi\Hydrator;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use Exception;
+use Kynx\Mezzio\OpenApi\Hydrator\Exception\ExtractionException;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException;
 
 use function assert;
@@ -21,5 +23,13 @@ final class DateTimeImmutableHydrator implements HydratorInterface
         } catch (Exception $exception) {
             throw HydrationException::fromThrowable(DateTimeImmutable::class, $exception);
         }
+    }
+
+    public static function extract(mixed $object): string
+    {
+        if (! $object instanceof DateTimeImmutable) {
+            throw ExtractionException::invalidObject($object, DateTimeImmutable::class);
+        }
+        return $object->format(DateTimeInterface::RFC3339_EXTENDED);
     }
 }
