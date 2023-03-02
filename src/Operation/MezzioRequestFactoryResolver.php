@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace Kynx\Mezzio\OpenApi\Operation;
 
-use Kynx\Mezzio\OpenApi\Attribute\OpenApiOperationFactory;
+use Kynx\Mezzio\OpenApi\Attribute\OpenApiRequestFactory;
 use Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException;
-use Kynx\Mezzio\OpenApi\Operation\OperationFactoryInterface;
-use Kynx\Mezzio\OpenApi\Operation\OperationFactoryResolverInterface;
 use Mezzio\Router\Route;
 use Mezzio\Router\RouteResult;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function assert;
 
-final class MezzioOperationFactoryResolver implements OperationFactoryResolverInterface
+final class MezzioRequestFactoryResolver implements RequestFactoryResolverInterface
 {
     /**
      * @param array<string, class-string> $operationFactories
@@ -23,23 +21,24 @@ final class MezzioOperationFactoryResolver implements OperationFactoryResolverIn
     {
     }
 
-    public function getFactory(ServerRequestInterface $request): OperationFactoryInterface|null
+    public function getFactory(ServerRequestInterface $request): RequestFactoryInterface|null
     {
         $routeResult = $request->getAttribute(RouteResult::class);
         assert($routeResult instanceof RouteResult);
         $matchedRoute = $routeResult->getMatchedRoute();
         assert($matchedRoute instanceof Route);
 
-        $routeOptions     = $matchedRoute->getOptions();
-        $operationFactory = $routeOptions[OpenApiOperationFactory::class] ?? null;
-        if (! $operationFactory instanceof OpenApiOperationFactory) {
+        /** @var array{OpenApiRequestFactory::class?: string} $routeOptions */
+        $routeOptions = $matchedRoute->getOptions();
+        $jsonPointer  = $routeOptions[OpenApiRequestFactory::class] ?? null;
+        if ($jsonPointer === null) {
             throw InvalidOperationException::missingPointer($request->getUri()->getPath());
         }
 
-        /** @var class-string<OperationFactoryInterface>|null $factoryClass */
-        $factoryClass = $this->operationFactories[$operationFactory->getJsonPointer()] ?? null;
+        /** @var class-string<RequestFactoryInterface>|null $factoryClass */
+        $factoryClass = $this->operationFactories[$jsonPointer] ?? null;
         if ($factoryClass === null) {
-            throw InvalidOperationException::missingOperationFactory($operationFactory->getJsonPointer());
+            throw InvalidOperationException::missingRequestFactory($jsonPointer);
         }
 
         return new $factoryClass();

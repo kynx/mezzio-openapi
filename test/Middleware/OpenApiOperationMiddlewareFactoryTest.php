@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace KynxTest\Mezzio\OpenApi\Middleware;
 
 use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddlewareFactory;
-use Kynx\Mezzio\OpenApi\Operation\OperationFactoryResolverInterface;
-use KynxTest\Mezzio\OpenApi\Operation\Asset\MockOperationFactory;
+use Kynx\Mezzio\OpenApi\Operation\RequestFactoryResolverInterface;
+use KynxTest\Mezzio\OpenApi\Operation\Asset\MockRequestFactory;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;
@@ -14,6 +14,8 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
+ * @uses \Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddleware
+ *
  * @covers \Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddlewareFactory
  */
 final class OpenApiOperationMiddlewareFactoryTest extends TestCase
@@ -25,14 +27,14 @@ final class OpenApiOperationMiddlewareFactoryTest extends TestCase
         $handler->method('handle')
             ->willReturn($expected);
 
-        $factory  = new MockOperationFactory();
-        $resolver = $this->createMock(OperationFactoryResolverInterface::class);
+        $factory  = new MockRequestFactory();
+        $resolver = $this->createMock(RequestFactoryResolverInterface::class);
         $resolver->method('getFactory')
             ->willReturn($factory);
 
         $container = $this->createMock(ContainerInterface::class);
         $container->method('get')
-            ->with(OperationFactoryResolverInterface::class)
+            ->with(RequestFactoryResolverInterface::class)
             ->willReturn($resolver);
 
         $factory    = new OpenApiOperationMiddlewareFactory();

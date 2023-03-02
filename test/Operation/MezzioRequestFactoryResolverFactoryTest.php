@@ -5,16 +5,18 @@ declare(strict_types=1);
 namespace KynxTest\Mezzio\OpenApi\Operation;
 
 use Kynx\Mezzio\OpenApi\ConfigProvider;
-use Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolverFactory;
-use KynxTest\Mezzio\OpenApi\Operation\Asset\MockOperationFactory;
+use Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory;
 use KynxTest\Mezzio\OpenApi\Middleware\MiddlewareTrait;
+use KynxTest\Mezzio\OpenApi\Operation\Asset\MockRequestFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 /**
- * @covers \Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolverFactory
+ * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver
+ *
+ * @covers \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory
  */
-final class MezzioOperationFactoryResolverFactoryTest extends TestCase
+final class MezzioRequestFactoryResolverFactoryTest extends TestCase
 {
     use MiddlewareTrait;
 
@@ -22,7 +24,7 @@ final class MezzioOperationFactoryResolverFactoryTest extends TestCase
     {
         $pointer   = '/paths/~1pet~1{petId}/get';
         $factories = [
-            $pointer => MockOperationFactory::class,
+            $pointer => MockRequestFactory::class,
         ];
         $container = $this->createMock(ContainerInterface::class);
         $container->method('get')
@@ -33,9 +35,9 @@ final class MezzioOperationFactoryResolverFactoryTest extends TestCase
                 ],
             ]);
 
-        $factory  = new MezzioOperationFactoryResolverFactory();
+        $factory  = new MezzioRequestFactoryResolverFactory();
         $instance = $factory($container);
         $actual   = $instance->getFactory($this->getOperationMiddlewareRequest($pointer));
-        self::assertInstanceOf(MockOperationFactory::class, $actual);
+        self::assertInstanceOf(MockRequestFactory::class, $actual);
     }
 }

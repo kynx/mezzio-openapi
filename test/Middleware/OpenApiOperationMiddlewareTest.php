@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace KynxTest\Mezzio\OpenApi\Middleware;
 
-use Kynx\Mezzio\OpenApi\Attribute\OpenApiOperation;
+use Kynx\Mezzio\OpenApi\Attribute\OpenApiRequest;
 use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddleware;
-use Kynx\Mezzio\OpenApi\Operation\OperationFactoryResolverInterface;
+use Kynx\Mezzio\OpenApi\Operation\RequestFactoryResolverInterface;
 use KynxTest\Mezzio\OpenApi\Operation\Asset\MockOperation;
-use KynxTest\Mezzio\OpenApi\Operation\Asset\MockOperationFactory;
+use KynxTest\Mezzio\OpenApi\Operation\Asset\MockRequestFactory;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;
@@ -23,14 +23,14 @@ final class OpenApiOperationMiddlewareTest extends TestCase
     public function testHandleAddsOpenApiOperationToRequest(): void
     {
         $handler  = $this->getHandler($handledRequest);
-        $resolver = $this->createStub(OperationFactoryResolverInterface::class);
+        $resolver = $this->createStub(RequestFactoryResolverInterface::class);
         $resolver->method('getFactory')
-            ->willReturn(new MockOperationFactory());
+            ->willReturn(new MockRequestFactory());
         $middleware = new OpenApiOperationMiddleware($resolver);
 
         $middleware->process(new ServerRequest(), $handler);
         self::assertInstanceOf(ServerRequestInterface::class, $handledRequest);
-        $actual = $handledRequest->getAttribute(OpenApiOperation::class);
+        $actual = $handledRequest->getAttribute(OpenApiRequest::class);
         self::assertInstanceOf(MockOperation::class, $actual);
     }
 
@@ -38,7 +38,7 @@ final class OpenApiOperationMiddlewareTest extends TestCase
     {
         $expected = new ServerRequest();
         $handler  = $this->getHandler($actual);
-        $resolver = $this->createStub(OperationFactoryResolverInterface::class);
+        $resolver = $this->createStub(RequestFactoryResolverInterface::class);
         $resolver->method('getFactory')
             ->willReturn(null);
         $middleware = new OpenApiOperationMiddleware($resolver);

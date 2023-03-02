@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace KynxTest\Mezzio\OpenApi\Operation;
 
-use Kynx\Mezzio\OpenApi\Attribute\OpenApiOperationFactory;
+use Kynx\Mezzio\OpenApi\Attribute\OpenApiRequestFactory;
 use Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException;
-use Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolver;
-use KynxTest\Mezzio\OpenApi\Operation\Asset\MockOperationFactory;
+use Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver;
 use KynxTest\Mezzio\OpenApi\Middleware\MiddlewareTrait;
+use KynxTest\Mezzio\OpenApi\Operation\Asset\MockRequestFactory;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Uri;
 use Mezzio\Router\Route;
@@ -17,20 +17,22 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Server\MiddlewareInterface;
 
 /**
- * @covers \Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolver
+ * @uses \Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException
+ *
+ * @covers \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver
  */
-final class MezzioOperationFactoryResolverTest extends TestCase
+final class MezzioRequestFactoryResolverTest extends TestCase
 {
     use MiddlewareTrait;
 
-    private MezzioOperationFactoryResolver $resolver;
+    private MezzioRequestFactoryResolver $resolver;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->resolver = new MezzioOperationFactoryResolver([
-            '/paths/~1pet~1{petId}/get' => MockOperationFactory::class,
+        $this->resolver = new MezzioRequestFactoryResolver([
+            '/paths/~1pet~1{petId}/get' => MockRequestFactory::class,
         ]);
     }
 
@@ -53,10 +55,10 @@ final class MezzioOperationFactoryResolverTest extends TestCase
     public function testGetFactoryMissingOperationFactoryThrowsException(): void
     {
         $pointer    = '/missing/factory';
-        $expected   = "No operation factory configured for '$pointer'";
+        $expected   = "No request factory configured for '$pointer'";
         $middleware = $this->createStub(MiddlewareInterface::class);
         $route      = new Route('/missing/factory', $middleware, ['POST'], 'pet.post');
-        $route->setOptions([OpenApiOperationFactory::class => new OpenApiOperationFactory($pointer)]);
+        $route->setOptions([OpenApiRequestFactory::class => $pointer]);
 
         $routeResult = RouteResult::fromRoute($route);
         $request     = (new ServerRequest())->withUri(new Uri("https://example.com/missing/factory"))
@@ -73,6 +75,6 @@ final class MezzioOperationFactoryResolverTest extends TestCase
         $request = $this->getOperationMiddlewareRequest($pointer);
 
         $actual = $this->resolver->getFactory($request);
-        self::assertInstanceOf(MockOperationFactory::class, $actual);
+        self::assertInstanceOf(MockRequestFactory::class, $actual);
     }
 }

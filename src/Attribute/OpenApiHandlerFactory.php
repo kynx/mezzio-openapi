@@ -7,11 +7,11 @@ namespace Kynx\Mezzio\OpenApi\Attribute;
 use Attribute;
 
 /**
- * Associates a model class with an OpenApi schema
+ * Associates a handler factory with an OpenApi schema
  *
  * @psalm-immutable
  */
 #[Attribute(Attribute::TARGET_CLASS)]
-final class OpenApiModel extends AbstractJsonPointerAttribute
+final class OpenApiHandlerFactory extends AbstractJsonPointerAttribute
 {
 }

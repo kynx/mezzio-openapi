@@ -12,14 +12,6 @@ use Attribute;
  * @psalm-immutable
  */
 #[Attribute(Attribute::TARGET_CLASS)]
-final class OpenApiHandler
+final class OpenApiHandler extends AbstractJsonPointerAttribute
 {
-    public function __construct(private readonly string $jsonPointer)
-    {
-    }
-
-    public function getJsonPointer(): string
-    {
-        return $this->jsonPointer;
-    }
 }

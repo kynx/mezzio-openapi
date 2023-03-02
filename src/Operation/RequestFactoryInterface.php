@@ -6,7 +6,7 @@ namespace Kynx\Mezzio\OpenApi\Operation;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-interface OperationFactoryInterface
+interface RequestFactoryInterface
 {
     public function getOperation(ServerRequestInterface $request): object;
 }

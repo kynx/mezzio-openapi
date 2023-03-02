@@ -6,8 +6,10 @@ namespace Kynx\Mezzio\OpenApi;
 
 use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddleware;
 use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddlewareFactory;
-use Kynx\Mezzio\OpenApi\Operation\MezzioOperationFactoryResolverFactory;
-use Kynx\Mezzio\OpenApi\Operation\OperationFactoryResolverInterface;
+use Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory;
+use Kynx\Mezzio\OpenApi\Operation\RequestFactoryResolverInterface;
+use Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializerFactory;
+use Kynx\Mezzio\OpenApi\Serializer\SerializerInterface;
 
 final class ConfigProvider
 {
@@ -31,8 +33,9 @@ final class ConfigProvider
     {
         return [
             'factories' => [
-                OpenApiOperationMiddleware::class        => OpenApiOperationMiddlewareFactory::class,
-                OperationFactoryResolverInterface::class => MezzioOperationFactoryResolverFactory::class,
+                OpenApiOperationMiddleware::class      => OpenApiOperationMiddlewareFactory::class,
+                RequestFactoryResolverInterface::class => MezzioRequestFactoryResolverFactory::class,
+                SerializerInterface::class             => DelegatingSerializerFactory::class,
             ],
         ];
     }

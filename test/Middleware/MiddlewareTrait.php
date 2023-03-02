@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace KynxTest\Mezzio\OpenApi\Middleware;
 
-use Kynx\Mezzio\OpenApi\Attribute\OpenApiOperationFactory;
+use Kynx\Mezzio\OpenApi\Attribute\OpenApiRequestFactory;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Uri;
 use Mezzio\Router\Route;
@@ -20,7 +20,7 @@ trait MiddlewareTrait
     {
         $middleware = $this->createStub(MiddlewareInterface::class);
         $route      = new Route('/paths/pet/{petId}/get', $middleware, ['GET'], 'pet.get');
-        $route->setOptions([OpenApiOperationFactory::class => new OpenApiOperationFactory($pointer)]);
+        $route->setOptions([OpenApiRequestFactory::class => $pointer]);
 
         $routeResult = RouteResult::fromRoute($route);
         return (new ServerRequest())->withUri(new Uri("https://example.com/pet/123"))

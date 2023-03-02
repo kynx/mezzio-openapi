@@ -13,6 +13,15 @@ use Psr\Container\ContainerInterface;
 use function array_keys;
 
 /**
+ * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver
+ * @uses \Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddleware
+ * @uses \Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddlewareFactory
+ * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver
+ * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory
+ * @uses \Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializer
+ * @uses \Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializerFactory
+ * @uses \Kynx\Mezzio\OpenApi\Serializer\JsonSerializer
+ *
  * @covers \Kynx\Mezzio\OpenApi\ConfigProvider
  */
 final class ConfigProviderTest extends TestCase
