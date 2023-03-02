@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 use function array_keys;
+use function sys_get_temp_dir;
 
 /**
  * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver
@@ -18,6 +19,9 @@ use function array_keys;
  * @uses \Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddlewareFactory
  * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver
  * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory
+ * @uses \Kynx\Mezzio\OpenApi\Schema\FileCache
+ * @uses \Kynx\Mezzio\OpenApi\Schema\FileCacheFactory
+ * @uses \Kynx\Mezzio\OpenApi\Schema\OpenApiFactory
  * @uses \Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializer
  * @uses \Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializerFactory
  * @uses \Kynx\Mezzio\OpenApi\Serializer\JsonSerializer
@@ -33,6 +37,14 @@ final class ConfigProviderTest extends TestCase
         parent::setUp();
 
         $config                             = (new ConfigProvider())();
+        $config[ConfigProvider::CONFIG_KEY] = [
+            ConfigProvider::DOCUMENT_KEY => __DIR__ . '/Schema/Asset/openapi.json',
+            ConfigProvider::CACHE_KEY    => [
+                'enabled' => false,
+                'path'    => sys_get_temp_dir() . '/openapi-cache.php',
+            ],
+        ];
+
         $dependencies                       = $config['dependencies'];
         $dependencies['services']['config'] = $config;
 

@@ -1,0 +1,4 @@
+openapi: "3.0.2"
+info:
+  title: YAML API
+  version: 1.1.1
