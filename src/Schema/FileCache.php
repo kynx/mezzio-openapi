@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Kynx\Mezzio\OpenApi\Schema;
 
 use cebe\openapi\spec\OpenApi;
-
 use Webimpress\SafeWriter\Exception\ExceptionInterface;
 use Webimpress\SafeWriter\FileWriter;
 
+use function date;
 use function file_exists;
 use function serialize;
+use function sprintf;
 use function str_replace;
 use function unlink;
 

@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace Kynx\Mezzio\OpenApi\Operation;
 
-use Kynx\Mezzio\OpenApi\Attribute\OpenApiRequestFactory;
 use Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException;
-use Mezzio\Router\Route;
-use Mezzio\Router\RouteResult;
+use Kynx\Mezzio\OpenApi\RouteOptionsUtil;
 use Psr\Http\Message\ServerRequestInterface;
-
-use function assert;
 
 final class MezzioRequestFactoryResolver implements RequestFactoryResolverInterface
 {
@@ -23,14 +19,7 @@ final class MezzioRequestFactoryResolver implements RequestFactoryResolverInterf
 
     public function getFactory(ServerRequestInterface $request): RequestFactoryInterface|null
     {
-        $routeResult = $request->getAttribute(RouteResult::class);
-        assert($routeResult instanceof RouteResult);
-        $matchedRoute = $routeResult->getMatchedRoute();
-        assert($matchedRoute instanceof Route);
-
-        /** @var array{OpenApiRequestFactory::class?: string} $routeOptions */
-        $routeOptions = $matchedRoute->getOptions();
-        $jsonPointer  = $routeOptions[OpenApiRequestFactory::class] ?? null;
+        $jsonPointer = RouteOptionsUtil::getJsonPointer($request);
         if ($jsonPointer === null) {
             throw InvalidOperationException::missingPointer($request->getUri()->getPath());
         }

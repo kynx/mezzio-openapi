@@ -8,12 +8,16 @@ use cebe\openapi\spec\OpenApi;
 use Kynx\Mezzio\OpenApi\Schema\FileCache;
 use PHPUnit\Framework\TestCase;
 
+use function copy;
+
 /**
  * @covers \Kynx\Mezzio\OpenApi\Schema\FileCache
  */
 final class FileCacheTest extends TestCase
 {
     use FileCacheTrait;
+
+    private FileCache $cache;
 
     protected function setUp(): void
     {
@@ -54,7 +58,7 @@ final class FileCacheTest extends TestCase
 
     public function testSetUnwritableIgnoresException(): void
     {
-        $file = __DIR__ . '/nonexistentdirectory/cache';
+        $file  = __DIR__ . '/nonexistentdirectory/cache';
         $cache = new FileCache($file);
         $cache->set($this->getOpenApi());
         self::assertFileDoesNotExist($file);

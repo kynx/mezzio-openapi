@@ -6,19 +6,20 @@ namespace KynxTest\Mezzio\OpenApi\Operation;
 
 use Kynx\Mezzio\OpenApi\ConfigProvider;
 use Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory;
-use KynxTest\Mezzio\OpenApi\Middleware\MiddlewareTrait;
+use KynxTest\Mezzio\OpenApi\MezzioRequestTrait;
 use KynxTest\Mezzio\OpenApi\Operation\Asset\MockRequestFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 /**
  * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver
+ * @uses \Kynx\Mezzio\OpenApi\RouteOptionsUtil
  *
  * @covers \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory
  */
 final class MezzioRequestFactoryResolverFactoryTest extends TestCase
 {
-    use MiddlewareTrait;
+    use MezzioRequestTrait;
 
     public function testInvokeReturnsConfiguredResolver(): void
     {
@@ -37,7 +38,7 @@ final class MezzioRequestFactoryResolverFactoryTest extends TestCase
 
         $factory  = new MezzioRequestFactoryResolverFactory();
         $instance = $factory($container);
-        $actual   = $instance->getFactory($this->getOperationMiddlewareRequest($pointer));
+        $actual   = $instance->getFactory($this->getOperationRequest($pointer));
         self::assertInstanceOf(MockRequestFactory::class, $actual);
     }
 }

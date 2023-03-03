@@ -11,10 +11,10 @@ use Negotiation\BaseAccept;
 use Negotiation\Exception\Exception as NegotiationException;
 use Negotiation\Negotiator;
 
-use function explode;
 use function fopen;
 use function fwrite;
 use function rewind;
+use function strtok;
 
 abstract class AbstractResponseFactory
 {
@@ -40,10 +40,9 @@ abstract class AbstractResponseFactory
         string $accept,
         array $priorities
     ): string {
-        /** @psalm-suppress InvalidCatch Exception does not extend Throwable :| */
+        /** @psalm-suppress InvalidCatch Exception interface does not extend Throwable :| */
         try {
-            [$try]    = explode(';', $accept);
-            $mimeType = $negotiator->getBest($try, $priorities);
+            $mimeType = $negotiator->getBest(strtok($accept, ';'), $priorities);
         } catch (NegotiationException $exception) {
             throw InvalidAcceptException::fromNegotiationException($exception);
         }

@@ -18,7 +18,7 @@ use Kynx\Mezzio\OpenApi\Serializer\SerializerInterface;
 final class ConfigProvider
 {
     public const CONFIG_KEY              = 'mezzio-openapi';
-    public const DOCUMENT_KEY            = 'openapi-document';
+    public const SCHEMA_KEY              = 'openapi-schema';
     public const VALIDATE_KEY            = 'validate';
     public const CACHE_KEY               = 'cache';
     public const OPERATION_FACTORIES_KEY = 'operation-factories';
@@ -37,8 +37,11 @@ final class ConfigProvider
     public function getConfig(): array
     {
         return [
-            'validate'      => true,
-            self::CACHE_KEY => [
+            self::VALIDATE_KEY => [
+                'schema'   => true,
+                'response' => true,
+            ],
+            self::CACHE_KEY    => [
                 'enabled' => true,
                 'path'    => './data/cache/openapi-cache.php',
             ],

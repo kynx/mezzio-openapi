@@ -35,9 +35,9 @@ trait FileCacheTrait
             'openapi' => '3.0.2',
             'info'    => [
                 'title'   => 'Cached API',
-                'version' => '1.1.1'
+                'version' => '1.1.1',
             ],
-            'paths' => [],
+            'paths'   => [],
         ]);
     }
 }

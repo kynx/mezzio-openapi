@@ -18,13 +18,15 @@ use Symfony\Component\Yaml\Exception\ParseException;
 use function in_array;
 use function pathinfo;
 
+use const PATHINFO_EXTENSION;
+
 final class OpenApiFactory
 {
     public function __invoke(ContainerInterface $container): OpenApi
     {
         $config   = (array) ($container->get('config')[ConfigProvider::CONFIG_KEY] ?? []);
-        $document = (string) ($config[ConfigProvider::DOCUMENT_KEY] ?? '');
-        $validate = (bool) ($config[ConfigProvider::VALIDATE_KEY] ?? true);
+        $document = (string) ($config[ConfigProvider::SCHEMA_KEY] ?? '');
+        $validate = (bool) ($config[ConfigProvider::VALIDATE_KEY]['schema'] ?? true);
         $useCache = (bool) ($config[ConfigProvider::CACHE_KEY]['enabled'] ?? false);
 
         if ($useCache) {
@@ -46,7 +48,8 @@ final class OpenApiFactory
             } else {
                 throw new InvalidArgumentException("Unrecognised schema extension '$extension'");
             }
-        } catch (InvalidJsonPointerSyntaxException
+        } catch (
+            InvalidJsonPointerSyntaxException
             | IOException
             | ParseException
             | TypeErrorException

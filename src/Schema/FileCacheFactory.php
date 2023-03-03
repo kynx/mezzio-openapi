@@ -7,6 +7,8 @@ namespace Kynx\Mezzio\OpenApi\Schema;
 use Kynx\Mezzio\OpenApi\ConfigProvider;
 use Psr\Container\ContainerInterface;
 
+use function assert;
+
 final class FileCacheFactory
 {
     public function __invoke(ContainerInterface $container): FileCache

@@ -22,7 +22,8 @@ use Psr\Container\ContainerInterface;
  */
 final class OpenApiFactoryTest extends TestCase
 {
-    private CacheInterface&MockObject $cache;
+    /** @var CacheInterface&MockObject */
+    private CacheInterface $cache;
 
     protected function setUp(): void
     {
@@ -39,6 +40,7 @@ final class OpenApiFactoryTest extends TestCase
 
         self::assertSame('JSON API', $instance->info->title);
     }
+
     public function testGetOpenApiReadsYaml(): void
     {
         $container = $this->getContainer(false, 'openapi.yaml');
@@ -89,6 +91,7 @@ final class OpenApiFactoryTest extends TestCase
 
     public function testGetCachedOpenApiReturnsCached(): void
     {
+        /** @var OpenApi $expected */
         $expected = require __DIR__ . '/Asset/cached.php';
         $this->cache->method('get')
             ->willReturn($expected);
@@ -119,21 +122,26 @@ final class OpenApiFactoryTest extends TestCase
 
     private function getContainer(
         bool $cacheEnabled,
-        $document = 'openapi.json',
+        string $document = 'openapi.json',
         bool $validate = true
     ): ContainerInterface {
         $container = $this->createStub(ContainerInterface::class);
         $container->method('get')
             ->willReturnMap([
-                ['config', [
-                    ConfigProvider::CONFIG_KEY => [
-                        ConfigProvider::VALIDATE_KEY => $validate,
-                        ConfigProvider::CACHE_KEY    => [
-                            'enabled' => $cacheEnabled,
+                [
+                    'config',
+                    [
+                        ConfigProvider::CONFIG_KEY => [
+                            ConfigProvider::VALIDATE_KEY => [
+                                'schema' => $validate,
+                            ],
+                            ConfigProvider::CACHE_KEY    => [
+                                'enabled' => $cacheEnabled,
+                            ],
+                            ConfigProvider::SCHEMA_KEY   => __DIR__ . '/Asset/' . $document,
                         ],
-                        ConfigProvider::DOCUMENT_KEY => __DIR__ . '/Asset/' . $document,
                     ],
-                ]],
+                ],
                 [CacheInterface::class, $this->cache],
             ]);
 

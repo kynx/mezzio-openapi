@@ -23,13 +23,16 @@ final class FileCacheFactoryTest extends TestCase
         $container = $this->createStub(ContainerInterface::class);
         $container->method('get')
             ->willReturnMap([
-                ['config', [
-                    ConfigProvider::CONFIG_KEY => [
-                        ConfigProvider::CACHE_KEY => [
-                            'path' => $this->getCacheFileName(),
+                [
+                    'config',
+                    [
+                        ConfigProvider::CONFIG_KEY => [
+                            ConfigProvider::CACHE_KEY => [
+                                'path' => $this->getCacheFileName(),
+                            ],
                         ],
                     ],
-                ]],
+                ],
             ]);
 
         $factory  = new FileCacheFactory();

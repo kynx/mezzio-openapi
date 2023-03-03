@@ -38,8 +38,8 @@ final class ConfigProviderTest extends TestCase
 
         $config                             = (new ConfigProvider())();
         $config[ConfigProvider::CONFIG_KEY] = [
-            ConfigProvider::DOCUMENT_KEY => __DIR__ . '/Schema/Asset/openapi.json',
-            ConfigProvider::CACHE_KEY    => [
+            ConfigProvider::SCHEMA_KEY => __DIR__ . '/Schema/Asset/openapi.json',
+            ConfigProvider::CACHE_KEY  => [
                 'enabled' => false,
                 'path'    => sys_get_temp_dir() . '/openapi-cache.php',
             ],
