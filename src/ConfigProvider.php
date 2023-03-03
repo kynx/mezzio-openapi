@@ -7,6 +7,8 @@ namespace Kynx\Mezzio\OpenApi;
 use cebe\openapi\spec\OpenApi;
 use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddleware;
 use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddlewareFactory;
+use Kynx\Mezzio\OpenApi\Middleware\ValidationMiddleware;
+use Kynx\Mezzio\OpenApi\Middleware\ValidationMiddlewareFactory;
 use Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory;
 use Kynx\Mezzio\OpenApi\Operation\RequestFactoryResolverInterface;
 use Kynx\Mezzio\OpenApi\Schema\CacheInterface;
@@ -42,7 +44,7 @@ final class ConfigProvider
                 'response' => true,
             ],
             self::CACHE_KEY    => [
-                'enabled' => true,
+                'enabled' => false,
                 'path'    => './data/cache/openapi-cache.php',
             ],
         ];
@@ -60,6 +62,7 @@ final class ConfigProvider
                 OpenApiOperationMiddleware::class      => OpenApiOperationMiddlewareFactory::class,
                 RequestFactoryResolverInterface::class => MezzioRequestFactoryResolverFactory::class,
                 SerializerInterface::class             => DelegatingSerializerFactory::class,
+                ValidationMiddleware::class            => ValidationMiddlewareFactory::class,
             ],
         ];
     }
