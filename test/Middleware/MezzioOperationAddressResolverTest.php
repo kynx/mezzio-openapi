@@ -13,6 +13,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @uses \Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException
  * @uses \Kynx\Mezzio\OpenApi\RouteOptionsUtil
+ *
  * @covers \Kynx\Mezzio\OpenApi\Middleware\MezzioOperationAddressResolver
  */
 final class MezzioOperationAddressResolverTest extends TestCase

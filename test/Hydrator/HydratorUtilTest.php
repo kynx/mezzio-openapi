@@ -445,7 +445,7 @@ final class HydratorUtilTest extends TestCase
             'object' => $object,
         ];
 
-        $actual = HydratorUtil::extractProperties($data, [], [stdClass::class => GoodHydrator::class]);
+        $actual = HydratorUtil::extractProperties($data, [], ['object' => GoodHydrator::class]);
         self::assertSame($expected, $actual);
     }
 
@@ -467,7 +467,7 @@ final class HydratorUtilTest extends TestCase
             'object' => [$first, $second],
         ];
 
-        $actual = HydratorUtil::extractProperties($data, ['object'], [stdClass::class => GoodHydrator::class]);
+        $actual = HydratorUtil::extractProperties($data, ['object'], ['object' => GoodHydrator::class]);
         self::assertSame($expected, $actual);
     }
 }

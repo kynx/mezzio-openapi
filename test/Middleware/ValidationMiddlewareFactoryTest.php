@@ -16,7 +16,6 @@ use Psr\Container\ContainerInterface;
 
 /**
  * @uses \Kynx\Mezzio\OpenApi\Middleware\Exception\ResponseValidationException
- *
  * @uses \Kynx\Mezzio\OpenApi\Middleware\MezzioOperationAddressResolver
  * @uses \Kynx\Mezzio\OpenApi\Middleware\ValidationMiddleware
  * @uses \Kynx\Mezzio\OpenApi\RouteOptionsUtil

@@ -308,7 +308,7 @@ final class HydratorUtil
     }
 
     /**
-     * @param array<class-string, class-string<HydratorInterface>> $extractors
+     * @param array<string, class-string<HydratorInterface>> $extractors
      */
     public static function extractProperties(array $data, array $arrayProperties, array $extractors): array
     {
@@ -350,8 +350,11 @@ final class HydratorUtil
     /**
      * @param class-string<HydratorInterface> $extractor
      */
-    private static function extractProperty(string $name, object $value, string $extractor): bool|array|float|int|string|null
-    {
+    private static function extractProperty(
+        string $name,
+        object $value,
+        string $extractor
+    ): bool|array|float|int|string|null {
         try {
             return $extractor::extract($value);
         } catch (TypeError $exception) {
