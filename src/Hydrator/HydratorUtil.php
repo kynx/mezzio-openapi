@@ -312,37 +312,50 @@ final class HydratorUtil
      */
     public static function extractProperties(array $data, array $arrayProperties, array $extractors): array
     {
-        foreach ($data as $property => $value) {
-            if (in_array($property, $arrayProperties, true)) {
-                assert(is_array($value));
-                $data[$property] = self::extractArray($value, $extractors);
-            } else {
-                /** @psalm-suppress MixedAssignment */
-                $data[$property] = self::extractProperty($value, $extractors);
+        foreach ($extractors as $property => $extractor) {
+            if (! isset($data[$property])) {
+                continue;
             }
+
+            /** @var array|object $propertyData */
+            $propertyData = $data[$property];
+
+            if (in_array($property, $arrayProperties, true)) {
+                assert(is_array($propertyData));
+                $hydrated = self::extractArray($property, $propertyData, $extractor);
+            } else {
+                assert(is_object($propertyData));
+                $hydrated = self::extractProperty($property, $propertyData, $extractor);
+            }
+
+            $data[$property] = $hydrated;
         }
 
         return $data;
     }
 
     /**
-     * @param array<class-string, class-string<HydratorInterface>> $extractors
+     * @param class-string<HydratorInterface> $extractor
      */
-    private static function extractArray(array $data, array $extractors): array
+    private static function extractArray(string $name, array $data, string $extractor): array
     {
-        return array_map(fn (object $object): mixed => self::extractProperty($object, $extractors), $data);
+        return array_map(
+            function (object $value) use ($name, $extractor): bool|array|float|int|string|null {
+                return self::extractProperty($name, $value, $extractor);
+            },
+            $data
+        );
     }
 
     /**
-     * @param array<class-string, class-string<HydratorInterface>> $extractors
+     * @param class-string<HydratorInterface> $extractor
      */
-    private static function extractProperty(mixed $value, array $extractors): mixed
+    private static function extractProperty(string $name, object $value, string $extractor): bool|array|float|int|string|null
     {
-        if (! is_object($value)) {
-            return $value;
+        try {
+            return $extractor::extract($value);
+        } catch (TypeError $exception) {
+            throw HydrationException::fromThrowable($name, $exception);
         }
-
-        assert(isset($extractors[$value::class]));
-        return $extractors[$value::class]::extract($value);
     }
 }
