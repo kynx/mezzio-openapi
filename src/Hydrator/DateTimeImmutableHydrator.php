@@ -15,8 +15,15 @@ use function is_string;
 
 final class DateTimeImmutableHydrator implements HydratorInterface
 {
+    /**
+     * @param array<array-key, string>|string $data
+     */
     public static function hydrate(mixed $data): DateTimeImmutable
     {
+        if (is_array($data)) {
+            $data = current($data);
+        }
+
         assert(is_string($data));
         try {
             return new DateTimeImmutable($data);

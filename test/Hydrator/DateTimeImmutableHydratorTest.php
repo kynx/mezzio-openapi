@@ -27,6 +27,14 @@ final class DateTimeImmutableHydratorTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
+    public function testHydrateHydratesArray(): void
+    {
+        $data     = '2023-01-12T16:01:35.000000Z';
+        $expected = new DateTimeImmutable($data);
+        $actual   = DateTimeImmutableHydrator::hydrate([$data]);
+        self::assertEquals($expected, $actual);
+    }
+
     public function testHydrateInvalidValueThrowsException(): void
     {
         self::expectException(HydrationException::class);
