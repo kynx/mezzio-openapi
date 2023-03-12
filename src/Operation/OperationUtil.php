@@ -37,14 +37,14 @@ final class OperationUtil
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, array|string|null>
      */
     public static function getQueryVariables(
         UriTemplate $uriTemplate,
         string $template,
         ServerRequestInterface $request
     ): array {
-        /** @var array<string, string> $variables */
+        /** @var array<string, array|string|null> $variables */
         $variables = $uriTemplate->extract($template, '?' . $request->getUri()->getQuery()) ?? [];
         return $variables;
     }
@@ -98,11 +98,22 @@ final class OperationUtil
     }
 
     /**
-     * @param list<string> $list
+     * Converts unexploded object to an associative array.
+     *
+     * For example: `R,100,G,200,B,150` -> `["R" => 100, "G" => 200, "B" => 150]`. The OpenAPI spec is crazy for
+     * permitting this kind of stuff. Stay sane: use the exploded form instead.
+     *
+     * @see https://spec.openapis.org/oas/v3.1.0#style-examples
+     *
+     * @param array<int, string>|null $list
      * @return array<string, string|null>
      */
-    public static function listToAssociativeArray(array $list): array
+    public static function listToAssociativeArray(array|null $list): array
     {
+        if ($list === null) {
+            return [];
+        }
+
         $assoc = [];
         for ($i = 0; $i < count($list); $i = $i + 2) {
             $assoc[$list[$i]] = $list[$i + 1] ?? null;

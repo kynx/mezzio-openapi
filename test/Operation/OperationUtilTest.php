@@ -156,6 +156,14 @@ final class OperationUtilTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    public function testListToAssociativeArrayHandlesNull(): void
+    {
+        $expected = [];
+
+        $actual = OperationUtil::listToAssociativeArray(null);
+        self::assertSame($expected, $actual);
+    }
+
     public function testListToAssociativeArrayHandlesMissingValue(): void
     {
         $expected = ['role' => 'admin', 'firstName' => null];
