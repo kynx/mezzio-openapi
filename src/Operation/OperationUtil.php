@@ -98,6 +98,34 @@ final class OperationUtil
     }
 
     /**
+     * @param array<array-key, string|null>|string|null $value
+     */
+    public static function castToScalar(array|string|null $value, string $type): bool|float|int|string|null
+    {
+        if (is_array($value)) {
+            $value = current($value);
+        }
+        if ($value === null) {
+            return null;
+        }
+
+        return match ($type) {
+            'bool'  => (bool) $value,
+            'float' => (float) $value,
+            'int'   => (int) $value,
+            default => (string) $value
+        };
+    }
+
+    public static function castToScalarArray(array $values, string $type): array
+    {
+        return array_map(
+            fn (string|null $value): bool|float|int|string|null => self::castToScalar($value, $type),
+            $values
+        );
+    }
+
+    /**
      * Converts unexploded object to an associative array.
      *
      * For example: `R,100,G,200,B,150` -> `["R" => 100, "G" => 200, "B" => 150]`. The OpenAPI spec is crazy for

@@ -148,6 +148,44 @@ final class OperationUtilTest extends TestCase
         ];
     }
 
+    /**
+     * @dataProvider castToScalarProvider
+     */
+    public function testCastToScalar(mixed $value, string $type, mixed $expected): void
+    {
+        $actual = OperationUtil::castToScalar($value, $type);
+        self::assertSame($expected, $actual);
+    }
+
+    public static function castToScalarProvider(): array
+    {
+        return [
+            'array' => [['100'], 'int', 100],
+            'null'  => [null, 'int', null],
+            'bool_one' => ['1', 'bool', true],
+            'bool_zero' => ['0', 'bool', false],
+            'bool_empty' => ['', 'bool', false],
+            'float' => ['12.34', 'float', 12.34],
+            'int' => ['123', 'int', 123],
+            'string' => ['123', 'string', '123'],
+        ];
+    }
+
+    public function testCastArrayToScalarCastsArray(): void
+    {
+        $expected = [
+            'foo' => 123,
+            'bar' => null,
+        ];
+        $values = [
+            'foo' => '123',
+            'bar' => null,
+        ];
+
+        $actual = OperationUtil::castToScalarArray($values, 'int');
+        self::assertSame($expected, $actual);
+    }
+
     public function testListToAssociativeArrayReturnsArray(): void
     {
         $expected = ['role' => 'admin', 'firstName' => 'Alex'];
