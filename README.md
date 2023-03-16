@@ -59,6 +59,7 @@ Stubs for each method.
 * https://cloud.google.com/endpoints/docs/openapi/deploy-endpoints-config#validating_openapijson_syntax
 * https://github.com/GoogleCloudPlatform/endpoints-samples/blob/master/k8s/openapi.yaml
 * https://github.com/lcobucci/jwt/issues/32
+* https://github.com/steverhoades/oauth2-openid-connect-client
 
 [delegator factory]: https://docs.mezzio.dev/mezzio/v3/cookbook/autowiring-routes-and-pipelines/#custom-delegator-factories
 [openapi-psr7-validator]: https://github.com/thephpleague/openapi-psr7-validator

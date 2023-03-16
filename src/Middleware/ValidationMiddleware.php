@@ -6,6 +6,7 @@ namespace Kynx\Mezzio\OpenApi\Middleware;
 
 use Kynx\Mezzio\OpenApi\Middleware\Exception\RequestValidationException;
 use Kynx\Mezzio\OpenApi\Middleware\Exception\ResponseValidationException;
+use League\OpenAPIValidation\PSR7\Exception\NoResponseCode;
 use League\OpenAPIValidation\PSR7\Exception\ValidationFailed;
 use League\OpenAPIValidation\PSR7\ResponseValidator;
 use League\OpenAPIValidation\PSR7\RoutedServerRequestValidator;
@@ -40,6 +41,11 @@ final class ValidationMiddleware implements MiddlewareInterface
         try {
             $this->responseValidator->validate($operationAddress, $response);
         } catch (ValidationFailed $exception) {
+            if ($exception instanceof NoResponseCode) {
+                // Ignore errors caused by responses with code that doesn't appear in spec (ie 403 returned by guard)
+                // @fixme Can this be done by removing this particular validator?
+                return $response;
+            }
             throw ResponseValidationException::validationFailed($exception);
         }
 
