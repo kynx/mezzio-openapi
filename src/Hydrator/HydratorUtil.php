@@ -170,9 +170,9 @@ final class HydratorUtil
             }
 
             $propertyData = $data[$property];
-            assert(is_array($propertyData));
 
             if (in_array($property, $arrayProperties, true)) {
+                assert(is_array($propertyData));
                 $hydrated = self::hydrateArray($property, $propertyData, $hydrator);
             } else {
                 $hydrated = self::hydrateProperty($property, $propertyData, $hydrator);
@@ -198,7 +198,7 @@ final class HydratorUtil
     /**
      * @param class-string<HydratorInterface> $hydrator
      */
-    private static function hydrateProperty(string $name, array $data, string $hydrator): object
+    private static function hydrateProperty(string $name, mixed $data, string $hydrator): object
     {
         try {
             return $hydrator::hydrate($data);

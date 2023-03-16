@@ -10,6 +10,7 @@ use Kynx\Mezzio\OpenApi\Middleware\Exception\ResponseValidationException;
 use Kynx\Mezzio\OpenApi\Middleware\ValidationMiddlewareFactory;
 use KynxTest\Mezzio\OpenApi\MezzioRequestTrait;
 use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Uri;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -35,7 +36,7 @@ final class ValidationMiddlewareFactoryTest extends TestCase
             ->withUri(new Uri('https://example.com/pets/123'));
 
         self::expectException(ResponseValidationException::class);
-        $instance->process($request, new MockHandler());
+        $instance->process($request, new MockHandler(new JsonResponse(['name' => 123], 200)));
     }
 
     public function testInvokeReturnsNoValidateResponseInstance(): void
