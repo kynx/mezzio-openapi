@@ -11,7 +11,7 @@ interface SerializerInterface
     public function supports(string $mimeType): bool;
 
     /**
-     * @param class-string<HydratorInterface>|HydratorInterface|null $hydrator
+     * @param array|bool|float|int|string|null $hydrator
      */
-    public function serialize(string $mimeType, HydratorInterface|string|null $hydrator, mixed $object): string;
+    public function serialize(string $mimeType, array|bool|float|int|string|null $data): string;
 }

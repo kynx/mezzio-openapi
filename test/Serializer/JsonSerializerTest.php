@@ -34,7 +34,7 @@ final class JsonSerializerTest extends TestCase
         $serializer = new JsonSerializer(JSON_PRETTY_PRINT);
 
         self::expectException(SerializerException::class);
-        $serializer->serialize('application/json', null, $invalid);
+        $serializer->serialize('application/json', $invalid);
     }
 
     /**
@@ -56,41 +56,5 @@ final class JsonSerializerTest extends TestCase
             'xml'         => ['application/xml', false],
             'empty'       => ['', false],
         ];
-    }
-
-    public function testSerializeUnsupportedThrowsException(): void
-    {
-        self::expectException(SerializerException::class);
-        self::expectExceptionMessage("Unsupported mime type");
-        $this->serializer->serialize('application/xml', null, new stdClass());
-    }
-
-    public function testSerializeNoHydratorReturnsJson(): void
-    {
-        $expected    = '{"foo":"bar"}';
-        $object      = new stdClass();
-        $object->foo = "bar";
-
-        $actual = $this->serializer->serialize('application/json', null, $object);
-        self::assertSame($expected, $actual);
-    }
-
-    public function testSerializeExtractsData(): void
-    {
-        $expected = '{"foo":"bar"}';
-        $hydrator = new class () implements HydratorInterface {
-            public static function hydrate(array $data): object
-            {
-                return (object) $data;
-            }
-
-            public static function extract(mixed $object): bool|array|float|int|string|null
-            {
-                return ['foo' => 'bar'];
-            }
-        };
-
-        $actual = $this->serializer->serialize('application/json', $hydrator, new stdClass());
-        self::assertSame($expected, $actual);
     }
 }

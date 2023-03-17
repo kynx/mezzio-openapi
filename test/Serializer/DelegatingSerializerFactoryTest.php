@@ -26,7 +26,7 @@ final class DelegatingSerializerFactoryTest extends TestCase
         $factory     = new DelegatingSerializerFactory();
 
         $instance = $factory($container);
-        $actual   = $instance->serialize('application/json', null, $object);
+        $actual   = $instance->serialize('application/json', null);
         self::assertSame($expected, $actual);
     }
 }

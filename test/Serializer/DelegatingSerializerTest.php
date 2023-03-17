@@ -48,7 +48,7 @@ final class DelegatingSerializerTest extends TestCase
         $serializer = new DelegatingSerializer();
         $this->expectException(SerializerException::class);
         $this->expectExceptionMessage("Unsupported mime type");
-        $serializer->serialize('application/json', null, new stdClass());
+        $serializer->serialize('application/json', null);
     }
 
     public function testSerializeReturnsSerialized(): void
@@ -61,7 +61,7 @@ final class DelegatingSerializerTest extends TestCase
             ->willReturn($expected);
         $serializer = new DelegatingSerializer($delegate);
 
-        $actual = $serializer->serialize('text/upper', null, new stdClass());
+        $actual = $serializer->serialize('text/upper', null);
         self::assertSame($expected, $actual);
     }
 }

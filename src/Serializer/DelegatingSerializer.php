@@ -21,14 +21,14 @@ final class DelegatingSerializer implements SerializerInterface
         return $this->getDelegate($mimeType) !== null;
     }
 
-    public function serialize(string $mimeType, HydratorInterface|string|null $hydrator, mixed $object): string
+    public function serialize(string $mimeType, array|bool|float|int|string|null $data): string
     {
         $delegate = $this->getDelegate($mimeType);
         if ($delegate === null) {
             throw SerializerException::unsupportedMimeType($mimeType);
         }
 
-        return $delegate->serialize($mimeType, $hydrator, $object);
+        return $delegate->serialize($mimeType, $data);
     }
 
     private function getDelegate(string $mimeType): SerializerInterface|null

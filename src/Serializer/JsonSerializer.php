@@ -49,19 +49,16 @@ final class JsonSerializer implements SerializerInterface
     }
 
     /**
-     * @param class-string<HydratorInterface>|HydratorInterface|null $hydrator
+     * @param array|bool|float|int|class-string<HydratorInterface>|null $data
      */
-    public function serialize(string $mimeType, HydratorInterface|string|null $hydrator, mixed $object): string
+    public function serialize(string $mimeType, array|bool|float|int|string|null $data): string
     {
         if (! $this->supports($mimeType)) {
             throw SerializerException::unsupportedMimeType($mimeType);
         }
 
         try {
-            if ($hydrator === null) {
-                return json_encode($object, $this->jsonFlags);
-            }
-            return json_encode($hydrator::extract($object), $this->jsonFlags);
+            return json_encode($data, $this->jsonFlags);
         } catch (JsonException $exception) {
             throw SerializerException::fromThrowable($exception);
         }
