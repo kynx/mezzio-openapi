@@ -267,6 +267,33 @@ final class HydratorUtil
     }
 
     /**
+     * @param array<string, class-string<HydratorInterface>|HydratorInterface> $extractors
+     */
+    public static function extractObjectArray(array $data, array $extractors): array
+    {
+        return array_map(fn (object $object): array => $extractors[$object::class]::extract($object), $data);
+    }
+
+    /**
+     * @param array<string, class-string<HydratorInterface>|HydratorInterface> $extractors
+     */
+    public static function extractMixedArray(mixed $data, array $extractors): mixed
+    {
+        if (is_array($data)) {
+            return array_map(
+                fn (mixed $object): mixed => is_object($object)
+                    ? $extractors[$object::class]::extract($object)
+                    : $object,
+                $data
+            );
+        }
+        if (is_object($data)) {
+            return $extractors[$data::class]::extract($data);
+        }
+        return $data;
+    }
+
+    /**
      * @param array<string, string> $methods
      * @return array<string, mixed>
      */

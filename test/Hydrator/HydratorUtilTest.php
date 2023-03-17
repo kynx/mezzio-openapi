@@ -387,6 +387,49 @@ final class HydratorUtilTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    public function testExtractObjectArrayExtracts(): void
+    {
+        $expected = [
+            [
+                'foo' => 'bar',
+            ]
+        ];
+        $object = new stdClass();
+        $object->foo = 'bar';
+        $data = [$object];
+        $extractors = [
+            stdClass::class => GoodHydrator::class,
+        ];
+
+        $actual = HydratorUtil::extractObjectArray($data, $extractors);
+        self::assertSame($expected, $actual);
+    }
+
+    /**
+     * @dataProvider extractMixedArrayProvider
+     */
+    public function testExtractMixedArrayExtracts(mixed $data, mixed $expected): void
+    {
+        $extractors = [
+            stdClass::class => GoodHydrator::class,
+        ];
+        /** @psalm-suppress MixedAssignment */
+        $actual = HydratorUtil::extractMixedArray($data, $extractors);
+        self::assertSame($expected, $actual);
+    }
+
+    public static function extractMixedArrayProvider(): array
+    {
+        $object = new stdClass();
+        $object->foo = 'bar';
+        return [
+            'object_array' => [[$object], [['foo' => 'bar']]],
+            'string_array' => [['a' => 'b'], ['a' => 'b']],
+            'object'       => [$object, ['foo' => 'bar']],
+            'scalar'       => ['foo', 'foo'],
+        ];
+    }
+
     public function testExtractDataExtractsMethods(): void
     {
         $expected = [
