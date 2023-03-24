@@ -8,7 +8,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Rize\UriTemplate;
 
 use function count;
+use function is_array;
 use function str_replace;
+use function urldecode;
 
 /**
  * @link https://spec.openapis.org/oas/v3.1.0#style-examples
@@ -33,7 +35,7 @@ final class OperationUtil
     ): array {
         /** @var array<string, string> $variables */
         $variables = $uriTemplate->extract($template, $request->getUri()->getPath()) ?? [];
-        return $variables;
+        return self::urlDecode($variables);
     }
 
     /**
@@ -46,7 +48,7 @@ final class OperationUtil
     ): array {
         /** @var array<string, array|string|null> $variables */
         $variables = $uriTemplate->extract($template, '?' . $request->getUri()->getQuery()) ?? [];
-        return $variables;
+        return self::urlDecode($variables);
     }
 
     /**
@@ -69,7 +71,7 @@ final class OperationUtil
             $variables[$name] = $extracted[$name] ?? null;
         }
 
-        return $variables;
+        return self::urlDecode($variables);
     }
 
     private static function normalizeCookieName(string $name): string
@@ -148,5 +150,24 @@ final class OperationUtil
         }
 
         return $assoc;
+    }
+
+    /**
+     * @template TKey
+     * @template TValue
+     * @param array<TKey, TValue> $variables
+     * @return array<TKey, TValue>
+     */
+    private static function urlDecode(array $variables): array
+    {
+        foreach ($variables as $i => $variable) {
+            if (is_array($variable)) {
+                $variables[$i] = self::urlDecode($variable);
+            } elseif ($variable !== null) {
+                $variables[$i] = urldecode($variable);
+            }
+        }
+
+        return $variables;
     }
 }

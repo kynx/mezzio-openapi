@@ -61,6 +61,7 @@ final class OperationUtilTest extends TestCase
             'matrix_explode_primitive' => ['/users/;id=3', '/users/{;id*}', ['id' => ['3']]],
             'matrix_explode_array'     => ['/users/;id=3;id=4', '/users/{;id*}', ['id' => ['3', '4']]],
             'matrix_explode_object'    => ['/users/;a=b;c=d', '/users/{;id*}', ['id' => ['a' => 'b', 'c' => 'd']]],
+            'url_encoded'              => ['/users/A%20B', '/users/{id}', ['id' => 'A B']],
         ];
     }
 
@@ -92,6 +93,8 @@ final class OperationUtilTest extends TestCase
             'pipe_array' => ['?id=3&id=4', '{?id*}', ['id' => ['3', '4']]],
             // 'pipe_explode_array'     => ['?id=3|4|5', '{?id|}', ['id' => ['3', '4', '5']]],
             'deep_explode_object' => ['?id[a]=b&id[c]=d', '{?id%}', ['id' => ['a' => 'b', 'c' => 'd']]],
+            'url_encoded'         => ['?id=A+B', '{?id*}', ['id' => ['A B']]],
+            'deep_url_encoded'    => ['?id[a]=b%20c', '{?id%}', ['id' => ['a' => 'b c']]],
         ];
     }
 
@@ -145,6 +148,7 @@ final class OperationUtilTest extends TestCase
             'form_empty'             => [[], ['id' => '{id}'], ['id' => null]],
             'space_in_name'          => [['a_b' => '5'], ['a b' => '{a b}'], ['a b' => '5']],
             'dot_in_name'            => [['a_b' => '5'], ['a.b' => '{a.b}'], ['a.b' => '5']],
+            'url_encoded'            => [['id' => 'a+b'], ['id' => '{id*}'], ['id' => ['a b']]],
         ];
     }
 

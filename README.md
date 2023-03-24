@@ -50,9 +50,9 @@ Handler per operation with `get` / `patch` / `post` / etc methods. Uses `operati
 to construct a default name (path + method?) if no `operationId` given.
 
 
-## Services
+## TODO
 
-Stubs for each method. 
+[ ] Sanitize hydration errors - ie `Cannot hydrate My\Api\Operation\Services\Search\Get\QueryParams: My\Api\Operation\Services\Search\Get\QueryParams::__construct(): Argument #2 ($search) must be of type ?string, array given, called in /Users/matt/www/lifecycle-calculator/src/Api/Operation/Services/Search/Get/QueryParamsHydrator.php on line 37`
 
 ## Resources
 
