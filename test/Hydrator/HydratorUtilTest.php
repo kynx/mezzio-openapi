@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace KynxTest\Mezzio\OpenApi\Hydrator;
 
+use DateTimeImmutable;
+use Kynx\Mezzio\OpenApi\Hydrator\DateTimeImmutableHydrator;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\InvalidDiscriminatorException;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\MissingDiscriminatorException;
@@ -16,6 +18,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
+ * @uses \Kynx\Mezzio\OpenApi\Hydrator\DateTimeImmutableHydrator
  * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException
  * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\InvalidDiscriminatorException
  * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\MissingDiscriminatorException
@@ -295,6 +298,36 @@ final class HydratorUtilTest extends TestCase
         ];
 
         $actual = HydratorUtil::hydrateProperties($data, ['foo'], $propertyMap);
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testHydrateArrayHydratesObject(): void
+    {
+        $expected = [
+            (object) ['a' => 1],
+            (object) ['b' => 2],
+        ];
+        $data = [
+            ['a' => 1],
+            ['b' => 2],
+        ];
+
+        $actual = HydratorUtil::hydrateArray('foo', $data, GoodHydrator::class);
+        self::assertEquals($expected, $actual);
+    }
+
+    public function testHydrateArrayHydratesStringObject(): void
+    {
+        $expected = [
+            new DateTimeImmutable('2024-04-04 10:49:53.000000'),
+            new DateTimeImmutable('2024-04-04 10:50:53.000000'),
+        ];
+        $data = [
+            '2024-04-04 10:49:53.000000',
+            '2024-04-04 10:50:53.000000',
+        ];
+
+        $actual = HydratorUtil::hydrateArray('foo', $data, DateTimeImmutableHydrator::class);
         self::assertEquals($expected, $actual);
     }
 

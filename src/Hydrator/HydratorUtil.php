@@ -190,7 +190,7 @@ final class HydratorUtil
     public static function hydrateArray(string $name, array $data, string $hydrator): array
     {
         return array_map(
-            fn (array $value): object => self::hydrateProperty($name, $value, $hydrator),
+            fn (mixed $value): object => self::hydrateProperty($name, $value, $hydrator),
             $data
         );
     }
