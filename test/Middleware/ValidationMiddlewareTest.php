@@ -63,7 +63,7 @@ final class ValidationMiddlewareTest extends TestCase
     public function testProcessValidatesResponse(): void
     {
         $response = new JsonResponse(['name' => 123], 200);
-        $request = $this->getRequest('/pets/123');
+        $request  = $this->getRequest('/pets/123');
 
         self::expectException(ResponseValidationException::class);
         $this->middleware->process($request, new MockHandler($response));

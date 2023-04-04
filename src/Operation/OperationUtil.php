@@ -7,7 +7,9 @@ namespace Kynx\Mezzio\OpenApi\Operation;
 use Psr\Http\Message\ServerRequestInterface;
 use Rize\UriTemplate;
 
+use function array_map;
 use function count;
+use function current;
 use function is_array;
 use function str_replace;
 use function urldecode;

@@ -164,14 +164,14 @@ final class OperationUtilTest extends TestCase
     public static function castToScalarProvider(): array
     {
         return [
-            'array' => [['100'], 'int', 100],
-            'null'  => [null, 'int', null],
-            'bool_one' => ['1', 'bool', true],
-            'bool_zero' => ['0', 'bool', false],
+            'array'      => [['100'], 'int', 100],
+            'null'       => [null, 'int', null],
+            'bool_one'   => ['1', 'bool', true],
+            'bool_zero'  => ['0', 'bool', false],
             'bool_empty' => ['', 'bool', false],
-            'float' => ['12.34', 'float', 12.34],
-            'int' => ['123', 'int', 123],
-            'string' => ['123', 'string', '123'],
+            'float'      => ['12.34', 'float', 12.34],
+            'int'        => ['123', 'int', 123],
+            'string'     => ['123', 'string', '123'],
         ];
     }
 
@@ -181,7 +181,7 @@ final class OperationUtilTest extends TestCase
             'foo' => 123,
             'bar' => null,
         ];
-        $values = [
+        $values   = [
             'foo' => '123',
             'bar' => null,
         ];

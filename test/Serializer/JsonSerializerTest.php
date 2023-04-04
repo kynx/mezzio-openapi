@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace KynxTest\Mezzio\OpenApi\Serializer;
 
-use Kynx\Mezzio\OpenApi\Hydrator\HydratorInterface;
 use Kynx\Mezzio\OpenApi\Serializer\JsonSerializer;
 use Kynx\Mezzio\OpenApi\Serializer\SerializerException;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 use const JSON_PRETTY_PRINT;
 

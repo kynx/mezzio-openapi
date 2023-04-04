@@ -307,7 +307,7 @@ final class HydratorUtilTest extends TestCase
             (object) ['a' => 1],
             (object) ['b' => 2],
         ];
-        $data = [
+        $data     = [
             ['a' => 1],
             ['b' => 2],
         ];
@@ -322,7 +322,7 @@ final class HydratorUtilTest extends TestCase
             new DateTimeImmutable('2024-04-04 10:49:53.000000'),
             new DateTimeImmutable('2024-04-04 10:50:53.000000'),
         ];
-        $data = [
+        $data     = [
             '2024-04-04 10:49:53.000000',
             '2024-04-04 10:50:53.000000',
         ];
@@ -422,15 +422,15 @@ final class HydratorUtilTest extends TestCase
 
     public function testExtractObjectArrayExtracts(): void
     {
-        $expected = [
+        $expected    = [
             [
                 'foo' => 'bar',
-            ]
+            ],
         ];
-        $object = new stdClass();
+        $object      = new stdClass();
         $object->foo = 'bar';
-        $data = [$object];
-        $extractors = [
+        $data        = [$object];
+        $extractors  = [
             stdClass::class => GoodHydrator::class,
         ];
 
@@ -453,7 +453,7 @@ final class HydratorUtilTest extends TestCase
 
     public static function extractMixedArrayProvider(): array
     {
-        $object = new stdClass();
+        $object      = new stdClass();
         $object->foo = 'bar';
         return [
             'object_array' => [[$object], [['foo' => 'bar']]],

@@ -8,7 +8,6 @@ use Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializer;
 use Kynx\Mezzio\OpenApi\Serializer\SerializerException;
 use Kynx\Mezzio\OpenApi\Serializer\SerializerInterface;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 /**
  * @uses \Kynx\Mezzio\OpenApi\Serializer\SerializerException

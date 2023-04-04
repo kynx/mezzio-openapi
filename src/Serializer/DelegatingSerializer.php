@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Kynx\Mezzio\OpenApi\Serializer;
 
-use Kynx\Mezzio\OpenApi\Hydrator\HydratorInterface;
-
 final class DelegatingSerializer implements SerializerInterface
 {
     /** @var array<array-key, SerializerInterface> */
