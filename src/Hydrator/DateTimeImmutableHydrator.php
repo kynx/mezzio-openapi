@@ -39,6 +39,6 @@ final class DateTimeImmutableHydrator implements HydratorInterface
         if (! $object instanceof DateTimeImmutable) {
             throw ExtractionException::invalidObject($object, DateTimeImmutable::class);
         }
-        return $object->format(DateTimeInterface::RFC3339_EXTENDED);
+        return $object->format(DateTimeInterface::RFC3339);
     }
 }

@@ -44,7 +44,7 @@ final class DateTimeImmutableHydratorTest extends TestCase
 
     public function testExtractReturnsDateString(): void
     {
-        $expected = '2023-02-23T20:51:37.000+00:00';
+        $expected = '2023-02-23T20:51:37+00:00';
         $dateTime = new DateTimeImmutable($expected);
         $actual   = DateTimeImmutableHydrator::extract($dateTime);
         self::assertSame($expected, $actual);
