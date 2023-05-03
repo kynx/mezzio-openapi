@@ -7,7 +7,7 @@ namespace Kynx\Mezzio\OpenApi\Operation;
 use Psr\Http\Message\ServerRequestInterface;
 use Rize\UriTemplate;
 
-use function array_map;
+use function array_key_exists;
 use function count;
 use function current;
 use function is_array;
@@ -101,10 +101,20 @@ final class OperationUtil
         return $variables;
     }
 
+    public static function castToScalar(array $data, string $key, string $type): array
+    {
+        if (! array_key_exists($key, $data)) {
+            return $data;
+        }
+
+        $data[$key] = self::castToScalarValue($data[$key], $type);
+        return $data;
+    }
+
     /**
      * @param array<array-key, string|null>|string|null $value
      */
-    public static function castToScalar(array|string|null $value, string $type): bool|float|int|string|null
+    private static function castToScalarValue(array|string|null $value, string $type): bool|float|int|string|null
     {
         if (is_array($value)) {
             $value = current($value);
@@ -121,12 +131,17 @@ final class OperationUtil
         };
     }
 
-    public static function castToScalarArray(array $values, string $type): array
+    public static function castToScalarArray(array $data, string $key, string $type): array
     {
-        return array_map(
-            fn (string|null $value): bool|float|int|string|null => self::castToScalar($value, $type),
-            $values
+        if (! (array_key_exists($key, $data) && is_array($data[$key]))) {
+            return $data;
+        }
+        $data[$key] = array_map(
+            fn (string|null $value): bool|float|int|string|null => self::castToScalarValue($value, $type),
+            $data[$key]
         );
+
+        return $data;
     }
 
     /**
@@ -136,22 +151,25 @@ final class OperationUtil
      * permitting this kind of stuff. Stay sane: use the exploded form instead.
      *
      * @see https://spec.openapis.org/oas/v3.1.0#style-examples
-     *
-     * @param array<int, string>|null $list
-     * @return array<string, string|null>
      */
-    public static function listToAssociativeArray(array|null $list): array
+    public static function listToAssociativeArray(array $data, string $key): array
     {
-        if ($list === null) {
+        if (! array_key_exists($key, $data)) {
+            return $data;
+        }
+        if ($data[$key] === null) {
             return [];
         }
 
         $assoc = [];
-        for ($i = 0; $i < count($list); $i = $i + 2) {
-            $assoc[$list[$i]] = $list[$i + 1] ?? null;
+        for ($i = 0; $i < count($data[$key]); $i = $i + 2) {
+            /** @var string $k */
+            $k = $data[$key][$i];
+            $assoc[$k] = $data[$key][$i + 1] ?? null;
         }
 
-        return $assoc;
+        $data[$key] = $assoc;
+        return $data;
     }
 
     /**

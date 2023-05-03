@@ -157,8 +157,9 @@ final class OperationUtilTest extends TestCase
      */
     public function testCastToScalar(mixed $value, string $type, mixed $expected): void
     {
-        $actual = OperationUtil::castToScalar($value, $type);
-        self::assertSame($expected, $actual);
+        $data = ['test' => $value];
+        $actual = OperationUtil::castToScalar($data, 'test', $type);
+        self::assertSame($expected, $actual['test']);
     }
 
     public static function castToScalarProvider(): array
@@ -175,26 +176,46 @@ final class OperationUtilTest extends TestCase
         ];
     }
 
+    public function testCastToScalarIgnoresMissingKey(): void
+    {
+        $expected = ['foo' => 'a'];
+        $actual = OperationUtil::castToScalar($expected, 'bar', 'int');
+        self::assertSame($expected, $actual);
+    }
+
     public function testCastArrayToScalarCastsArray(): void
     {
         $expected = [
-            'foo' => 123,
-            'bar' => null,
+            'test' => [
+                'foo' => 123,
+                'bar' => null,
+            ],
         ];
         $values   = [
-            'foo' => '123',
-            'bar' => null,
+            'test' => [
+                'foo' => '123',
+                'bar' => null,
+            ],
         ];
 
-        $actual = OperationUtil::castToScalarArray($values, 'int');
+        $actual = OperationUtil::castToScalarArray($values, 'test', 'int');
+        self::assertSame($expected, $actual);
+    }
+
+    public function testCastArrayToScalarIgnoresMissingKey(): void
+    {
+        $expected = ['foo' => 'a'];
+        $actual   = OperationUtil::castToScalarArray($expected, 'bar', 'int');
         self::assertSame($expected, $actual);
     }
 
     public function testListToAssociativeArrayReturnsArray(): void
     {
-        $expected = ['role' => 'admin', 'firstName' => 'Alex'];
+        $expected = [
+            'test' => ['role' => 'admin', 'firstName' => 'Alex'],
+        ];
 
-        $actual = OperationUtil::listToAssociativeArray(['role', 'admin', 'firstName', 'Alex']);
+        $actual = OperationUtil::listToAssociativeArray(['test' => ['role', 'admin', 'firstName', 'Alex']], 'test');
         self::assertSame($expected, $actual);
     }
 
@@ -202,15 +223,17 @@ final class OperationUtilTest extends TestCase
     {
         $expected = [];
 
-        $actual = OperationUtil::listToAssociativeArray(null);
+        $actual = OperationUtil::listToAssociativeArray(['test' => null], 'test');
         self::assertSame($expected, $actual);
     }
 
     public function testListToAssociativeArrayHandlesMissingValue(): void
     {
-        $expected = ['role' => 'admin', 'firstName' => null];
+        $expected = [
+            'test' => ['role' => 'admin', 'firstName' => null],
+        ];
 
-        $actual = OperationUtil::listToAssociativeArray(['role', 'admin', 'firstName']);
+        $actual = OperationUtil::listToAssociativeArray(['test' => ['role', 'admin', 'firstName']], 'test');
         self::assertSame($expected, $actual);
     }
 
