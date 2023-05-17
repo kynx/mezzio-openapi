@@ -27,7 +27,7 @@ final class MezzioRequestFactoryResolver implements RequestFactoryResolverInterf
         /** @var class-string<RequestFactoryInterface>|null $factoryClass */
         $factoryClass = $this->operationFactories[$jsonPointer] ?? null;
         if ($factoryClass === null) {
-            throw InvalidOperationException::missingRequestFactory($jsonPointer);
+            return null;
         }
 
         return new $factoryClass();

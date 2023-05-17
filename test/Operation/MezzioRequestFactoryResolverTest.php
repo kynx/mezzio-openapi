@@ -42,15 +42,13 @@ final class MezzioRequestFactoryResolverTest extends TestCase
         $this->resolver->getFactory($request);
     }
 
-    public function testGetFactoryMissingOperationFactoryThrowsException(): void
+    public function testGetFactoryMissingOperationFactoryReturnsNull(): void
     {
         $pointer  = '/missing/factory';
-        $expected = "No request factory configured for '$pointer'";
         $request  = $this->getOperationRequest($pointer);
 
-        self::expectException(InvalidOperationException::class);
-        self::expectExceptionMessage($expected);
-        $this->resolver->getFactory($request);
+        $actual = $this->resolver->getFactory($request);
+        self::assertNull($actual);
     }
 
     public function testGetFactoryReturnsOperationFactory(): void
