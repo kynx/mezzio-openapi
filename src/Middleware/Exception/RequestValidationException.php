@@ -6,8 +6,11 @@ namespace Kynx\Mezzio\OpenApi\Middleware\Exception;
 
 use DomainException;
 use Kynx\Mezzio\OpenApi\ClientExceptionInterface;
+use League\OpenAPIValidation\PSR7\Exception\Validation\InvalidBody;
 use League\OpenAPIValidation\PSR7\Exception\Validation\RequiredParameterMissing;
 use League\OpenAPIValidation\PSR7\Exception\ValidationFailed;
+use League\OpenAPIValidation\Schema\Exception\KeywordMismatch;
+use League\OpenAPIValidation\Schema\Exception\SchemaMismatch;
 use Throwable;
 
 use function sprintf;
@@ -22,9 +25,17 @@ final class RequestValidationException extends DomainException implements Client
     public static function validationFailed(ValidationFailed $exception): self
     {
         if ($exception instanceof RequiredParameterMissing) {
-            return new self(sprintf("Parameter '%s' is required", $exception->name()), 400, $exception);
+            return self::fromRequiredParameterMissing($exception);
+        }
+        if ($exception->getPrevious() instanceof SchemaMismatch) {
+            return new self($exception->getPrevious()->getMessage(), 400, $exception);
         }
 
         return new self($exception->getMessage(), 400, $exception);
+    }
+
+    private static function fromRequiredParameterMissing(RequiredParameterMissing $exception): self
+    {
+        return new self(sprintf("Parameter '%s' is required", $exception->name()), 400, $exception);
     }
 }
