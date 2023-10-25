@@ -35,6 +35,13 @@ final class DateTimeImmutableHydratorTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
+    public function testHydrateNonStringThrowsException(): void
+    {
+        self::expectException(HydrationException::class);
+        self::expectExceptionMessage("Error hydrating " . DateTimeImmutable::class);
+        DateTimeImmutableHydrator::hydrate(1.23);
+    }
+
     public function testHydrateInvalidValueThrowsException(): void
     {
         self::expectException(HydrationException::class);

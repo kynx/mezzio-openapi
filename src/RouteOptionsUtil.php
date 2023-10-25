@@ -13,6 +13,9 @@ use function assert;
 
 final class RouteOptionsUtil
 {
+    /**
+     * @psalm-suppress UnusedConstructor
+     */
     private function __construct()
     {
     }

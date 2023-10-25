@@ -16,7 +16,15 @@ use Kynx\Mezzio\OpenApi\Schema\FileCacheFactory;
 use Kynx\Mezzio\OpenApi\Schema\OpenApiFactory;
 use Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializerFactory;
 use Kynx\Mezzio\OpenApi\Serializer\SerializerInterface;
+use Laminas\ServiceManager\ServiceManager;
 
+/**
+ * @psalm-type MezzioOpenApiConfig = array{
+ *     validate: array{schema: bool, response: bool},
+ *     cache: array{enabled: bool, path: string}
+ * }
+ * @psalm-type DependencyConfig = array{factories: array<class-string, class-string>}
+ */
 final class ConfigProvider
 {
     public const CONFIG_KEY              = 'mezzio-openapi';
@@ -26,7 +34,7 @@ final class ConfigProvider
     public const OPERATION_FACTORIES_KEY = 'operation-factories';
 
     /**
-     * @return array{dependencies: array{factories: array<class-string, class-string>}}
+     * @return array{mezzio-openapi: MezzioOpenApiConfig, dependencies: DependencyConfig}
      */
     public function __invoke(): array
     {
@@ -36,6 +44,9 @@ final class ConfigProvider
         ];
     }
 
+    /**
+     * @return MezzioOpenApiConfig
+     */
     public function getConfig(): array
     {
         return [
@@ -51,7 +62,7 @@ final class ConfigProvider
     }
 
     /**
-     * @return array{factories: array<class-string, class-string>}
+     * @return DependencyConfig
      */
     private function getDependencies(): array
     {

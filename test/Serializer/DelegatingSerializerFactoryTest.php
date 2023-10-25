@@ -22,10 +22,9 @@ final class DelegatingSerializerFactoryTest extends TestCase
         $expected    = '{"foo":"bar"}';
         $object      = new stdClass();
         $object->foo = 'bar';
-        $container   = $this->createStub(ContainerInterface::class);
         $factory     = new DelegatingSerializerFactory();
 
-        $instance = $factory($container);
+        $instance = $factory();
         $actual   = $instance->serialize('application/json', ['foo' => 'bar']);
         self::assertSame($expected, $actual);
     }

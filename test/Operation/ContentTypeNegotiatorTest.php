@@ -57,6 +57,9 @@ final class ContentTypeNegotiatorTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    /**
+     * @return array<string, array{0: string, 1: string}>
+     */
     public static function matchedContentTypeProvider(): array
     {
         return [

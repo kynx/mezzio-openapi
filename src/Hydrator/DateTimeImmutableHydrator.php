@@ -15,18 +15,22 @@ use function current;
 use function is_array;
 use function is_string;
 
+/**
+ * @see https://datatracker.ietf.org/doc/html/rfc3339#section-5.6
+ */
 final class DateTimeImmutableHydrator implements HydratorInterface
 {
-    /**
-     * @param array<array-key, string>|string $data
-     */
     public static function hydrate(mixed $data): DateTimeImmutable
     {
         if (is_array($data)) {
+            /** @var mixed $data */
             $data = current($data);
         }
 
-        assert(is_string($data));
+        if (! is_string($data)) {
+            throw HydrationException::fromValue(DateTimeImmutable::class, $data);
+        }
+        /** @todo Catch DateMalformedStringException once PHP8.2 support is dropped */
         try {
             return new DateTimeImmutable($data);
         } catch (Exception $exception) {

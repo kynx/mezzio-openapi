@@ -48,7 +48,7 @@ final class ConfigProviderTest extends TestCase
         $dependencies                       = $config['dependencies'];
         $dependencies['services']['config'] = $config;
 
-        /** @psalm-suppress InvalidArgument */
+        /** @psalm-suppress ArgumentTypeCoercion */
         $this->container = new ServiceManager($dependencies);
     }
 
@@ -62,6 +62,9 @@ final class ConfigProviderTest extends TestCase
         self::assertInstanceOf($dependency, $actual);
     }
 
+    /**
+     * @return Generator<class-string, array{0: class-string}>
+     */
     public static function dependencyProvider(): Generator
     {
         $config = (new ConfigProvider())();

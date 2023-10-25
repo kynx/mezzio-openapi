@@ -25,7 +25,7 @@ use function is_string;
 use function method_exists;
 
 /**
- * @psalm-type DiscriminatorValue = array{key: string, map: array<string, class-string<HydratorInterface>}
+ * @psalm-type DiscriminatorValue = array{key: string, map: array<string, class-string<HydratorInterface>>}
  * @psalm-type DiscriminatorValueArray = array<string, DiscriminatorValue>
  * @psalm-type DiscriminatorList = array<class-string<HydratorInterface>, list<string>>
  * @psalm-type DiscriminatorListArray = array<string, DiscriminatorList>
@@ -35,6 +35,7 @@ final class HydratorUtil
 {
     /**
      * @codeCoverageIgnore
+     * @psalm-suppress UnusedConstructor
      */
     private function __construct()
     {
@@ -383,9 +384,11 @@ final class HydratorUtil
         string $extractor
     ): bool|array|float|int|string|null {
         try {
-            return $extractor::extract($value);
+            /** @var bool|array|float|int|string|null $extracted */
+            $extracted = $extractor::extract($value);
         } catch (TypeError $exception) {
             throw HydrationException::fromThrowable($name, $exception);
         }
+        return $extracted;
     }
 }

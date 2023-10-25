@@ -9,7 +9,7 @@ use TypeError;
 
 final class TypeErrorHydrator implements HydratorInterface
 {
-    public static function hydrate(array $data): object
+    public static function hydrate(mixed $data): object
     {
         throw new TypeError('Bad type');
     }
