@@ -8,9 +8,11 @@ use Psr\Http\Message\ServerRequestInterface;
 use Rize\UriTemplate;
 
 use function array_key_exists;
+use function array_map;
 use function count;
 use function current;
 use function is_array;
+use function is_string;
 use function str_replace;
 use function urldecode;
 
@@ -21,6 +23,7 @@ use function urldecode;
 final class OperationUtil
 {
     /**
+     * @psalm-suppress UnusedConstructor
      * @codeCoverageIgnore
      */
     private function __construct()
@@ -37,20 +40,24 @@ final class OperationUtil
     ): array {
         /** @var array<string, string> $variables */
         $variables = $uriTemplate->extract($template, $request->getUri()->getPath()) ?? [];
-        return self::urlDecode($variables);
+        /** @var array<string, string> $decoded */
+        $decoded = self::urlDecode($variables);
+        return $decoded;
     }
 
     /**
-     * @return array<string, array|string|null>
+     * @return array<string, array|string>
      */
     public static function getQueryVariables(
         UriTemplate $uriTemplate,
         string $template,
         ServerRequestInterface $request
     ): array {
-        /** @var array<string, array|string|null> $variables */
+        /** @var array<string, array<string, string|null>|string|null> $variables */
         $variables = $uriTemplate->extract($template, '?' . $request->getUri()->getQuery()) ?? [];
-        return self::urlDecode($variables);
+        /** @var array<string, array|string> $decoded */
+        $decoded = self::urlDecode($variables);
+        return $decoded;
     }
 
     /**
@@ -73,7 +80,9 @@ final class OperationUtil
             $variables[$name] = $extracted[$name] ?? null;
         }
 
-        return self::urlDecode($variables);
+        /** @var array<string, string> $decoded */
+        $decoded = self::urlDecode($variables);
+        return $decoded;
     }
 
     private static function normalizeCookieName(string $name): string
@@ -107,7 +116,9 @@ final class OperationUtil
             return $data;
         }
 
-        $data[$key] = self::castToScalarValue($data[$key], $type);
+        /** @var array<array-key, string|null>|string|null $value */
+        $value      = $data[$key];
+        $data[$key] = self::castToScalarValue($value, $type);
         return $data;
     }
 
@@ -157,15 +168,18 @@ final class OperationUtil
         if (! array_key_exists($key, $data)) {
             return $data;
         }
-        if ($data[$key] === null) {
+        $value = $data[$key];
+        if (! is_array($value)) {
             return [];
         }
 
         $assoc = [];
-        for ($i = 0; $i < count($data[$key]); $i = $i + 2) {
+        for ($i = 0; $i < count($value); $i += 2) {
             /** @var string $k */
-            $k = $data[$key][$i];
-            $assoc[$k] = $data[$key][$i + 1] ?? null;
+            $k = $value[$i];
+            /** @var scalar|null $v */
+            $v         = $value[$i + 1] ?? null;
+            $assoc[$k] = $v;
         }
 
         $data[$key] = $assoc;
@@ -173,17 +187,14 @@ final class OperationUtil
     }
 
     /**
-     * @template TKey
-     * @template TValue
-     * @param array<TKey, TValue> $variables
-     * @return array<TKey, TValue>
+     * @param array<string, array<string, string|null>|string|null> $variables
      */
     private static function urlDecode(array $variables): array
     {
         foreach ($variables as $i => $variable) {
             if (is_array($variable)) {
                 $variables[$i] = self::urlDecode($variable);
-            } elseif ($variable !== null) {
+            } elseif (is_string($variable)) {
                 $variables[$i] = urldecode($variable);
             }
         }

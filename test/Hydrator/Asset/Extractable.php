@@ -10,16 +10,25 @@ final class Extractable
     {
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public function getOne(): string
     {
         return $this->one;
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public function getTwo(): int
     {
         return $this->two;
     }
 
+    /**
+     * @psalm-suppress PossiblyUnusedMethod
+     */
     public function isThree(): bool
     {
         return $this->three;

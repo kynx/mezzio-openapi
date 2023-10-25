@@ -34,6 +34,9 @@ final class DelegatingSerializerTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    /**
+     * @return array<string, array{0: string, 1: bool}>
+     */
     public static function supportsProvider(): array
     {
         return [

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Kynx\Mezzio\OpenApi\Serializer;
 
 use JsonException;
-use Kynx\Mezzio\OpenApi\Hydrator\HydratorInterface;
 
 use function array_pop;
 use function explode;
@@ -36,6 +35,7 @@ final class JsonSerializer implements SerializerInterface
     public function supports(string $mimeType): bool
     {
         $parts = explode('/', $mimeType);
+
         if (isset($parts[1])) {
             // ie 'application/hal+json'
             $subParts = explode('+', $parts[1]);
@@ -44,13 +44,11 @@ final class JsonSerializer implements SerializerInterface
             $parts[1] = '*';
         }
 
-        return ($parts[0] === 'application' || $parts[0] === '*')
+        return isset($parts[0])
+            && ($parts[0] === 'application' || $parts[0] === '*')
             && ($parts[1] === 'json' || $parts[1] === '*');
     }
 
-    /**
-     * @param array|bool|float|int|class-string<HydratorInterface>|null $data
-     */
     public function serialize(string $mimeType, array|bool|float|int|string|null $data): string
     {
         if (! $this->supports($mimeType)) {

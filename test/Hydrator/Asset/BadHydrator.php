@@ -9,7 +9,7 @@ use stdClass;
 
 final class BadHydrator implements HydratorInterface
 {
-    public static function hydrate(array $data): object
+    public static function hydrate(mixed $data): object
     {
         return new stdClass();
     }

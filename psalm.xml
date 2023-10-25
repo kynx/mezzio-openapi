@@ -1,16 +1,19 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="1"
-    resolveFromConfigFile="true"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    errorLevel="1"
+    resolveFromConfigFile="true"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="true"
+
 >
     <projectFiles>
-        <directory name="src" />
-        <directory name="test" />
+        <directory name="src"/>
+        <directory name="test"/>
         <ignoreFiles>
-            <directory name="vendor" />
+            <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
 
@@ -20,9 +23,14 @@
                 <directory name="test"/>
             </errorLevel>
         </PropertyNotSetInConstructor>
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <directory name="src/Attribute"/>
+            </errorLevel>
+        </UnusedClass>
     </issueHandlers>
 
     <stubs>
-        <file name=".psr-container.php.stub" preloadClasses="true" />
+        <file name=".psr-container.php.stub" preloadClasses="true"/>
     </stubs>
-</psalm>
+<plugins><pluginClass class="Psalm\PhpUnitPlugin\Plugin"/></plugins></psalm>
