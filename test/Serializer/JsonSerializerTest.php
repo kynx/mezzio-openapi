@@ -37,15 +37,15 @@ final class JsonSerializerTest extends TestCase
 
     public function testConstructorSetsOverridesJsonFlags(): void
     {
-        $expected =<<<END_OF_EXPECTED
+        $expected   = <<<END_OF_EXPECTED
         {
             "a": "foo",
             "b": "bar"
         }
         END_OF_EXPECTED;
-        $data = ['a' => 'foo', 'b' => 'bar'];
+        $data       = ['a' => 'foo', 'b' => 'bar'];
         $serializer = new JsonSerializer(JSON_PRETTY_PRINT);
-        $actual = $serializer->serialize('application/json', $data);
+        $actual     = $serializer->serialize('application/json', $data);
         self::assertSame($expected, $actual);
     }
 

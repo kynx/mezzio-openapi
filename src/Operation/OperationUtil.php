@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Rize\UriTemplate;
 
 use function array_key_exists;
+use function array_map;
 use function count;
 use function current;
 use function is_array;
@@ -116,7 +117,7 @@ final class OperationUtil
         }
 
         /** @var array<array-key, string|null>|string|null $value */
-        $value = $data[$key];
+        $value      = $data[$key];
         $data[$key] = self::castToScalarValue($value, $type);
         return $data;
     }
@@ -173,11 +174,11 @@ final class OperationUtil
         }
 
         $assoc = [];
-        for ($i = 0; $i < count($value); $i = $i + 2) {
+        for ($i = 0; $i < count($value); $i += 2) {
             /** @var string $k */
             $k = $value[$i];
             /** @var scalar|null $v */
-            $v = $value[$i + 1] ?? null;
+            $v         = $value[$i + 1] ?? null;
             $assoc[$k] = $v;
         }
 

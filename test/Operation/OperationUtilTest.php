@@ -166,11 +166,10 @@ final class OperationUtilTest extends TestCase
      */
     public function testCastToScalar(mixed $value, string $type, mixed $expected): void
     {
-        $data = ['test' => $value];
+        $data   = ['test' => $value];
         $actual = OperationUtil::castToScalar($data, 'test', $type);
         self::assertSame($expected, $actual['test']);
     }
-
 
     /**
      * @return array<string, array{0: array|null|string, 1: string, 2: scalar|null}>
@@ -192,7 +191,7 @@ final class OperationUtilTest extends TestCase
     public function testCastToScalarIgnoresMissingKey(): void
     {
         $expected = ['foo' => 'a'];
-        $actual = OperationUtil::castToScalar($expected, 'bar', 'int');
+        $actual   = OperationUtil::castToScalar($expected, 'bar', 'int');
         self::assertSame($expected, $actual);
     }
 

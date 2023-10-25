@@ -16,7 +16,6 @@ use Kynx\Mezzio\OpenApi\Schema\FileCacheFactory;
 use Kynx\Mezzio\OpenApi\Schema\OpenApiFactory;
 use Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializerFactory;
 use Kynx\Mezzio\OpenApi\Serializer\SerializerInterface;
-use Laminas\ServiceManager\ServiceManager;
 
 /**
  * @psalm-type MezzioOpenApiConfig = array{

@@ -16,12 +16,14 @@ final class GoodHydrator implements HydratorInterface
         return (object) $data;
     }
 
+    /**
+     * @psalm-suppress MixedReturnTypeCoercion
+     */
     public static function extract(mixed $object): bool|array|float|int|string|null
     {
         if (is_object($object)) {
             return get_object_vars($object);
         }
-        /** @var bool|array|float|int|string|null $object */
         return $object;
     }
 }

@@ -6,7 +6,6 @@ namespace KynxTest\Mezzio\OpenApi\Serializer;
 
 use Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializerFactory;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 use stdClass;
 
 /**

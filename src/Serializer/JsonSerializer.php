@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Kynx\Mezzio\OpenApi\Serializer;
 
 use JsonException;
-use Kynx\Mezzio\OpenApi\Hydrator\HydratorInterface;
 
 use function array_pop;
 use function explode;

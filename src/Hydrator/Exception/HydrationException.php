@@ -28,7 +28,7 @@ final class HydrationException extends DomainException implements ClientExceptio
         return $this->target;
     }
 
-    public function getValue():  bool|int|float|string|null
+    public function getValue(): bool|int|float|string|null
     {
         return $this->value;
     }
@@ -41,7 +41,7 @@ final class HydrationException extends DomainException implements ClientExceptio
             $throwable->getMessage()
         ), $throwable);
     }
-    
+
     public static function fromValue(string $target, mixed $value): self
     {
         $value = is_scalar($value) ? $value : get_debug_type($value);
