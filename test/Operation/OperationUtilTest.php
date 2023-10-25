@@ -40,7 +40,7 @@ final class OperationUtilTest extends TestCase
      * Note that it is impossible to distinguish between array and object notation unless explode is used. Parsers
      * will need to account for this and use the schema type to determine how the returned array is represented.
      */
-    public function pathVariableProvider(): array
+    public static function pathVariableProvider(): array
     {
         return [
             'simple_primitive' => ['/users/3', '/users/{id}', ['id' => '3']],
@@ -79,7 +79,7 @@ final class OperationUtilTest extends TestCase
     /**
      * @fixme space_explode and pipe_explode will require custom handling, similar to `rize/url-template` '%' operator
      */
-    public function queryVariableProvider(): array
+    public static function queryVariableProvider(): array
     {
         return [
             'form_explode_primitive' => ['?id=5', '{?id*}', ['id' => ['5']]],
@@ -111,7 +111,7 @@ final class OperationUtilTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function headerVariableProvider(): array
+    public static function headerVariableProvider(): array
     {
         // phpcs:disable Generic.Files.LineLength.TooLong
         return [
@@ -138,7 +138,7 @@ final class OperationUtilTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function cookieVariableProvider(): array
+    public static function cookieVariableProvider(): array
     {
         return [
             'form_explode_primitive' => [['id' => '5'], ['id' => '{id*}'], ['id' => ['5']]],

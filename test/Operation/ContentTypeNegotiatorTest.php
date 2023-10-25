@@ -57,7 +57,7 @@ final class ContentTypeNegotiatorTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
-    public function matchedContentTypeProvider(): array
+    public static function matchedContentTypeProvider(): array
     {
         return [
             'application/geo+json'   => ['application/geo+json', 'application/geo+json'],

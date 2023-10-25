@@ -62,7 +62,7 @@ final class ConfigProviderTest extends TestCase
         self::assertInstanceOf($dependency, $actual);
     }
 
-    public function dependencyProvider(): Generator
+    public static function dependencyProvider(): Generator
     {
         $config = (new ConfigProvider())();
         foreach (array_keys($config['dependencies']['factories']) as $dependency) {
