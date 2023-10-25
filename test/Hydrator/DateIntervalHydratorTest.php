@@ -9,7 +9,6 @@ use Kynx\Mezzio\OpenApi\Hydrator\DateIntervalHydrator;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\ExtractionException;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 /**
  * @covers \Kynx\Mezzio\OpenApi\Hydrator\DateIntervalHydrator
@@ -25,6 +24,9 @@ final class DateIntervalHydratorTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
+    /**
+     * @return array<string, array{0: string|list<string>, 1: DateInterval}>
+     */
     public static function durationProvider(): array
     {
         return [
@@ -49,6 +51,9 @@ final class DateIntervalHydratorTest extends TestCase
         DateIntervalHydrator::extract($interval);
     }
 
+    /**
+     * @return array<string, array{0: string|DateInterval, 1: string}>
+     */
     public static function invalidIntervalProvider(): array
     {
         $inverted         = new DateInterval('P1Y');
@@ -75,6 +80,9 @@ final class DateIntervalHydratorTest extends TestCase
         self::assertEquals($interval, $actual);
     }
 
+    /**
+     * @return array<string, array{0: string}>
+     */
     public static function validIntervalProvider(): array
     {
         return [

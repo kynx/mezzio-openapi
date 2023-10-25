@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Kynx\Mezzio\OpenApi\Hydrator;
 
 use DateInterval;
-
 use Exception;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\ExtractionException;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException;
 
 use function assert;
 use function current;
+use function is_array;
 use function is_string;
 
 /**
