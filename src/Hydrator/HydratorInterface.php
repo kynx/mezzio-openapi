@@ -6,7 +6,7 @@ namespace Kynx\Mezzio\OpenApi\Hydrator;
 
 interface HydratorInterface
 {
-    public static function hydrate(array $data): object;
+    public static function hydrate(mixed $data): object;
 
     /**
      * @template T of mixed

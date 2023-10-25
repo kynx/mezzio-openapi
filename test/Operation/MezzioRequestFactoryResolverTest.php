@@ -44,8 +44,8 @@ final class MezzioRequestFactoryResolverTest extends TestCase
 
     public function testGetFactoryMissingOperationFactoryReturnsNull(): void
     {
-        $pointer  = '/missing/factory';
-        $request  = $this->getOperationRequest($pointer);
+        $pointer = '/missing/factory';
+        $request = $this->getOperationRequest($pointer);
 
         $actual = $this->resolver->getFactory($request);
         self::assertNull($actual);

@@ -451,6 +451,9 @@ final class HydratorUtilTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    /**
+     * @return array<string, array>
+     */
     public static function extractMixedArrayProvider(): array
     {
         $object      = new stdClass();

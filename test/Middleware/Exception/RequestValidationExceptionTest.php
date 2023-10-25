@@ -6,12 +6,10 @@ namespace KynxTest\Mezzio\OpenApi\Middleware\Exception;
 
 use Kynx\Mezzio\OpenApi\Middleware\Exception\RequestValidationException;
 use League\OpenAPIValidation\PSR7\Exception\Validation\InvalidBody;
-use League\OpenAPIValidation\PSR7\Exception\Validation\InvalidParameter;
 use League\OpenAPIValidation\PSR7\Exception\Validation\RequiredParameterMissing;
 use League\OpenAPIValidation\PSR7\Exception\ValidationFailed;
 use League\OpenAPIValidation\PSR7\OperationAddress;
 use League\OpenAPIValidation\Schema\Exception\KeywordMismatch;
-use League\OpenAPIValidation\Schema\Exception\SchemaMismatch;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -31,8 +29,8 @@ final class RequestValidationExceptionTest extends TestCase
 
     public function testValidationFailedPreviousSchemaMismatch(): void
     {
-        $message     = "Required property 'foo' must be present in the object";
-        $expected    = "Keyword validation failed: $message";
+        $message  = "Required property 'foo' must be present in the object";
+        $expected = "Keyword validation failed: $message";
 
         $address     = new OperationAddress('/foo', 'PUT');
         $previous    = KeywordMismatch::fromKeyword('foo', [], $message);

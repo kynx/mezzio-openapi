@@ -6,7 +6,6 @@ namespace KynxTest\Mezzio\OpenApi\Serializer;
 
 use Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializerFactory;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 use stdClass;
 
 /**
@@ -22,10 +21,9 @@ final class DelegatingSerializerFactoryTest extends TestCase
         $expected    = '{"foo":"bar"}';
         $object      = new stdClass();
         $object->foo = 'bar';
-        $container   = $this->createStub(ContainerInterface::class);
         $factory     = new DelegatingSerializerFactory();
 
-        $instance = $factory($container);
+        $instance = $factory();
         $actual   = $instance->serialize('application/json', ['foo' => 'bar']);
         self::assertSame($expected, $actual);
     }

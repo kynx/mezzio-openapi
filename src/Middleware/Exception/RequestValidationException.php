@@ -6,10 +6,8 @@ namespace Kynx\Mezzio\OpenApi\Middleware\Exception;
 
 use DomainException;
 use Kynx\Mezzio\OpenApi\ClientExceptionInterface;
-use League\OpenAPIValidation\PSR7\Exception\Validation\InvalidBody;
 use League\OpenAPIValidation\PSR7\Exception\Validation\RequiredParameterMissing;
 use League\OpenAPIValidation\PSR7\Exception\ValidationFailed;
-use League\OpenAPIValidation\Schema\Exception\KeywordMismatch;
 use League\OpenAPIValidation\Schema\Exception\SchemaMismatch;
 use Throwable;
 

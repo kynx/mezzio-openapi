@@ -39,8 +39,10 @@ final class OperationUtilTest extends TestCase
     /**
      * Note that it is impossible to distinguish between array and object notation unless explode is used. Parsers
      * will need to account for this and use the schema type to determine how the returned array is represented.
+     *
+     * @return array<string, array{0: string, 1: string, 2: array}>
      */
-    public function pathVariableProvider(): array
+    public static function pathVariableProvider(): array
     {
         return [
             'simple_primitive' => ['/users/3', '/users/{id}', ['id' => '3']],
@@ -78,8 +80,9 @@ final class OperationUtilTest extends TestCase
 
     /**
      * @fixme space_explode and pipe_explode will require custom handling, similar to `rize/url-template` '%' operator
+     * @return array<string, array{0: string, 1: string, 2: array}>
      */
-    public function queryVariableProvider(): array
+    public static function queryVariableProvider(): array
     {
         return [
             'form_explode_primitive' => ['?id=5', '{?id*}', ['id' => ['5']]],
@@ -111,7 +114,10 @@ final class OperationUtilTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function headerVariableProvider(): array
+    /**
+     * @return array<string, array{0: array, 1: array<string, string>, 2: array}>
+     */
+    public static function headerVariableProvider(): array
     {
         // phpcs:disable Generic.Files.LineLength.TooLong
         return [
@@ -138,7 +144,10 @@ final class OperationUtilTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    public function cookieVariableProvider(): array
+    /**
+     * @return array<string, array{0: array, 1: array<string, string>, 2: array}>
+     */
+    public static function cookieVariableProvider(): array
     {
         return [
             'form_explode_primitive' => [['id' => '5'], ['id' => '{id*}'], ['id' => ['5']]],
@@ -157,11 +166,14 @@ final class OperationUtilTest extends TestCase
      */
     public function testCastToScalar(mixed $value, string $type, mixed $expected): void
     {
-        $data = ['test' => $value];
+        $data   = ['test' => $value];
         $actual = OperationUtil::castToScalar($data, 'test', $type);
         self::assertSame($expected, $actual['test']);
     }
 
+    /**
+     * @return array<string, array{0: array|null|string, 1: string, 2: scalar|null}>
+     */
     public static function castToScalarProvider(): array
     {
         return [
@@ -179,7 +191,7 @@ final class OperationUtilTest extends TestCase
     public function testCastToScalarIgnoresMissingKey(): void
     {
         $expected = ['foo' => 'a'];
-        $actual = OperationUtil::castToScalar($expected, 'bar', 'int');
+        $actual   = OperationUtil::castToScalar($expected, 'bar', 'int');
         self::assertSame($expected, $actual);
     }
 

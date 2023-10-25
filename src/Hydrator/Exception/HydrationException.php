@@ -8,13 +8,15 @@ use DomainException;
 use Kynx\Mezzio\OpenApi\ClientExceptionInterface;
 use Throwable;
 
+use function get_debug_type;
+use function is_scalar;
 use function sprintf;
 
 final class HydrationException extends DomainException implements ClientExceptionInterface
 {
     private function __construct(
         private string $target,
-        private string|null $value,
+        private bool|int|float|string|null $value,
         string $message,
         Throwable|null $throwable = null
     ) {
@@ -26,7 +28,7 @@ final class HydrationException extends DomainException implements ClientExceptio
         return $this->target;
     }
 
-    public function getValue(): string|null
+    public function getValue(): bool|int|float|string|null
     {
         return $this->value;
     }
@@ -40,12 +42,13 @@ final class HydrationException extends DomainException implements ClientExceptio
         ), $throwable);
     }
 
-    public static function fromValue(string $target, string $value): self
+    public static function fromValue(string $target, mixed $value): self
     {
+        $value = is_scalar($value) ? $value : get_debug_type($value);
         return new self($target, $value, sprintf(
             "Error hydrating %s with '%s'",
             $target,
-            $value
+            (string) $value
         ));
     }
 }

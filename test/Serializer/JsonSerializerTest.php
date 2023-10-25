@@ -35,6 +35,20 @@ final class JsonSerializerTest extends TestCase
         $serializer->serialize('application/json', $invalid);
     }
 
+    public function testConstructorSetsOverridesJsonFlags(): void
+    {
+        $expected   = <<<END_OF_EXPECTED
+        {
+            "a": "foo",
+            "b": "bar"
+        }
+        END_OF_EXPECTED;
+        $data       = ['a' => 'foo', 'b' => 'bar'];
+        $serializer = new JsonSerializer(JSON_PRETTY_PRINT);
+        $actual     = $serializer->serialize('application/json', $data);
+        self::assertSame($expected, $actual);
+    }
+
     /**
      * @dataProvider supportsProvider
      */
@@ -44,6 +58,9 @@ final class JsonSerializerTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    /**
+     * @return array<string, array{0: string, 1: bool}>
+     */
     public static function supportsProvider(): array
     {
         return [
