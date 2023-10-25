@@ -20,10 +20,18 @@ final class ExtractionException extends DomainException implements ServerExcepti
 
     public static function invalidObject(mixed $object, string $expected): self
     {
-        return new self(sprintf(
-            "Cannot extract %s: expected object of type %s",
-            get_debug_type($object),
+        return self::unexpectedValue($object, sprintf(
+            "expected object of type %s",
             $expected
+        ));
+    }
+
+    public static function unexpectedValue(mixed $object, string $message): self
+    {
+        return new self(sprintf(
+            "Cannot extract %s: %s",
+            get_debug_type($object),
+            $message
         ), 500);
     }
 }
