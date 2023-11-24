@@ -336,6 +336,43 @@ final class HydratorUtil
     }
 
     /**
+     * @param array<string, array|object> $data
+     * @param array<string, array<class-string, class-string<HydratorInterface>>> $unions
+     */
+    public static function extractUnions(array $data, array $arrayProperties, array $unions): array
+    {
+        foreach ($unions as $property => $union) {
+            $value = $data[$property];
+            if (in_array($property, $arrayProperties, true)) {
+                assert(is_array($value));
+                $unionValues = [];
+                /** @var object $unionValue */
+                foreach ($value as $unionValue) {
+                    $unionValues[] = self::extractUnion($unionValue, $union);
+                }
+                $data[$property] = $unionValues;
+            } else {
+                assert(is_object($value));
+                $data[$property] = self::extractUnion($value, $union);
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array<class-string, class-string<HydratorInterface>> $union
+     */
+    public static function extractUnion(object $object, array $union): bool|array|float|int|string|null
+    {
+        if (! isset($union[$object::class])) {
+            return null;
+        }
+        $extractor = $union[$object::class];
+        return $extractor::extract($object);
+    }
+
+    /**
      * @param array<string, class-string<HydratorInterface>> $extractors
      */
     public static function extractProperties(array $data, array $arrayProperties, array $extractors): array

@@ -11,8 +11,11 @@ use Kynx\Mezzio\OpenApi\Hydrator\Exception\InvalidDiscriminatorException;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\MissingDiscriminatorException;
 use Kynx\Mezzio\OpenApi\Hydrator\HydratorUtil;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\Extractable;
+use KynxTest\Mezzio\OpenApi\Hydrator\Asset\ExtractableHydrator;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\GoodHydrator;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\MockEnum;
+use KynxTest\Mezzio\OpenApi\Hydrator\Asset\SecondExtractable;
+use KynxTest\Mezzio\OpenApi\Hydrator\Asset\SecondExtractableHydrator;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\TypeErrorHydrator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -492,6 +495,71 @@ final class HydratorUtilTest extends TestCase
 
         $actual = HydratorUtil::extractEnums($data, [], ['enum' => MockEnum::class]);
         self::assertSame($expected, $actual);
+    }
+
+    public function testExtractUnionsExtractsArrayOfUnions(): void
+    {
+        $expected = [
+            'items' => [
+                ['one' => 'a', 'two' => 2, 'three' => true],
+            ],
+        ];
+        $data     = [
+            'items' => [
+                new Extractable('a', 2, true),
+            ],
+        ];
+        $unions   = [
+            'items' => [
+                Extractable::class => ExtractableHydrator::class,
+            ],
+        ];
+
+        $actual = HydratorUtil::extractUnions($data, ['items'], $unions);
+        self::assertSame($expected, $actual);
+    }
+
+    public function testExtractUnionsExtractsSingleUnion(): void
+    {
+        $expected = [
+            'item' => ['one' => 'a', 'two' => 2, 'three' => true],
+        ];
+        $data     = [
+            'item' => new Extractable('a', 2, true),
+        ];
+        $unions   = [
+            'item' => [
+                Extractable::class => ExtractableHydrator::class,
+            ],
+        ];
+
+        $actual = HydratorUtil::extractUnions($data, ['foo'], $unions);
+        self::assertSame($expected, $actual);
+    }
+
+    /**
+     * @dataProvider extractUnionProvider
+     */
+    public function testExtractUnionExtractsCorrectClass(object $extractable, array $expected): void
+    {
+        $union = [
+            Extractable::class       => ExtractableHydrator::class,
+            SecondExtractable::class => SecondExtractableHydrator::class,
+        ];
+
+        $actual = HydratorUtil::extractUnion($extractable, $union);
+        self::assertSame($expected, $actual);
+    }
+
+    /**
+     * @return array<string, array{0: Extractable|SecondExtractable, 1: array}>
+     */
+    public static function extractUnionProvider(): array
+    {
+        return [
+            'first'  => [new Extractable('a', 2, true), ['one' => 'a', 'two' => 2, 'three' => true]],
+            'second' => [new SecondExtractable('foo'), ['value' => 'foo']],
+        ];
     }
 
     public function testExtractEnumsExtractsArrayOfEnums(): void
