@@ -259,7 +259,7 @@ final class HydratorUtil
     {
         $mapped = [];
         foreach ($map as $old => $new) {
-            if (isset($data[$old])) {
+            if (array_key_exists($old, $data)) {
                 $mapped[$new] = $data[$old];
             }
         }

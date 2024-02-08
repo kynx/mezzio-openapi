@@ -423,6 +423,16 @@ final class HydratorUtilTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    public function testGetMappedPropertiesReturnsNulls(): void
+    {
+        $expected = ['b' => null];
+        $map      = ['a' => 'b'];
+        $data     = ['a' => null];
+
+        $actual = HydratorUtil::getMappedProperties($data, $map);
+        self::assertSame($expected, $actual);
+    }
+
     public function testExtractObjectArrayExtracts(): void
     {
         $expected    = [
