@@ -3,6 +3,7 @@
 /.gitattributes export-ignore
 /.gitignore export-ignore
 /.laminas-ci.json export-ignore
+/.markdownlint.json export-ignore
 /.psr-container.php.stub export-ignore
 /phpcs.xml export-ignore
 /phpunit.xml.dist export-ignore
