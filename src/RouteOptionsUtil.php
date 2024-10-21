@@ -27,8 +27,10 @@ final class RouteOptionsUtil
         $matchedRoute = $routeResult->getMatchedRoute();
         assert($matchedRoute instanceof Route);
 
-        /** @var array{OpenApiRequestFactory::class?: string} $routeOptions */
         $routeOptions = $matchedRoute->getOptions();
-        return $routeOptions[OpenApiRequestFactory::class] ?? null;
+        if (isset($routeOptions[OpenApiRequestFactory::class])) {
+            return (string) $routeOptions[OpenApiRequestFactory::class];
+        }
+        return null;
     }
 }

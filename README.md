@@ -8,8 +8,7 @@ Create pipeline [delegator factory]. This includes standard middleware (ProblemD
 
 ### Considerations
 
-* Pipeline delegator factory should be opt-in from command line - too much stuff a user might want to customise later. 
-
+* Pipeline delegator factory should be opt-in from command line - too much stuff a user might want to customise later.
 
 ## Routing
 
@@ -25,30 +24,27 @@ Routes have the original OpenApi path set as an option so it is available to mid
 
 Add `mezzio/authentication` implementations. OAuth2 is a bitch.
 
-
 ### Validator
 
 Use [openapi-psr7-validator]?
 
 ### Considerations
 
-* Do we validate before or after authentication? Probably after: [Google Cloud Endpoints] could replace the authentication, but 
+* Do we validate before or after authentication? Probably after: [Google Cloud Endpoints] could replace the authentication, but
 doesn't really validate requests.
 
 ### RequestParser
 
-Adds OpenApiRequestInterface attribute to request. This contains path, query, header and cookie parameters along with 
+Adds OpenApiRequestInterface attribute to request. This contains path, query, header and cookie parameters along with
 parsed request body. Everything is strongly typed - ie query params converted to ints / model objects / etc.
 
-TOOD: handling XML request bodies. Add / find an XML strategy to add to BodyParamsMiddleware. The schema includes extra 
+TOOD: handling XML request bodies. Add / find an XML strategy to add to BodyParamsMiddleware. The schema includes extra
 stuff on how the XML is formatted that we will need to figure out...
-
 
 ## Handlers
 
 Handler per operation with `get` / `patch` / `post` / etc methods. Uses `operationId` for naming. Will need
 to construct a default name (path + method?) if no `operationId` given.
-
 
 ## TODO
 
