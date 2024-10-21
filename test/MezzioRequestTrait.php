@@ -9,10 +9,11 @@ use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Uri;
 use Mezzio\Router\Route;
 use Mezzio\Router\RouteResult;
+use PHPUnit\Framework\TestCase;
 use Psr\Http\Server\MiddlewareInterface;
 
 /**
- * @psalm-require-extends \PHPUnit\Framework\TestCase
+ * @psalm-require-extends TestCase
  */
 trait MezzioRequestTrait
 {
