@@ -8,6 +8,7 @@ use cebe\openapi\spec\OpenApi;
 
 use function getmypid;
 use function microtime;
+use function sprintf;
 use function sys_get_temp_dir;
 use function tempnam;
 use function unlink;
@@ -19,7 +20,11 @@ trait FileCacheTrait
     protected function getCacheFileName(): string
     {
         if (empty($this->file)) {
-            $this->file = tempnam(sys_get_temp_dir(), 'phpunit_' . getmypid() . '_' . microtime(true));
+            $this->file = (string) tempnam(sys_get_temp_dir(), sprintf(
+                'phpunit_%s_%s',
+                (string) getmypid(),
+                microtime(true)
+            ));
         }
         return $this->file;
     }

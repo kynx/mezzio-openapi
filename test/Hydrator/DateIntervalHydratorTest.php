@@ -24,9 +24,6 @@ final class DateIntervalHydratorTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @return array<string, array{0: string|list<string>, 1: DateInterval}>
-     */
     public static function durationProvider(): array
     {
         return [
@@ -51,9 +48,6 @@ final class DateIntervalHydratorTest extends TestCase
         DateIntervalHydrator::extract($interval);
     }
 
-    /**
-     * @return array<string, array{0: string|DateInterval, 1: string}>
-     */
     public static function invalidIntervalProvider(): array
     {
         $inverted         = new DateInterval('P1Y');

@@ -10,6 +10,7 @@ use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function assert;
 use function fclose;
 use function fopen;
 use function is_resource;
@@ -94,7 +95,9 @@ final class ContentTypeNegotiatorTest extends TestCase
 
     private function getRequest(array $headers): ServerRequestInterface
     {
-        $this->stream = fopen('php://memory', 'r+');
+        $stream = fopen('php://memory', 'r+');
+        assert(is_resource($stream));
+        $this->stream = $stream;
         return new ServerRequest([], [], null, null, $this->stream, $headers);
     }
 }
