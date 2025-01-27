@@ -8,18 +8,18 @@ use cebe\openapi\spec\OpenApi;
 use InvalidArgumentException;
 use Kynx\Mezzio\OpenApi\ConfigProvider;
 use Kynx\Mezzio\OpenApi\Schema\CacheInterface;
+use Kynx\Mezzio\OpenApi\Schema\FileCache;
 use Kynx\Mezzio\OpenApi\Schema\InvalidOpenApiException;
 use Kynx\Mezzio\OpenApi\Schema\OpenApiFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Schema\FileCache
- * @uses \Kynx\Mezzio\OpenApi\Schema\InvalidOpenApiException
- *
- * @covers \Kynx\Mezzio\OpenApi\Schema\OpenApiFactory
- */
+#[CoversClass(OpenApiFactory::class)]
+#[UsesClass(FileCache::class)]
+#[UsesClass(InvalidOpenApiException::class)]
 final class OpenApiFactoryTest extends TestCase
 {
     /** @var CacheInterface&MockObject */

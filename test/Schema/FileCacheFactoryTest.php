@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace KynxTest\Mezzio\OpenApi\Schema;
 
 use Kynx\Mezzio\OpenApi\ConfigProvider;
+use Kynx\Mezzio\OpenApi\Schema\FileCache;
 use Kynx\Mezzio\OpenApi\Schema\FileCacheFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Schema\FileCache
- *
- * @covers \Kynx\Mezzio\OpenApi\Schema\FileCacheFactory
- */
+#[CoversClass(FileCacheFactory::class)]
+#[UsesClass(FileCache::class)]
 final class FileCacheFactoryTest extends TestCase
 {
     use FileCacheTrait;

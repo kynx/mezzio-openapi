@@ -6,11 +6,10 @@ namespace KynxTest\Mezzio\OpenApi;
 
 use Kynx\Mezzio\OpenApi\RouteOptionsUtil;
 use KynxTest\Mezzio\OpenApi\MezzioRequestTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\RouteOptionsUtil
- */
+#[CoversClass(RouteOptionsUtil::class)]
 final class RouteOptionsUtilTest extends TestCase
 {
     use MezzioRequestTrait;

@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace KynxTest\Mezzio\OpenApi\Operation\Exception;
 
 use Kynx\Mezzio\OpenApi\Operation\Exception\InvalidContentTypeException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Operation\Exception\InvalidContentTypeException
- */
+#[CoversClass(InvalidContentTypeException::class)]
 final class InvalidContentTypeExceptionTest extends TestCase
 {
     public function testFromContentTypeReturnsException(): void

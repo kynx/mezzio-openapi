@@ -7,22 +7,24 @@ namespace KynxTest\Mezzio\OpenApi\Middleware;
 use cebe\openapi\spec\OpenApi;
 use Kynx\Mezzio\OpenApi\ConfigProvider;
 use Kynx\Mezzio\OpenApi\Middleware\Exception\ResponseValidationException;
+use Kynx\Mezzio\OpenApi\Middleware\MezzioOperationAddressResolver;
+use Kynx\Mezzio\OpenApi\Middleware\ValidationMiddleware;
 use Kynx\Mezzio\OpenApi\Middleware\ValidationMiddlewareFactory;
+use Kynx\Mezzio\OpenApi\RouteOptionsUtil;
 use KynxTest\Mezzio\OpenApi\MezzioRequestTrait;
 use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use Laminas\Diactoros\Uri;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Middleware\Exception\ResponseValidationException
- * @uses \Kynx\Mezzio\OpenApi\Middleware\MezzioOperationAddressResolver
- * @uses \Kynx\Mezzio\OpenApi\Middleware\ValidationMiddleware
- * @uses \Kynx\Mezzio\OpenApi\RouteOptionsUtil
- *
- * @covers \Kynx\Mezzio\OpenApi\Middleware\ValidationMiddlewareFactory
- */
+#[CoversClass(ValidationMiddlewareFactory::class)]
+#[UsesClass(ResponseValidationException::class)]
+#[UsesClass(MezzioOperationAddressResolver::class)]
+#[UsesClass(ValidationMiddleware::class)]
+#[UsesClass(RouteOptionsUtil::class)]
 final class ValidationMiddlewareFactoryTest extends TestCase
 {
     use MezzioRequestTrait;

@@ -6,11 +6,10 @@ namespace KynxTest\Mezzio\OpenApi\Serializer;
 
 use Exception;
 use Kynx\Mezzio\OpenApi\Serializer\SerializerException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Serializer\SerializerException
- */
+#[CoversClass(SerializerException::class)]
 final class SerializerExceptionTest extends TestCase
 {
     public function testUnsupportedMimeTypeSetsMessageAndCode(): void

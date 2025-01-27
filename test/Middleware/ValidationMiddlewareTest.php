@@ -11,14 +11,13 @@ use Laminas\Diactoros\Response\EmptyResponse;
 use Laminas\Diactoros\Response\JsonResponse;
 use League\OpenAPIValidation\PSR7\ResponseValidator;
 use League\OpenAPIValidation\PSR7\RoutedServerRequestValidator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Middleware\Exception\RequestValidationException
- * @uses \Kynx\Mezzio\OpenApi\Middleware\Exception\ResponseValidationException
- *
- * @covers \Kynx\Mezzio\OpenApi\Middleware\ValidationMiddleware
- */
+#[CoversClass(ValidationMiddleware::class)]
+#[UsesClass(RequestValidationException::class)]
+#[UsesClass(ResponseValidationException::class)]
 final class ValidationMiddlewareTest extends TestCase
 {
     use ValidationMiddlewareTrait;

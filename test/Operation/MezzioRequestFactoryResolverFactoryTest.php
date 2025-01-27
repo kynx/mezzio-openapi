@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace KynxTest\Mezzio\OpenApi\Operation;
 
 use Kynx\Mezzio\OpenApi\ConfigProvider;
+use Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver;
 use Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory;
+use Kynx\Mezzio\OpenApi\RouteOptionsUtil;
 use KynxTest\Mezzio\OpenApi\MezzioRequestTrait;
 use KynxTest\Mezzio\OpenApi\Operation\Asset\MockRequestFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver
- * @uses \Kynx\Mezzio\OpenApi\RouteOptionsUtil
- *
- * @covers \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory
- */
+#[CoversClass(MezzioRequestFactoryResolverFactory::class)]
+#[UsesClass(MezzioRequestFactoryResolver::class)]
+#[UsesClass(RouteOptionsUtil::class)]
 final class MezzioRequestFactoryResolverFactoryTest extends TestCase
 {
     use MezzioRequestTrait;

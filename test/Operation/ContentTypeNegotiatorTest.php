@@ -7,6 +7,9 @@ namespace KynxTest\Mezzio\OpenApi\Operation;
 use Kynx\Mezzio\OpenApi\Operation\ContentTypeNegotiator;
 use Kynx\Mezzio\OpenApi\Operation\Exception\InvalidContentTypeException;
 use Laminas\Diactoros\ServerRequest;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -15,11 +18,8 @@ use function fclose;
 use function fopen;
 use function is_resource;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Operation\Exception\InvalidContentTypeException
- *
- * @covers \Kynx\Mezzio\OpenApi\Operation\ContentTypeNegotiator
- */
+#[CoversClass(ContentTypeNegotiator::class)]
+#[UsesClass(InvalidContentTypeException::class)]
 final class ContentTypeNegotiatorTest extends TestCase
 {
     /** @var resource|closed-resource|null */
@@ -40,9 +40,7 @@ final class ContentTypeNegotiatorTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider matchedContentTypeProvider
-     */
+    #[DataProvider('matchedContentTypeProvider')]
     public function testMatchContentTypeReturnsMatched(string $mimeType, string $expected): void
     {
         $negotiator = new ContentTypeNegotiator([

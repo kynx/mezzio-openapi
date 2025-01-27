@@ -6,11 +6,10 @@ namespace KynxTest\Mezzio\OpenApi\Middleware\Exception;
 
 use Kynx\Mezzio\OpenApi\Middleware\Exception\ResponseValidationException;
 use League\OpenAPIValidation\PSR7\Exception\NoContentType;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Middleware\Exception\ResponseValidationException
- */
+#[CoversClass(ResponseValidationException::class)]
 final class ResponseValidationExceptionTest extends TestCase
 {
     public function testValidationFailedSetsMessageAndCode(): void
