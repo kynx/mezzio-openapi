@@ -11,12 +11,11 @@ use KynxTest\Mezzio\OpenApi\Middleware\MockHandler;
 use KynxTest\Mezzio\OpenApi\Operation\Asset\MockOperation;
 use KynxTest\Mezzio\OpenApi\Operation\Asset\MockRequestFactory;
 use Laminas\Diactoros\ServerRequest;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddleware
- */
+#[CoversClass(OpenApiOperationMiddleware::class)]
 final class OpenApiOperationMiddlewareTest extends TestCase
 {
     public function testHandleAddsOpenApiOperationToRequest(): void

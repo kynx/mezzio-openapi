@@ -11,8 +11,10 @@ use Negotiation\BaseAccept;
 use Negotiation\Exception\Exception as NegotiationException;
 use Negotiation\Negotiator;
 
+use function assert;
 use function fopen;
 use function fwrite;
+use function is_resource;
 use function rewind;
 use function strtok;
 
@@ -27,6 +29,7 @@ abstract class AbstractResponseFactory
     protected function getResponse(string $body, int $status, string $reasonPhrase = '', array $headers = []): Response
     {
         $resource = fopen('php://temp/maxmemory=' . $this->maxMemory, 'r+');
+        assert(is_resource($resource));
         fwrite($resource, $body);
         rewind($resource);
 
@@ -42,7 +45,7 @@ abstract class AbstractResponseFactory
     ): string {
         /** @psalm-suppress InvalidCatch Exception interface does not extend Throwable :| */
         try {
-            $mimeType = $negotiator->getBest(strtok($accept, ';'), $priorities);
+            $mimeType = $negotiator->getBest((string) strtok($accept, ';'), $priorities);
         } catch (NegotiationException $exception) {
             throw InvalidAcceptException::fromNegotiationException($exception);
         }

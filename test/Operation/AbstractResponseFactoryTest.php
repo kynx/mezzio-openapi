@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace KynxTest\Mezzio\OpenApi\Operation;
 
+use Kynx\Mezzio\OpenApi\Operation\AbstractResponseFactory;
 use Kynx\Mezzio\OpenApi\Operation\Exception\InvalidAcceptException;
 use Kynx\Mezzio\OpenApi\Serializer\SerializerInterface;
 use KynxTest\Mezzio\OpenApi\Operation\Asset\MockResponseFactory;
 use Negotiation\Negotiator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Operation\Exception\InvalidAcceptException
- *
- * @covers \Kynx\Mezzio\OpenApi\Operation\AbstractResponseFactory
- */
+#[CoversClass(AbstractResponseFactory::class)]
+#[UsesClass(InvalidAcceptException::class)]
 final class AbstractResponseFactoryTest extends TestCase
 {
     private MockResponseFactory $factory;

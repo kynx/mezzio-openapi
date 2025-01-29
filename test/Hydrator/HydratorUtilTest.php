@@ -17,17 +17,17 @@ use KynxTest\Mezzio\OpenApi\Hydrator\Asset\MockEnum;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\SecondExtractable;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\SecondExtractableHydrator;
 use KynxTest\Mezzio\OpenApi\Hydrator\Asset\TypeErrorHydrator;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Hydrator\DateTimeImmutableHydrator
- * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException
- * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\InvalidDiscriminatorException
- * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\MissingDiscriminatorException
- *
- * @covers \Kynx\Mezzio\OpenApi\Hydrator\HydratorUtil
- */
+#[CoversClass(HydratorUtil::class)]
+#[UsesClass(DateTimeImmutableHydrator::class)]
+#[UsesClass(HydrationException::class)]
+#[UsesClass(InvalidDiscriminatorException::class)]
+#[UsesClass(MissingDiscriminatorException::class)]
 final class HydratorUtilTest extends TestCase
 {
     public function testHydrateDiscriminatorValuesMissingPropertyThrowsException(): void
@@ -451,9 +451,7 @@ final class HydratorUtilTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
-    /**
-     * @dataProvider extractMixedArrayProvider
-     */
+    #[DataProvider('extractMixedArrayProvider')]
     public function testExtractMixedArrayExtracts(mixed $data, mixed $expected): void
     {
         $extractors = [
@@ -547,9 +545,7 @@ final class HydratorUtilTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
-    /**
-     * @dataProvider extractUnionProvider
-     */
+    #[DataProvider('extractUnionProvider')]
     public function testExtractUnionExtractsCorrectClass(object $extractable, array $expected): void
     {
         $union = [

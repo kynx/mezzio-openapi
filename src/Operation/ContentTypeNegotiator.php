@@ -43,8 +43,8 @@ final class ContentTypeNegotiator
 
             $this->matchers[$mimeType] = array_values(
                 array_filter(
-                    preg_split('#[/+]#', $mimeType),
-                    fn(string $part) => $part !== '*'
+                    (array) preg_split('#[/+]#', $mimeType),
+                    static fn (string|false $part) => $part !== false && $part !== '*'
                 )
             );
         }
@@ -58,7 +58,7 @@ final class ContentTypeNegotiator
     public function negotiate(ServerRequestInterface $request): string
     {
         [$type]   = explode(';', $request->getHeaderLine('Content-Type'));
-        $mimeType = $this->getMatched(preg_split('#[/+]#', trim($type)));
+        $mimeType = $this->getMatched((array) preg_split('#[/+]#', trim($type)));
         if ($mimeType === null) {
             throw InvalidContentTypeException::fromExpected($type, $this->getMimeTypes());
         }

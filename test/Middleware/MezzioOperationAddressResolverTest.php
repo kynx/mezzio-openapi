@@ -6,16 +6,16 @@ namespace KynxTest\Mezzio\OpenApi\Middleware;
 
 use Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException;
 use Kynx\Mezzio\OpenApi\Middleware\MezzioOperationAddressResolver;
+use Kynx\Mezzio\OpenApi\RouteOptionsUtil;
 use KynxTest\Mezzio\OpenApi\MezzioRequestTrait;
 use League\OpenAPIValidation\PSR7\OperationAddress;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException
- * @uses \Kynx\Mezzio\OpenApi\RouteOptionsUtil
- *
- * @covers \Kynx\Mezzio\OpenApi\Middleware\MezzioOperationAddressResolver
- */
+#[CoversClass(MezzioOperationAddressResolver::class)]
+#[UsesClass(InvalidOperationException::class)]
+#[UsesClass(RouteOptionsUtil::class)]
 final class MezzioOperationAddressResolverTest extends TestCase
 {
     use MezzioRequestTrait;

@@ -6,15 +6,15 @@ namespace KynxTest\Mezzio\OpenApi\Serializer;
 
 use Kynx\Mezzio\OpenApi\Serializer\JsonSerializer;
 use Kynx\Mezzio\OpenApi\Serializer\SerializerException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
 use const JSON_PRETTY_PRINT;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Serializer\SerializerException
- *
- * @covers \Kynx\Mezzio\OpenApi\Serializer\JsonSerializer
- */
+#[CoversClass(JsonSerializer::class)]
+#[UsesClass(SerializerException::class)]
 final class JsonSerializerTest extends TestCase
 {
     private JsonSerializer $serializer;
@@ -49,9 +49,7 @@ final class JsonSerializerTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
-    /**
-     * @dataProvider supportsProvider
-     */
+    #[DataProvider('supportsProvider')]
     public function testSupportsReturnsSupported(string $mimeType, bool $expected): void
     {
         $actual = $this->serializer->supports($mimeType);

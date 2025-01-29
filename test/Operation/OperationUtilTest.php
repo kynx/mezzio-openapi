@@ -7,13 +7,13 @@ namespace KynxTest\Mezzio\OpenApi\Operation;
 use Kynx\Mezzio\OpenApi\Operation\OperationUtil;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Uri;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamInterface;
 use Rize\UriTemplate;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Operation\OperationUtil
- */
+#[CoversClass(OperationUtil::class)]
 final class OperationUtilTest extends TestCase
 {
     private UriTemplate $uriTemplate;
@@ -25,9 +25,7 @@ final class OperationUtilTest extends TestCase
         $this->uriTemplate = new UriTemplate();
     }
 
-    /**
-     * @dataProvider pathVariableProvider
-     */
+    #[DataProvider('pathVariableProvider')]
     public function testGetPathVariablesPopulatesPathParams(string $path, string $template, array $expected): void
     {
         $request = $this->getRequest(new Uri('http://example.com' . $path), [], []);
@@ -67,9 +65,7 @@ final class OperationUtilTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider queryVariableProvider
-     */
+    #[DataProvider('queryVariableProvider')]
     public function testGetQueryVariablesPopulatesQueryParams(string $query, string $template, array $expected): void
     {
         $request = $this->getRequest(new Uri('http://example.com/users/123' . $query), [], []);
@@ -102,9 +98,9 @@ final class OperationUtilTest extends TestCase
     }
 
     /**
-     * @dataProvider headerVariableProvider
      * @param array<string, string> $templates
      */
+    #[DataProvider('headerVariableProvider')]
     public function testGetHeaderVariablesPopulatesHeaderParams(array $headers, array $templates, array $expected): void
     {
         $uri     = new Uri('http://example.com/');
@@ -132,9 +128,9 @@ final class OperationUtilTest extends TestCase
     }
 
     /**
-     * @dataProvider cookieVariableProvider
      * @param array<string, string> $templates
      */
+    #[DataProvider('cookieVariableProvider')]
     public function testGetCookieVariablesPopulatesCookieParams(array $cookies, array $templates, array $expected): void
     {
         $uri     = new Uri('http://example.com/');
@@ -161,9 +157,7 @@ final class OperationUtilTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider castToScalarProvider
-     */
+    #[DataProvider('castToScalarProvider')]
     public function testCastToScalar(mixed $value, string $type, mixed $expected): void
     {
         $data   = ['test' => $value];

@@ -28,6 +28,9 @@ final class MezzioOperationAddressResolver implements OperationAddressResolverIn
 
         // '/paths/~1pet~1{petId}/get' => ['paths', 'pet', '{petId}', 'get']
         $parts = array_filter(explode('/', str_replace(['~0', '~1'], ['~', '/'], $jsonPointer)));
-        return new OperationAddress('/' . implode('/', array_slice($parts, 1, -1)), array_pop($parts));
+        return new OperationAddress(
+            '/' . implode('/', array_slice($parts, 1, -1)),
+            (string) array_pop($parts)
+        );
     }
 }

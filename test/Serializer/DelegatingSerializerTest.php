@@ -7,18 +7,16 @@ namespace KynxTest\Mezzio\OpenApi\Serializer;
 use Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializer;
 use Kynx\Mezzio\OpenApi\Serializer\SerializerException;
 use Kynx\Mezzio\OpenApi\Serializer\SerializerInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Serializer\SerializerException
- *
- * @covers \Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializer
- */
+#[CoversClass(DelegatingSerializer::class)]
+#[UsesClass(SerializerException::class)]
 final class DelegatingSerializerTest extends TestCase
 {
-    /**
-     * @dataProvider supportsProvider
-     */
+    #[DataProvider('supportsProvider')]
     public function testSupportsDelegates(string $mimeType, bool $expected): void
     {
         $unsupported = $this->createStub(SerializerInterface::class);

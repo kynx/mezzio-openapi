@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="6.0.0@b8e96bb617bf59382113b1b56cef751f648a7dc9">
+  <file src="test/ConfigProviderTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[dependencyProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Hydrator/DateIntervalHydratorTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[durationProvider]]></code>
+      <code><![CDATA[invalidIntervalProvider]]></code>
+      <code><![CDATA[validIntervalProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Hydrator/HydratorUtilTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[extractMixedArrayProvider]]></code>
+      <code><![CDATA[extractUnionProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Operation/ContentTypeNegotiatorTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[matchedContentTypeProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Operation/OperationUtilTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[castToScalarProvider]]></code>
+      <code><![CDATA[cookieVariableProvider]]></code>
+      <code><![CDATA[headerVariableProvider]]></code>
+      <code><![CDATA[pathVariableProvider]]></code>
+      <code><![CDATA[queryVariableProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Serializer/DelegatingSerializerTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[supportsProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+  <file src="test/Serializer/JsonSerializerTest.php">
+    <PossiblyUnusedMethod>
+      <code><![CDATA[supportsProvider]]></code>
+    </PossiblyUnusedMethod>
+  </file>
+</files>

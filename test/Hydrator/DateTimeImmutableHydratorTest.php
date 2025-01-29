@@ -8,15 +8,14 @@ use DateTimeImmutable;
 use Kynx\Mezzio\OpenApi\Hydrator\DateTimeImmutableHydrator;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\ExtractionException;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException
- * @uses \Kynx\Mezzio\OpenApi\Hydrator\Exception\ExtractionException
- *
- * @covers \Kynx\Mezzio\OpenApi\Hydrator\DateTimeImmutableHydrator
- */
+#[CoversClass(DateTimeImmutableHydrator::class)]
+#[UsesClass(HydrationException::class)]
+#[UsesClass(ExtractionException::class)]
 final class DateTimeImmutableHydratorTest extends TestCase
 {
     public function testHydrateReturnsHydrated(): void

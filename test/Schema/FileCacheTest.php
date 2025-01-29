@@ -6,13 +6,12 @@ namespace KynxTest\Mezzio\OpenApi\Schema;
 
 use cebe\openapi\spec\OpenApi;
 use Kynx\Mezzio\OpenApi\Schema\FileCache;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 use function copy;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Schema\FileCache
- */
+#[CoversClass(FileCache::class)]
 final class FileCacheTest extends TestCase
 {
     use FileCacheTrait;

@@ -6,28 +6,38 @@ namespace KynxTest\Mezzio\OpenApi;
 
 use Generator;
 use Kynx\Mezzio\OpenApi\ConfigProvider;
+use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddleware;
+use Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddlewareFactory;
+use Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver;
+use Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory;
+use Kynx\Mezzio\OpenApi\Schema\FileCache;
+use Kynx\Mezzio\OpenApi\Schema\FileCacheFactory;
+use Kynx\Mezzio\OpenApi\Schema\OpenApiFactory;
+use Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializer;
+use Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializerFactory;
+use Kynx\Mezzio\OpenApi\Serializer\JsonSerializer;
 use Laminas\ServiceManager\ServiceManager;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 use function array_keys;
 use function sys_get_temp_dir;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver
- * @uses \Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddleware
- * @uses \Kynx\Mezzio\OpenApi\Middleware\OpenApiOperationMiddlewareFactory
- * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver
- * @uses \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolverFactory
- * @uses \Kynx\Mezzio\OpenApi\Schema\FileCache
- * @uses \Kynx\Mezzio\OpenApi\Schema\FileCacheFactory
- * @uses \Kynx\Mezzio\OpenApi\Schema\OpenApiFactory
- * @uses \Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializer
- * @uses \Kynx\Mezzio\OpenApi\Serializer\DelegatingSerializerFactory
- * @uses \Kynx\Mezzio\OpenApi\Serializer\JsonSerializer
- *
- * @covers \Kynx\Mezzio\OpenApi\ConfigProvider
- */
+#[CoversClass(ConfigProvider::class)]
+#[UsesClass(MezzioRequestFactoryResolver::class)]
+#[UsesClass(OpenApiOperationMiddleware::class)]
+#[UsesClass(OpenApiOperationMiddlewareFactory::class)]
+#[UsesClass(MezzioRequestFactoryResolver::class)]
+#[UsesClass(MezzioRequestFactoryResolverFactory::class)]
+#[UsesClass(FileCache::class)]
+#[UsesClass(FileCacheFactory::class)]
+#[UsesClass(OpenApiFactory::class)]
+#[UsesClass(DelegatingSerializer::class)]
+#[UsesClass(DelegatingSerializerFactory::class)]
+#[UsesClass(JsonSerializer::class)]
 final class ConfigProviderTest extends TestCase
 {
     private ContainerInterface $container;
@@ -53,9 +63,9 @@ final class ConfigProviderTest extends TestCase
     }
 
     /**
-     * @dataProvider dependencyProvider
      * @param class-string $dependency
      */
+    #[DataProvider('dependencyProvider')]
     public function testDependenciesResolve(string $dependency): void
     {
         $actual = $this->container->get($dependency);

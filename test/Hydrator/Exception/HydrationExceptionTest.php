@@ -6,11 +6,10 @@ namespace KynxTest\Mezzio\OpenApi\Hydrator\Exception;
 
 use Exception;
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Hydrator\Exception\HydrationException
- */
+#[CoversClass(HydrationException::class)]
 final class HydrationExceptionTest extends TestCase
 {
     public function testFromThrowableReturnsException(): void

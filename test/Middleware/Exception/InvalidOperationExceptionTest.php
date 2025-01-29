@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace KynxTest\Mezzio\OpenApi\Middleware\Exception;
 
 use Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException
- */
+#[CoversClass(InvalidOperationException::class)]
 final class InvalidOperationExceptionTest extends TestCase
 {
     public function testMissingPointerSetsMessageAndCode(): void

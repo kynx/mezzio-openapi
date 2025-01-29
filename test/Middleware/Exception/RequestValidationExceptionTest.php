@@ -10,11 +10,10 @@ use League\OpenAPIValidation\PSR7\Exception\Validation\RequiredParameterMissing;
 use League\OpenAPIValidation\PSR7\Exception\ValidationFailed;
 use League\OpenAPIValidation\PSR7\OperationAddress;
 use League\OpenAPIValidation\Schema\Exception\KeywordMismatch;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Middleware\Exception\RequestValidationException
- */
+#[CoversClass(RequestValidationException::class)]
 final class RequestValidationExceptionTest extends TestCase
 {
     public function testValidationFailedRequiredParameterMissing(): void

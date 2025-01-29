@@ -6,11 +6,10 @@ namespace KynxTest\Mezzio\OpenApi\Operation\Exception;
 
 use Kynx\Mezzio\OpenApi\Operation\Exception\InvalidAcceptException;
 use Negotiation\Exception\InvalidArgument;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Operation\Exception\InvalidAcceptException
- */
+#[CoversClass(InvalidAcceptException::class)]
 final class InvalidAcceptExceptionTest extends TestCase
 {
     public function testFromNegotiationExceptionSetsMessageAndCode(): void

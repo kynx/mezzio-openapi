@@ -56,7 +56,7 @@ final class JsonSerializer implements SerializerInterface
         }
 
         try {
-            return json_encode($data, $this->jsonFlags);
+            return (string) json_encode($data, $this->jsonFlags);
         } catch (JsonException $exception) {
             throw SerializerException::fromThrowable($exception);
         }

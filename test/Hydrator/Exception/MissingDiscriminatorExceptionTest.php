@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace KynxTest\Mezzio\OpenApi\Hydrator\Exception;
 
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\MissingDiscriminatorException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Hydrator\Exception\MissingDiscriminatorException
- */
+#[CoversClass(MissingDiscriminatorException::class)]
 final class MissingDiscriminatorExceptionTest extends TestCase
 {
     public function testFromMissingReturnsException(): void

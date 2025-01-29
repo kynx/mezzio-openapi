@@ -7,18 +7,19 @@ namespace KynxTest\Mezzio\OpenApi\Operation;
 use Kynx\Mezzio\OpenApi\Operation\ContentTypeNegotiator;
 use Kynx\Mezzio\OpenApi\Operation\Exception\InvalidContentTypeException;
 use Laminas\Diactoros\ServerRequest;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 
+use function assert;
 use function fclose;
 use function fopen;
 use function is_resource;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Operation\Exception\InvalidContentTypeException
- *
- * @covers \Kynx\Mezzio\OpenApi\Operation\ContentTypeNegotiator
- */
+#[CoversClass(ContentTypeNegotiator::class)]
+#[UsesClass(InvalidContentTypeException::class)]
 final class ContentTypeNegotiatorTest extends TestCase
 {
     /** @var resource|closed-resource|null */
@@ -39,9 +40,7 @@ final class ContentTypeNegotiatorTest extends TestCase
         }
     }
 
-    /**
-     * @dataProvider matchedContentTypeProvider
-     */
+    #[DataProvider('matchedContentTypeProvider')]
     public function testMatchContentTypeReturnsMatched(string $mimeType, string $expected): void
     {
         $negotiator = new ContentTypeNegotiator([
@@ -94,7 +93,9 @@ final class ContentTypeNegotiatorTest extends TestCase
 
     private function getRequest(array $headers): ServerRequestInterface
     {
-        $this->stream = fopen('php://memory', 'r+');
+        $stream = fopen('php://memory', 'r+');
+        assert(is_resource($stream));
+        $this->stream = $stream;
         return new ServerRequest([], [], null, null, $this->stream, $headers);
     }
 }

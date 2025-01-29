@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace KynxTest\Mezzio\OpenApi\Schema;
 
 use Kynx\Mezzio\OpenApi\Schema\InvalidOpenApiException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Schema\InvalidOpenApiException
- */
+#[CoversClass(InvalidOpenApiException::class)]
 final class InvalidOpenApiExceptionTest extends TestCase
 {
     public function testFromOpenApiErrorsSetsMessageAndCode(): void

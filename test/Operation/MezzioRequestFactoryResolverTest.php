@@ -6,16 +6,16 @@ namespace KynxTest\Mezzio\OpenApi\Operation;
 
 use Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException;
 use Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver;
+use Kynx\Mezzio\OpenApi\RouteOptionsUtil;
 use KynxTest\Mezzio\OpenApi\MezzioRequestTrait;
 use KynxTest\Mezzio\OpenApi\Operation\Asset\MockRequestFactory;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @uses \Kynx\Mezzio\OpenApi\Middleware\Exception\InvalidOperationException
- * @uses \Kynx\Mezzio\OpenApi\RouteOptionsUtil
- *
- * @covers \Kynx\Mezzio\OpenApi\Operation\MezzioRequestFactoryResolver
- */
+#[CoversClass(MezzioRequestFactoryResolver::class)]
+#[UsesClass(InvalidOperationException::class)]
+#[UsesClass(RouteOptionsUtil::class)]
 final class MezzioRequestFactoryResolverTest extends TestCase
 {
     use MezzioRequestTrait;

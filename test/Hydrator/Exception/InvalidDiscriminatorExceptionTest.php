@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace KynxTest\Mezzio\OpenApi\Hydrator\Exception;
 
 use Kynx\Mezzio\OpenApi\Hydrator\Exception\InvalidDiscriminatorException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Kynx\Mezzio\OpenApi\Hydrator\Exception\InvalidDiscriminatorException
- */
+#[CoversClass(InvalidDiscriminatorException::class)]
 final class InvalidDiscriminatorExceptionTest extends TestCase
 {
     public function testFromValueReturnsException(): void
