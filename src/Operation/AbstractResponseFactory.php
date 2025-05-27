@@ -20,7 +20,7 @@ use function strtok;
 
 abstract class AbstractResponseFactory
 {
-    public const DEFAULT_MAX_MEMORY = 1024 * 1024 * 10;
+    public const int DEFAULT_MAX_MEMORY = 1024 * 1024 * 10;
 
     public function __construct(protected int $maxMemory = self::DEFAULT_MAX_MEMORY)
     {
