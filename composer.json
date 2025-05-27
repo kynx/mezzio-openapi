@@ -21,7 +21,7 @@
         }
     },
     "require": {
-        "php": "~8.2.0 || ~8.3.0 || ~8.4.0",
+        "php": "~8.3.0 || ~8.4.0",
         "devizzent/cebe-php-openapi": "^1.1.4",
         "league/openapi-psr7-validator": "^0.22",
         "mezzio/mezzio": "^3.20",
