@@ -27,17 +27,16 @@ use function array_keys;
 use function sys_get_temp_dir;
 
 #[CoversClass(ConfigProvider::class)]
-#[UsesClass(MezzioRequestFactoryResolver::class)]
-#[UsesClass(OpenApiOperationMiddleware::class)]
-#[UsesClass(OpenApiOperationMiddlewareFactory::class)]
-#[UsesClass(MezzioRequestFactoryResolver::class)]
-#[UsesClass(MezzioRequestFactoryResolverFactory::class)]
-#[UsesClass(FileCache::class)]
-#[UsesClass(FileCacheFactory::class)]
-#[UsesClass(OpenApiFactory::class)]
 #[UsesClass(DelegatingSerializer::class)]
 #[UsesClass(DelegatingSerializerFactory::class)]
+#[UsesClass(FileCache::class)]
+#[UsesClass(FileCacheFactory::class)]
 #[UsesClass(JsonSerializer::class)]
+#[UsesClass(MezzioRequestFactoryResolver::class)]
+#[UsesClass(MezzioRequestFactoryResolverFactory::class)]
+#[UsesClass(OpenApiFactory::class)]
+#[UsesClass(OpenApiOperationMiddleware::class)]
+#[UsesClass(OpenApiOperationMiddlewareFactory::class)]
 final class ConfigProviderTest extends TestCase
 {
     private ContainerInterface $container;
