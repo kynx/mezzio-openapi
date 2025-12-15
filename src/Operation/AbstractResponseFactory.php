@@ -26,6 +26,9 @@ abstract class AbstractResponseFactory
     {
     }
 
+    /**
+     * @param array<non-empty-string, string|string[]> $headers
+     */
     protected function getResponse(string $body, int $status, string $reasonPhrase = '', array $headers = []): Response
     {
         $resource = fopen('php://temp/maxmemory=' . $this->maxMemory, 'r+');
