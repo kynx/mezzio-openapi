@@ -46,7 +46,7 @@ final class AbstractResponseFactoryTest extends TestCase
         self::expectExceptionMessage('Error negotiating Accept header');
         $this->factory->getMimeType(
             new Negotiator(),
-            $this->createStub(SerializerInterface::class),
+            self::createStub(SerializerInterface::class),
             'application/json',
             []
         );
@@ -58,7 +58,7 @@ final class AbstractResponseFactoryTest extends TestCase
         self::expectExceptionMessage("Unsupported mime type 'text/plain'");
         $this->factory->getMimeType(
             new Negotiator(),
-            $this->createStub(SerializerInterface::class),
+            self::createStub(SerializerInterface::class),
             'text/plain',
             ['application/json']
         );
@@ -85,7 +85,7 @@ final class AbstractResponseFactoryTest extends TestCase
     public function testGetMimeTypeReturnsMatchedType(): void
     {
         $expected   = 'application/json';
-        $serializer = $this->createStub(SerializerInterface::class);
+        $serializer = self::createStub(SerializerInterface::class);
         $serializer->method('supports')
             ->willReturn(true);
 

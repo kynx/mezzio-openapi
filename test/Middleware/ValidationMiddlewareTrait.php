@@ -27,7 +27,7 @@ trait ValidationMiddlewareTrait
 
     protected function getResolver(): OperationAddressResolverInterface
     {
-        $resolver = $this->createStub(OperationAddressResolverInterface::class);
+        $resolver = self::createStub(OperationAddressResolverInterface::class);
         $resolver->method('getOperationAddress')
             ->willReturn(new OperationAddress('/pets/{petId}', 'get'));
 

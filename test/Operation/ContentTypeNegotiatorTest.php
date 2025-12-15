@@ -91,6 +91,9 @@ final class ContentTypeNegotiatorTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    /**
+     * @param array<non-empty-string, string|string[]> $headers
+     */
     private function getRequest(array $headers): ServerRequestInterface
     {
         $stream = fopen('php://memory', 'r+');

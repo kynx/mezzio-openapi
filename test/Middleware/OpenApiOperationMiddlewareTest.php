@@ -21,7 +21,7 @@ final class OpenApiOperationMiddlewareTest extends TestCase
     public function testHandleAddsOpenApiOperationToRequest(): void
     {
         $handler  = new MockHandler();
-        $resolver = $this->createStub(RequestFactoryResolverInterface::class);
+        $resolver = self::createStub(RequestFactoryResolverInterface::class);
         $resolver->method('getFactory')
             ->willReturn(new MockRequestFactory());
         $middleware = new OpenApiOperationMiddleware($resolver);
@@ -37,7 +37,7 @@ final class OpenApiOperationMiddlewareTest extends TestCase
     {
         $expected = new ServerRequest();
         $handler  = new MockHandler();
-        $resolver = $this->createStub(RequestFactoryResolverInterface::class);
+        $resolver = self::createStub(RequestFactoryResolverInterface::class);
         $resolver->method('getFactory')
             ->willReturn(null);
         $middleware = new OpenApiOperationMiddleware($resolver);

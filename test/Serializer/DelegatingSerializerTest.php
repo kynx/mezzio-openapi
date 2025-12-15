@@ -19,10 +19,10 @@ final class DelegatingSerializerTest extends TestCase
     #[DataProvider('supportsProvider')]
     public function testSupportsDelegates(string $mimeType, bool $expected): void
     {
-        $unsupported = $this->createStub(SerializerInterface::class);
+        $unsupported = self::createStub(SerializerInterface::class);
         $unsupported->method('supports')
             ->willReturn(false);
-        $supported = $this->createMock(SerializerInterface::class);
+        $supported = self::createStub(SerializerInterface::class);
         $supported->method('supports')
             ->with($mimeType)
             ->willReturn($expected);
@@ -54,7 +54,7 @@ final class DelegatingSerializerTest extends TestCase
     public function testSerializeReturnsSerialized(): void
     {
         $expected = 'SERIALIZED';
-        $delegate = $this->createStub(SerializerInterface::class);
+        $delegate = self::createStub(SerializerInterface::class);
         $delegate->method('supports')
             ->willReturn(true);
         $delegate->method('serialize')

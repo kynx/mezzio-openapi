@@ -23,16 +23,16 @@ final class OpenApiOperationMiddlewareFactoryTest extends TestCase
     public function testInvokeReturnsConfiguredInstance(): void
     {
         $expected = new EmptyResponse();
-        $handler  = $this->createStub(RequestHandlerInterface::class);
+        $handler  = self::createStub(RequestHandlerInterface::class);
         $handler->method('handle')
             ->willReturn($expected);
 
         $factory  = new MockRequestFactory();
-        $resolver = $this->createMock(RequestFactoryResolverInterface::class);
+        $resolver = self::createStub(RequestFactoryResolverInterface::class);
         $resolver->method('getFactory')
             ->willReturn($factory);
 
-        $container = $this->createMock(ContainerInterface::class);
+        $container = self::createStub(ContainerInterface::class);
         $container->method('get')
             ->with(RequestFactoryResolverInterface::class)
             ->willReturn($resolver);

@@ -54,7 +54,7 @@ final class ValidationMiddlewareFactoryTest extends TestCase
 
     private function getContainer(bool $validateResponse): ContainerInterface
     {
-        $container = $this->createStub(ContainerInterface::class);
+        $container = self::createStub(ContainerInterface::class);
         $container->method('get')
             ->willReturnMap([
                 [

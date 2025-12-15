@@ -98,6 +98,7 @@ final class OperationUtilTest extends TestCase
     }
 
     /**
+     * @param array<non-empty-string, string|string[]> $headers
      * @param array<string, string> $templates
      */
     #[DataProvider('headerVariableProvider')]
@@ -111,7 +112,7 @@ final class OperationUtilTest extends TestCase
     }
 
     /**
-     * @return array<string, array{0: array, 1: array<string, string>, 2: array}>
+     * @return array<string, array{0: array<non-empty-string, string|string[]>, 1: array<string, string>, 2: array}>
      */
     public static function headerVariableProvider(): array
     {
@@ -243,9 +244,12 @@ final class OperationUtilTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    /**
+     * @param array<non-empty-string, string|string[]> $headers
+     */
     private function getRequest(Uri $uri, array $headers, array $cookies): ServerRequest
     {
-        $stream = $this->createStub(StreamInterface::class);
+        $stream = self::createStub(StreamInterface::class);
         return new ServerRequest([], [], $uri, null, $stream, $headers, $cookies);
     }
 }
