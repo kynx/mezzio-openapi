@@ -34,23 +34,12 @@
         "willdurand/negotiation": "^3.1"
     },
     "require-dev": {
-        "amphp/amp": "^3.1",
-        "amphp/cache": "^2.0.1",
-        "amphp/dns": "^2.4",
-        "amphp/parallel": "^2.3.3",
-        "amphp/parser": "^1.1.1",
-        "amphp/process": "^2.0.3",
-        "amphp/socket": "^2.3.1",
-        "daverandom/libdns": "^2.1",
         "laminas/laminas-coding-standard": "^3.1",
         "laminas/laminas-diactoros": "^3.8",
         "laminas/laminas-servicemanager": "^4.5",
         "phpunit/phpunit": "^12.5.4",
         "psalm/plugin-phpunit": "^0.19.5",
-        "revolt/event-loop": "^1.0.8",
         "roave/security-advisories": "dev-master",
-        "spatie/array-to-xml": "^3.4.4",
-        "symfony/console": "^7.4",
         "vimeo/psalm": "^6.14.2"
     },
     "autoload": {
