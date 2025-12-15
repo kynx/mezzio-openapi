@@ -13,7 +13,7 @@ use Kynx\Mezzio\OpenApi\Schema\InvalidOpenApiException;
 use Kynx\Mezzio\OpenApi\Schema\OpenApiFactory;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
-use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
@@ -22,14 +22,14 @@ use Psr\Container\ContainerInterface;
 #[UsesClass(InvalidOpenApiException::class)]
 final class OpenApiFactoryTest extends TestCase
 {
-    /** @var CacheInterface&MockObject */
+    /** @var CacheInterface&Stub */
     private CacheInterface $cache;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->cache = $this->createMock(CacheInterface::class);
+        $this->cache = self::createStub(CacheInterface::class);
     }
 
     public function testGetOpenApiReadsJson(): void
@@ -125,7 +125,7 @@ final class OpenApiFactoryTest extends TestCase
         string $document = 'openapi.json',
         bool $validate = true
     ): ContainerInterface {
-        $container = $this->createStub(ContainerInterface::class);
+        $container = self::createStub(ContainerInterface::class);
         $container->method('get')
             ->willReturnMap([
                 [

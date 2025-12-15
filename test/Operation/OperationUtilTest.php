@@ -249,7 +249,7 @@ final class OperationUtilTest extends TestCase
      */
     private function getRequest(Uri $uri, array $headers, array $cookies): ServerRequest
     {
-        $stream = $this->createStub(StreamInterface::class);
+        $stream = self::createStub(StreamInterface::class);
         return new ServerRequest([], [], $uri, null, $stream, $headers, $cookies);
     }
 }

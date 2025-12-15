@@ -19,7 +19,7 @@ trait MezzioRequestTrait
 {
     protected function getOperationRequest(string $pointer): ServerRequest
     {
-        $middleware = $this->createStub(MiddlewareInterface::class);
+        $middleware = self::createStub(MiddlewareInterface::class);
         $route      = new Route('/pet/{petId:\d+}/get', $middleware, ['GET'], 'pet.get');
         $route->setOptions([OpenApiRequestFactory::class => $pointer]);
         $routeResult = RouteResult::fromRoute($route);
@@ -30,7 +30,7 @@ trait MezzioRequestTrait
 
     protected function getNonOperationRequest(string $path): ServerRequest
     {
-        $middleware  = $this->createStub(MiddlewareInterface::class);
+        $middleware  = self::createStub(MiddlewareInterface::class);
         $route       = new Route('/pet/{petId:\d+}/get', $middleware, ['GET'], 'pet.get');
         $routeResult = RouteResult::fromRoute($route);
 

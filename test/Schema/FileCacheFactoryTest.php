@@ -20,7 +20,7 @@ final class FileCacheFactoryTest extends TestCase
 
     public function testInvokeReturnsConfiguredInstance(): void
     {
-        $container = $this->createStub(ContainerInterface::class);
+        $container = self::createStub(ContainerInterface::class);
         $container->method('get')
             ->willReturnMap([
                 [
