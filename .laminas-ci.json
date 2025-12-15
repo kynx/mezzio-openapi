@@ -1,5 +1,12 @@
 {
     "extensions": [
         "intl"
+    ],
+    "exclude": [
+      {
+        "name": "Psalm",
+        "php": "8.5",
+        "dependencies": "lowest"
+      }
     ]
 }
