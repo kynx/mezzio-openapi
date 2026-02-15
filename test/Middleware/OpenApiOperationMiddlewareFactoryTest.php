@@ -32,8 +32,9 @@ final class OpenApiOperationMiddlewareFactoryTest extends TestCase
         $resolver->method('getFactory')
             ->willReturn($factory);
 
-        $container = self::createStub(ContainerInterface::class);
-        $container->method('get')
+        $container = $this->createMock(ContainerInterface::class);
+        $container->expects(self::once())
+            ->method('get')
             ->with(RequestFactoryResolverInterface::class)
             ->willReturn($resolver);
 
