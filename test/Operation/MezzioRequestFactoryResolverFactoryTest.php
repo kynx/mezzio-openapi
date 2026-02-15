@@ -28,8 +28,9 @@ final class MezzioRequestFactoryResolverFactoryTest extends TestCase
         $factories = [
             $pointer => MockRequestFactory::class,
         ];
-        $container = self::createStub(ContainerInterface::class);
-        $container->method('get')
+        $container = $this->createMock(ContainerInterface::class);
+        $container->expects(self::once())
+            ->method('get')
             ->with('config')
             ->willReturn([
                 ConfigProvider::CONFIG_KEY => [

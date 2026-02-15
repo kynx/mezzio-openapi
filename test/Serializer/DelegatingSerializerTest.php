@@ -22,8 +22,9 @@ final class DelegatingSerializerTest extends TestCase
         $unsupported = self::createStub(SerializerInterface::class);
         $unsupported->method('supports')
             ->willReturn(false);
-        $supported = self::createStub(SerializerInterface::class);
-        $supported->method('supports')
+        $supported = $this->createMock(SerializerInterface::class);
+        $supported->expects(self::once())
+            ->method('supports')
             ->with($mimeType)
             ->willReturn($expected);
 
