@@ -29,7 +29,7 @@
         "psr/http-server-middleware": "^1.0",
         "respect/validation": "^2.4 || ^3.0",
         "rize/uri-template": "^0.4.1",
-        "symfony/yaml": "^7.2.3",
+        "symfony/yaml": "^7.2.3 || ^8.0.0",
         "webimpress/safe-writer": "^2.2",
         "willdurand/negotiation": "^3.1"
     },
