@@ -26,7 +26,7 @@
     "require": {
         "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
         "devizzent/cebe-php-openapi": "^1.1.4",
-        "league/openapi-psr7-validator": "^0.22 || ^0.24",
+        "league/openapi-psr7-validator": "^0.24",
         "mezzio/mezzio": "^3.26",
         "psr/http-message": "^1.0 || ^2.0",
         "psr/http-server-middleware": "^1.0",
@@ -41,7 +41,7 @@
         "laminas/laminas-diactoros": "^3.8",
         "laminas/laminas-servicemanager": "^4.5",
         "phpunit/phpunit": "^12.5.4",
-        "psalm/plugin-phpunit": "^0.20.0",
+        "psalm/plugin-phpunit": "^0.19.7",
         "roave/security-advisories": "dev-master",
         "vimeo/psalm": "^6.14.2"
     },
