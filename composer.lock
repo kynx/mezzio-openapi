@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d3bc44b795aa665c20af668436d55fa",
+    "content-hash": "67295152d714dca5055946d0548bdd1f",
     "packages": [
         {
             "name": "devizzent/cebe-php-openapi",
@@ -508,16 +508,16 @@
         },
         {
             "name": "league/openapi-psr7-validator",
-            "version": "0.22",
+            "version": "0.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/openapi-psr7-validator.git",
-                "reference": "a665e220d0bba68411efc1899ed5022fd9b10113"
+                "reference": "10675b6eb7eb100ebe99378206272a963ed764e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/openapi-psr7-validator/zipball/a665e220d0bba68411efc1899ed5022fd9b10113",
-                "reference": "a665e220d0bba68411efc1899ed5022fd9b10113",
+                "url": "https://api.github.com/repos/thephpleague/openapi-psr7-validator/zipball/10675b6eb7eb100ebe99378206272a963ed764e7",
+                "reference": "10675b6eb7eb100ebe99378206272a963ed764e7",
                 "shasum": ""
             },
             "require": {
@@ -531,7 +531,7 @@
                 "respect/validation": "^1.1.3 || ^2.0",
                 "riverline/multipart-parser": "^2.0.3",
                 "symfony/polyfill-php80": "^1.27",
-                "webmozart/assert": "^1.4"
+                "webmozart/assert": "^1.4 || ^2.0"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^8.0",
@@ -564,9 +564,9 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/openapi-psr7-validator/issues",
-                "source": "https://github.com/thephpleague/openapi-psr7-validator/tree/0.22"
+                "source": "https://github.com/thephpleague/openapi-psr7-validator/tree/0.24"
             },
-            "time": "2024-01-10T19:11:09+00:00"
+            "time": "2026-05-08T15:27:06+00:00"
         },
         {
             "name": "league/uri",
