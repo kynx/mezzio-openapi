@@ -16,7 +16,7 @@
     ],
     "config": {
         "platform": {
-            "php": "8.3.99"
+            "php": "8.4.99"
         },
         "sort-packages": true,
         "allow-plugins": {
@@ -24,7 +24,7 @@
         }
     },
     "require": {
-        "php": "~8.3.0 || ~8.4.0 || ~8.5.0",
+        "php": "~8.4.0 || ~8.5.0 || ~8.6.0",
         "devizzent/cebe-php-openapi": "^1.1.4",
         "league/openapi-psr7-validator": "^0.24",
         "mezzio/mezzio": "^3.26",
