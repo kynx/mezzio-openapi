@@ -30,7 +30,6 @@ use function method_exists;
  * @psalm-type DiscriminatorValueArray = array<string, DiscriminatorValue>
  * @psalm-type DiscriminatorList = array<class-string<HydratorInterface>, list<string>>
  * @psalm-type DiscriminatorListArray = array<string, DiscriminatorList>
- * @psalm-immutable
  */
 final class HydratorUtil
 {

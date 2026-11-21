@@ -45,7 +45,7 @@ final class HydratorUtilTest extends TestCase
         ];
 
         self::expectException(MissingDiscriminatorException::class);
-        self::expectExceptionMessage("Property 'foo' is missing discriminator 'baz'");
+        self::expectExceptionMessageIsOrContains("Property 'foo' is missing discriminator 'baz'");
         HydratorUtil::hydrateDiscriminatorValues($data, [], $valueMap);
     }
 
@@ -66,7 +66,7 @@ final class HydratorUtilTest extends TestCase
         ];
 
         self::expectException(InvalidDiscriminatorException::class);
-        self::expectExceptionMessage("Discriminator property 'bar' has invalid value 'a'");
+        self::expectExceptionMessageIsOrContains("Discriminator property 'bar' has invalid value 'a'");
         HydratorUtil::hydrateDiscriminatorValues($data, [], $valueMap);
     }
 
@@ -87,7 +87,7 @@ final class HydratorUtilTest extends TestCase
         ];
 
         self::expectException(HydrationException::class);
-        self::expectExceptionMessage("Bad type");
+        self::expectExceptionMessageIsOrContains("Bad type");
         HydratorUtil::hydrateDiscriminatorValues($data, [], $valueMap);
     }
 
@@ -173,7 +173,7 @@ final class HydratorUtilTest extends TestCase
         ];
 
         self::expectException(HydrationException::class);
-        self::expectExceptionMessage("Bad type");
+        self::expectExceptionMessageIsOrContains("Bad type");
         HydratorUtil::hydrateDiscriminatorLists($data, [], $listMap);
     }
 
@@ -247,7 +247,7 @@ final class HydratorUtilTest extends TestCase
         ];
 
         self::expectException(HydrationException::class);
-        self::expectExceptionMessage("Bad type");
+        self::expectExceptionMessageIsOrContains("Bad type");
         HydratorUtil::hydrateProperties($data, [], $propertyMap);
     }
 
@@ -344,7 +344,7 @@ final class HydratorUtilTest extends TestCase
         ];
 
         self::expectException(HydrationException::class);
-        self::expectExceptionMessage('Cannot hydrate foo: "baz" is not a valid backing value');
+        self::expectExceptionMessageIsOrContains('Cannot hydrate foo: "baz" is not a valid backing value');
         HydratorUtil::hydrateEnums($data, [], $enums);
     }
 

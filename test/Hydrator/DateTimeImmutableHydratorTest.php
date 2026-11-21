@@ -37,14 +37,14 @@ final class DateTimeImmutableHydratorTest extends TestCase
     public function testHydrateNonStringThrowsException(): void
     {
         self::expectException(HydrationException::class);
-        self::expectExceptionMessage("Error hydrating " . DateTimeImmutable::class);
+        self::expectExceptionMessageIsOrContains("Error hydrating " . DateTimeImmutable::class);
         DateTimeImmutableHydrator::hydrate(1.23);
     }
 
     public function testHydrateInvalidValueThrowsException(): void
     {
         self::expectException(HydrationException::class);
-        self::expectExceptionMessage("Cannot hydrate " . DateTimeImmutable::class);
+        self::expectExceptionMessageIsOrContains("Cannot hydrate " . DateTimeImmutable::class);
         DateTimeImmutableHydrator::hydrate("bad");
     }
 
@@ -59,7 +59,7 @@ final class DateTimeImmutableHydratorTest extends TestCase
     public function testExtractInvalidObjectThrowsException(): void
     {
         self::expectException(ExtractionException::class);
-        self::expectExceptionMessage("Cannot extract stdClass: expected object of type DateTimeImmutable");
+        self::expectExceptionMessageIsOrContains("Cannot extract stdClass: expected object of type DateTimeImmutable");
         DateTimeImmutableHydrator::extract(new stdClass());
     }
 }

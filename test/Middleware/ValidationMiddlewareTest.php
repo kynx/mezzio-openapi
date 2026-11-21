@@ -41,7 +41,7 @@ final class ValidationMiddlewareTest extends TestCase
         $request = $this->getRequest('/pets/foo');
 
         self::expectException(RequestValidationException::class);
-        self::expectExceptionMessage('Value "foo" for parameter "petId" is invalid');
+        self::expectExceptionMessageIsOrContains('Value "foo" for parameter "petId" is invalid');
         $this->middleware->process($request, new MockHandler());
     }
 

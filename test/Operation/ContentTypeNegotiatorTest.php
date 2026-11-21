@@ -78,7 +78,7 @@ final class ContentTypeNegotiatorTest extends TestCase
         $request    = $this->getRequest(['Content-Type' => 'text/csv']);
 
         self::expectException(InvalidContentTypeException::class);
-        self::expectExceptionMessage("Invalid Content-Type header 'text/csv'; expected one of 'image/png'");
+        self::expectExceptionMessageIsOrContains("Invalid Content-Type header 'text/csv'; expected one of 'image/png'");
         $negotiator->negotiate($request);
     }
 

@@ -8,8 +8,6 @@ use Attribute;
 
 /**
  * Associates hydrator with OpenAPI schema
- *
- * @psalm-immutable
  */
 #[Attribute(Attribute::TARGET_CLASS)]
 final class OpenApiHydrator extends AbstractJsonPointerAttribute

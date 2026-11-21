@@ -47,8 +47,8 @@ final class DelegatingSerializerTest extends TestCase
     public function testSerializeUnsupportedThrowsException(): void
     {
         $serializer = new DelegatingSerializer();
-        $this->expectException(SerializerException::class);
-        $this->expectExceptionMessage("Unsupported mime type");
+        self::expectException(SerializerException::class);
+        self::expectExceptionMessageIsOrContains("Unsupported mime type");
         $serializer->serialize('application/json', null);
     }
 

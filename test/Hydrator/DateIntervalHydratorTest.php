@@ -43,7 +43,7 @@ final class DateIntervalHydratorTest extends TestCase
     public function testExtractInvalidDateIntervalThrowsException(mixed $interval, string $expected): void
     {
         self::expectException(ExtractionException::class);
-        self::expectExceptionMessage($expected);
+        self::expectExceptionMessageIsOrContains($expected);
         DateIntervalHydrator::extract($interval);
     }
 
@@ -71,7 +71,7 @@ final class DateIntervalHydratorTest extends TestCase
     {
         $dateInterval = new DateInterval($interval);
         $actual       = DateIntervalHydrator::extract($dateInterval);
-        self::assertEquals($interval, $actual);
+        self::assertSame($interval, $actual);
     }
 
     /**
