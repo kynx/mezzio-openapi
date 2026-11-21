@@ -8,8 +8,6 @@ use Attribute;
 
 /**
  * Associates an operation factory class with an OpenApi schema
- *
- * @psalm-immutable
  */
 #[Attribute(Attribute::TARGET_CLASS)]
 final class OpenApiRequestFactory extends AbstractJsonPointerAttribute

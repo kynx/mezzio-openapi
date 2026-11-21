@@ -71,7 +71,7 @@ final class DateIntervalHydratorTest extends TestCase
     {
         $dateInterval = new DateInterval($interval);
         $actual       = DateIntervalHydrator::extract($dateInterval);
-        self::assertEquals($interval, $actual);
+        self::assertSame($interval, $actual);
     }
 
     /**

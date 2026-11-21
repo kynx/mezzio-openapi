@@ -8,8 +8,6 @@ use Attribute;
 
 /**
  * Associates a handler class with an OpenApi schema
- *
- * @psalm-immutable
  */
 #[Attribute(Attribute::TARGET_CLASS)]
 final class OpenApiHandler extends AbstractJsonPointerAttribute
