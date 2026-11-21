@@ -56,7 +56,7 @@ final class OpenApiFactoryTest extends TestCase
         $factory   = new OpenApiFactory();
 
         self::expectException(InvalidArgumentException::class);
-        self::expectExceptionMessage('Cannot read specification document');
+        self::expectExceptionMessageIsOrContains('Cannot read specification document');
         $factory($container);
     }
 
@@ -66,7 +66,7 @@ final class OpenApiFactoryTest extends TestCase
         $factory   = new OpenApiFactory();
 
         self::expectException(InvalidArgumentException::class);
-        self::expectExceptionMessage("Unrecognised schema extension 'txt'");
+        self::expectExceptionMessageIsOrContains("Unrecognised schema extension 'txt'");
         $factory($container);
     }
 
@@ -76,7 +76,9 @@ final class OpenApiFactoryTest extends TestCase
         $factory   = new OpenApiFactory();
 
         self::expectException(InvalidOpenApiException::class);
-        self::expectExceptionMessage('Invalid OpenApi document: [] OpenApi is missing required property: paths');
+        self::expectExceptionMessageIsOrContains(
+            'Invalid OpenApi document: [] OpenApi is missing required property: paths'
+        );
         $factory($container);
     }
 

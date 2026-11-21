@@ -36,7 +36,7 @@ final class MezzioOperationAddressResolverTest extends TestCase
         $request  = $this->getNonOperationRequest($path);
 
         self::expectException(InvalidOperationException::class);
-        self::expectExceptionMessage($expected);
+        self::expectExceptionMessageIsOrContains($expected);
         $this->resolver->getOperationAddress($request);
     }
 
